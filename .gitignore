@@ -1,0 +1,4 @@
+# Deploy global — no commitear secrets
+.DS_Store
+Thumbs.db
+*.log

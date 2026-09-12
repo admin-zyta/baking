@@ -1,0 +1,12 @@
+{
+  "enabled": true,
+  "profile": "claude",
+  "handoffDir": ".cursor/handoff",
+  "routing": {
+    "defaultOnAmbiguity": "PLAN"
+  },
+  "consumption": {
+    "skipPlannerForTrivialTasks": true,
+    "maxParallelSubagents": 2
+  }
+}

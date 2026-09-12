@@ -1,0 +1,12 @@
+Baking es GLOBAL — no instalar en el repo.
+
+Config: ~/.cursor/opus-sonnet/config.json
+Uso: /baking  o  "usemos baking para ..."
+
+Actualizar skills Claude (global):
+  & "$env:USERPROFILE\.cursor\opus-sonnet\claude-code\install-claude-skills.ps1"
+
+Handoff por repo (solo diary):
+  .cursor/handoff/
+
+DEPRECADO: enable-project.ps1, init-baking, planner-executor-project

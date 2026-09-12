@@ -1,0 +1,91 @@
+{
+  "$schema": "./config.schema.json",
+  "bakingVersion": "1.0.0",
+  "enabled": true,
+  "profile": "claude",
+  "handoffDir": ".cursor/handoff",
+  "filenamePattern": "YYYY-MM-DD-<slug>.md",
+  "profiles": {
+    "claude": {
+      "label": "Opus 5 planifica, Sonnet ejecuta (pool Other Models)",
+      "planner": {
+        "subagent": "planner",
+        "model": "claude-opus-5[effort=high]"
+      },
+      "executor": {
+        "subagent": "executor",
+        "model": "claude-sonnet-5"
+      },
+      "orchestrator": {
+        "recommendedModels": [
+          "composer-2.5",
+          "claude-sonnet-5"
+        ],
+        "neverUseExpensiveAsParent": true
+      },
+      "billingPool": "other"
+    },
+    "cursor": {
+      "label": "Opus 5 planifica, Composer ejecuta (default)",
+      "planner": {
+        "subagent": "planner",
+        "model": "claude-opus-5[effort=high]"
+      },
+      "executor": {
+        "subagent": "executor-cursor",
+        "model": "composer-2.5[]"
+      },
+      "orchestrator": {
+        "recommendedModels": [
+          "composer-2.5"
+        ],
+        "neverUseExpensiveAsParent": true
+      },
+      "billingPool": "mixed"
+    },
+    "hybrid": {
+      "label": "Grok 4.6 planifica, Composer ejecuta (100% pool Cursor Models)",
+      "planner": {
+        "subagent": "planner-cursor",
+        "model": "grok-4.6[]"
+      },
+      "executor": {
+        "subagent": "executor-cursor",
+        "model": "composer-2.5[]"
+      },
+      "orchestrator": {
+        "recommendedModels": [
+          "composer-2.5"
+        ],
+        "neverUseExpensiveAsParent": true
+      },
+      "billingPool": "cursor"
+    }
+  },
+  "planner": {
+    "subagent": "planner",
+    "model": "claude-opus-5[effort=high]"
+  },
+  "executor": {
+    "subagent": "executor",
+    "model": "claude-sonnet-5"
+  },
+  "orchestrator": {
+    "recommendedModels": [
+      "composer-2.5",
+      "claude-sonnet-5"
+    ],
+    "neverUseOpusAsParent": true,
+    "neverUseExpensiveAsParent": true
+  },
+  "routing": {
+    "defaultOnAmbiguity": "PLAN",
+    "forcePlanIfNoHandoffExists": true
+  },
+  "consumption": {
+    "maxParallelSubagents": 2,
+    "requireHandoffFile": true,
+    "skipPlannerForTrivialTasks": true,
+    "trivialTaskMaxWords": 12
+  }
+}

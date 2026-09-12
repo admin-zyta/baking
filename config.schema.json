@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Opus-Sonnet Router Config",
+  "type": "object",
+  "properties": {
+    "bakingVersion": {
+      "type": "string",
+      "description": "Versión semver de Baking (debe coincidir con VERSION en el repo)."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Activa el gate automático (config global única)."
+    },
+    "profile": {
+      "type": "string",
+      "enum": ["claude", "cursor", "hybrid"],
+      "description": "Perfil de modelos: claude | cursor | hybrid"
+    },
+    "profiles": {
+      "type": "object",
+      "description": "Mapa de perfiles (solo en config global)"
+    },
+    "handoffDir": {
+      "type": "string",
+      "description": "Carpeta del diary relativa a la raíz del proyecto."
+    },
+    "filenamePattern": {
+      "type": "string",
+      "description": "Patrón de nombre: YYYY-MM-DD-<slug>.md"
+    },
+    "planner": {
+      "type": "object",
+      "properties": {
+        "subagent": { "type": "string" },
+        "model": { "type": "string" }
+      }
+    },
+    "executor": {
+      "type": "object",
+      "properties": {
+        "subagent": { "type": "string" },
+        "model": { "type": "string" }
+      }
+    },
+    "orchestrator": {
+      "type": "object",
+      "properties": {
+        "recommendedModels": { "type": "array", "items": { "type": "string" } },
+        "neverUseOpusAsParent": { "type": "boolean" }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "properties": {
+        "defaultOnAmbiguity": { "enum": ["PLAN", "EXECUTE"] },
+        "forcePlanIfNoHandoffExists": { "type": "boolean" }
+      }
+    },
+    "consumption": {
+      "type": "object",
+      "properties": {
+        "maxParallelSubagents": { "type": "integer", "minimum": 1 },
+        "requireHandoffFile": { "type": "boolean" },
+        "skipPlannerForTrivialTasks": { "type": "boolean" },
+        "trivialTaskMaxWords": { "type": "integer" }
+      }
+    }
+  }
+}
