@@ -2,6 +2,28 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.1.0] — 2026-09-12
+
+### Added
+
+- **Executor barato para tareas mecánicas** — `model: "haiku"` (Claude Code) en vez del Sonnet
+  default del perfil para rename/campo suelto/doc-only/verificación sin diseño (`claude-code/BAKING.md`,
+  `consumption.md`)
+- **Sugerir `/compact` al cerrar** una tarea (`status: completed`), `/clear` si el próximo pedido
+  es un tema no relacionado (`claude-code/BAKING.md`, `consumption.md`)
+- **Reintento automático ante fallo de infraestructura** de un subagente (stream watchdog, no fallo
+  de contenido) — relanzar el mismo pedido sobre el mismo handoff sin escalar al usuario, salvo que
+  vuelva a fallar (`consumption.md`)
+
+### Evidence
+
+- Reporte de uso 24h (sesión lore-forge, 2026-09-12): 84% subagent-heavy, 84% sesiones 8h+, 74% de
+  uso a >150k de contexto
+- `planner` colgado por stream watchdog tras sólo leer el handoff, sin escribir nada — reintento
+  manual sobre el mismo handoff intacto resolvió en el segundo intento
+
+[1.1.0]: https://github.com/local/baking/releases/tag/v1.1.0
+
 ## [1.0.0] — 2026-09-12
 
 Primera release versionada. Repo: `~/.cursor/opus-sonnet/`.

@@ -73,6 +73,12 @@ Antes de delegar, ¿la tarea depende de contexto **ya cargado en esta sesión**?
 
 **Regla de oro:** handoff autocontenido → `executor` fresco OK. Si el executor tendría que **re-descubrir** lo que ya sabés → **`fork`**.
 
+**Modelo del executor — no siempre Sonnet.** Si la tarea es mecánica (rename, un campo suelto,
+doc-only, wiring sin decisión de diseño, una verificación de ida y vuelta) pasá `model: "haiku"` en
+el Agent call en vez del Sonnet default del perfil. Reservá Sonnet para lo que toca lógica real
+(schema, prompt, migraciones, varios archivos con decisiones). Evidencia: reporte de uso 24h del
+usuario — *"84% subagent-heavy... consider configuring a cheaper model for simpler subagents"*.
+
 Prompt **`executor`** (solo ruta):
 
 ```text
@@ -111,6 +117,7 @@ Modo default: **prod + spec + craft**.
 
 ```yaml
 baking:
+  version: "1.0.0"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | EXECUTE | TRIVIAL
   plan_mode: planner | skipped
@@ -126,6 +133,12 @@ baking:
 **Reglas:** partial si craft/assets fallan; nunca completed con `assets: fail`.
 
 **Nota fork:** `fork` (Agent tool) reutiliza contexto de sesión — OK para debug. **Prohibido** usar fork/copy para pegar `src/` de otra app (bench inválido).
+
+**Sugerir `/compact` al cerrar** (`status: completed`), sobre todo si ya es la 2da+ tarea cerrada en
+la sesión — el handoff en disco ya preserva plan + ejecución, compactar no pierde nada durable.
+Si el usuario arranca un tema no relacionado, sugerir `/clear` en vez de `/compact`. Evidencia:
+reporte de uso 24h del usuario — *"74% of your usage was at >150k context... /compact mid-task,
+/clear when switching to new tasks"*.
 
 Mensaje breve al usuario + ruta handoff.
 

@@ -43,6 +43,12 @@ Aplicar cuando el router está activo (`enabled: true` en **`~/.cursor/opus-sonn
 - El diary evita re-explicar contexto en el chat.
 - Pasar **ruta de archivo**, no el contenido del plan, al executor.
 - Pedidos triviales (≤12 palabras, una acción): EXECUTE directo con handoff mínimo.
+- Executor mecánico (rename, un campo, doc-only, verificación sin diseño): modelo más barato
+  (`haiku` en Claude Code — ver `claude-code/BAKING.md`; Composer/Grok ya son el barato en los
+  perfiles Cursor). Reservar Sonnet/Composer normal para lo que toca lógica real.
+- Al cerrar una tarea (`status: completed`), sugerir `/compact` — el handoff en disco ya preserva
+  plan+ejecución, no se pierde nada. `/clear` si el próximo pedido es un tema no relacionado.
+  Evidencia: reporte de uso 24h — 84% subagent-heavy, 74% de uso a >150k de contexto.
 
 ## Cuándo NO usar planner fuerte (Opus/Grok plan)
 
