@@ -19,14 +19,14 @@ user-invocable: true
 
 Baking crea solo `.cursor/handoff/` en el workspace si falta.
 
-## Cambiar perfil / enabled
+## Cambiar perfil / enabled / versión
 
-Editá **`~/.cursor/opus-sonnet/config.json`** (ej. `"profile": "cursor"` | `"claude"` | `"hybrid"`).
-
-## Actualizar skills Claude
+Editá **`~/.cursor/opus-sonnet/config.json`** en el **repo git**, commit, tag, deploy:
 
 ```powershell
-& "$env:USERPROFILE\.cursor\opus-sonnet\claude-code\install-claude-skills.ps1"
+cd ~/.cursor/opus-sonnet
+# editar VERSION, CHANGELOG, config.json bakingVersion
+git commit -am "baking: ..."
+git tag v1.0.1
+& ./sync-global.ps1
 ```
-
-No uses `enable-project.ps1` — deprecado.
