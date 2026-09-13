@@ -2,6 +2,17 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.2.0] — 2026-09-13
+
+### Added
+
+- **Métricas JSONL** — Baking append a `.cursor/baking/metrics/runs.jsonl` por corrida:
+  `prompt`, agentes, modelos, señales, `review.plan_fit` / `exec_fit` (`METRICS.md`,
+  `metrics.schema.json`, config `metrics.enabled`).
+- Preparación `plan_agent: hyper` en schema para futuro `planner-hyper`.
+
+[1.2.0]: https://github.com/local/baking/releases/tag/v1.2.0
+
 ## [1.1.1] — 2026-09-12
 
 ### Added

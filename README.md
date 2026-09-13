@@ -51,6 +51,8 @@ Perfil: editar `"profile"` en `config.json` (`cursor` | `claude` | `hybrid`).
 
 Otras sesiones: citar `bakingVersion` en cierre YAML del handoff.
 
+Métricas: `.cursor/baking/metrics/runs.jsonl` — ver `METRICS.md`.
+
 ## Deprecado
 
 Instalación por proyecto, `/init-baking`, `enable-project.ps1` (solo crean `handoff/` con warning).

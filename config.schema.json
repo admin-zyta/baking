@@ -64,6 +64,14 @@
         "skipPlannerForTrivialTasks": { "type": "boolean" },
         "trivialTaskMaxWords": { "type": "integer" }
       }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "dir": { "type": "string" },
+        "file": { "type": "string" }
+      }
     }
   }
 }

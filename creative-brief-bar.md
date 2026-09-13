@@ -15,15 +15,16 @@ Esta barra equilibra: **misma rigurosidad de paths/build, más especificación d
 
 ## Modo de build por defecto (landings creativas)
 
-Composite default: **`prod + spec + craft`** (no prod + spec solo).
+Composite default: **`prod + spec + craft + visual`** (no prod + spec solo).
 
 | Capa | Qué cubre |
 |------|-----------|
 | **prod** | build, lint, componentes, paths |
 | **spec** | tabla de timings de interacciones |
 | **craft** | checklist perceptual — `creative-brief-bar` (global) o `docs/CRAFT-BAR.md` + `docs/ORIGINALITY.md` (starter v0.0.5+) |
+| **visual** | techo Visual — `docs/VISUAL-BAR.md` + `docs/ART-DIRECTION.md` + `docs/COPY-CRAFT.md` (starter v0.1.0+) |
 
-El planner debe declarar qué capas aplican. El executor verifica **las tres** en landings creativas.
+El planner debe declarar qué capas aplican. El executor verifica **las cuatro** en landings creativas boutique.
 
 ---
 
@@ -44,6 +45,14 @@ Además del template estándar del planner, incluir:
 ### 1. Ambición visual (3–5 bullets)
 
 Qué debe sentir el usuario en los primeros 5 segundos. Una frase antítesis si el brief la trae (“antídoto a gym culture”, “monografía impresa”, etc.).
+
+**Visual ceiling (starter v0.1.0+)** — el planner debe nombrar explícitamente:
+
+- Capas atmosféricas (máx. 3: grain, luz, textura base)
+- Sistema tipográfico editorial (label line, folios, acento en títulos)
+- Estrategia de arte: `svg-system` | `photo-treated` | `hybrid`
+- Motivo repetible en ≥3 secciones
+- Longitud del hero tagline (≥120 chars, párrafo)
 
 ### 2. Jerarquía tipográfica
 
@@ -90,6 +99,8 @@ No solo listar — especificar **curva** (`cubic-bezier`) y si pausa off-screen.
 
 Si el repo usa **starter Boogiepop v0.0.5+**, el executor también lee `docs/CRAFT-BAR.md` y `docs/ORIGINALITY.md`.
 
+Si **v0.1.0+**, además: `docs/VISUAL-BAR.md`, `docs/ART-DIRECTION.md`, `docs/COPY-CRAFT.md`, `docs/PAGE-COHESION.md`.
+
 ### 6. Anti-patterns (mínimo 3)
 
 Qué evitar para no caer en “AI slop” / template:
@@ -111,6 +122,8 @@ Además de `npm run build` (**build ≠ completado**):
 - [ ] Imágenes alineadas al brief (tema, no random)
 - [ ] Assets externos verificados (2xx) — ver tabla Assets
 - [ ] Craft bar revisada en UI corriendo (starter: `docs/CRAFT-BAR.md`)
+- [ ] Visual bar revisada en UI corriendo (starter v0.1.0+: `docs/VISUAL-BAR.md`)
+- [ ] Art strategy en `DECISIONS.md` + copy mínimos (`docs/COPY-CRAFT.md`)
 
 ### 8. Referencia externa (opcional)
 
@@ -134,7 +147,7 @@ Planner compara ambición; executor implementa **desde cero**. No archivar compa
 
 ## Rol de Baking (orquestador)
 
-- Detectar brief creativo → avisar al planner: “incluí creative-brief-bar” + modo **prod+spec+craft**.
+- Detectar brief creativo → avisar al planner: “incluí creative-brief-bar” + modo **prod+spec+craft+visual**.
 - No acortar el pedido visual al delegar al planner.
 - Post-exec: evaluar scores antes de cerrar (ver `BAKING-CURSOR.md` / `claude-code/BAKING.md`):
   - **partial** si build OK pero `craft: partial|fail` o `assets: fail`

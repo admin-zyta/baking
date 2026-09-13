@@ -1,6 +1,6 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.1.1",
+  "bakingVersion": "1.2.0",
   "enabled": true,
   "profile": "claude",
   "handoffDir": ".cursor/handoff",
@@ -87,5 +87,10 @@
     "requireHandoffFile": true,
     "skipPlannerForTrivialTasks": true,
     "trivialTaskMaxWords": 12
+  },
+  "metrics": {
+    "enabled": true,
+    "dir": ".cursor/baking/metrics",
+    "file": "runs.jsonl"
   }
 }

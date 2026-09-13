@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Baking run metric (one JSONL line)",
+  "type": "object",
+  "required": ["ts", "bakingVersion", "prompt", "classification", "models", "review"],
+  "properties": {
+    "ts": { "type": "string", "format": "date-time" },
+    "bakingVersion": { "type": "string" },
+    "runtime": { "enum": ["cursor", "claude-code"] },
+    "profile": { "type": "string" },
+    "prompt": { "type": "string", "maxLength": 4000 },
+    "handoff": { "type": ["string", "null"] },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "flow": { "type": "string" },
+        "plan_agent": { "enum": ["planner", "hyper", "skipped"] },
+        "exec_agent": { "enum": ["mecanic", "executor", "fork", "direct", "skipped"] },
+        "plan_mode": { "enum": ["auto", "explicit-deep", "explicit-normal", "explicit-only", "skipped"] },
+        "exec_mode": { "enum": ["auto", "explicit", "skipped"] }
+      }
+    },
+    "models": {
+      "type": "object",
+      "properties": {
+        "orchestrator": { "type": "string" },
+        "planner": { "type": ["string", "null"] },
+        "executor": { "type": ["string", "null"] }
+      }
+    },
+    "signals": { "type": "array", "items": { "type": "string" } },
+    "explicit": {
+      "type": "object",
+      "properties": {
+        "plan_deep": { "type": "boolean" },
+        "plan_only": { "type": "boolean" },
+        "no_execute": { "type": "boolean" },
+        "plan_fast": { "type": "boolean" }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["completed", "partial", "blocked", "plan-ready"] },
+        "scores": { "type": "object" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["plan_fit", "exec_fit"],
+      "properties": {
+        "plan_fit": { "enum": ["good", "overkill", "underkill", "n/a"] },
+        "exec_fit": { "enum": ["good", "overkill", "underkill", "n/a"] },
+        "note": { "type": "string", "maxLength": 500 }
+      }
+    }
+  }
+}

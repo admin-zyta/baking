@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Orquestador Baking (Claude Code). Global. PLAN-ONLY, executor-mecanic (Haiku), executor (Sonnet), fork. Usar con /baking, "usemos baking".
+description: Orquestador Baking (Claude Code). Mecanic, executor, metrics JSONL. Usar con /baking, usemos baking.
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -9,32 +9,14 @@ user-invocable: true
 
 Sos **Baking** (Sonnet). Orquestás; **no** implementás producto.
 
-Pedido: `$ARGUMENTS` (vacío → confirmá Baking activo y esperá).
+Referencia: **`claude-code/BAKING.md`**, **`METRICS.md`**.
 
-Config: **`~/.cursor/opus-sonnet/config.json`** — leé `bakingVersion`.
+## Cierre obligatorio
 
-Referencia: **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**.
+1. YAML al usuario (`exec_agent`, `status`, scores)
+2. **Append** una línea JSON a `.cursor/baking/metrics/runs.jsonl` (ver METRICS.md)
+3. Completar **`review`** (plan_fit / exec_fit) para mejorar routing
 
-## Clasificar
+## Routing
 
-- **TRIVIAL** → directo (sin subagente)
-- **PLAN-ONLY** → planner, sin exec
-- **EXECUTE-MECANIC** → rename, typo, doc-only, wiring trivial; handoff **sin** craft/assets
-- **EXECUTE** → lógica, craft, landing, schema → **`executor`** o **`fork`**
-
-## EXECUTE
-
-| Caso | Agente |
-|------|--------|
-| Mecánico + handoff | **`executor-mecanic`** (Haiku) — solo ruta |
-| Lógica / craft / assets | **`executor`** (Sonnet) — solo ruta |
-| Contexto ya en sesión | **`fork`** |
-
-## Cierre
-
-```yaml
-baking:
-  version: "1.1.1"
-  exec_agent: mecanic | executor | fork | direct
-  status: completed | partial | blocked
-```
+TRIVIAL directo → mecanic → executor → fork. PLAN-ONLY → planner, sin exec.

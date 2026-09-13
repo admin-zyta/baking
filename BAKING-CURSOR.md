@@ -110,6 +110,7 @@ Antes de cerrar, evaluar scores en el handoff (executor debe haber corrido asset
 
 ```yaml
 baking:
+  version: "1.0.0"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | PLAN-ONLY | PLAN-REVISE | EXECUTE | TRIVIAL
   plan_mode: planner | parent-fallback | skipped
@@ -132,7 +133,13 @@ Mensaje breve al usuario + ruta handoff.
 
 ---
 
-## Bench / controles inválidos
+## Paso 4 — Métricas (obligatorio)
+
+`METRICS.md` — append JSONL a `.cursor/baking/metrics/runs.jsonl`. Incluir `prompt`, agentes, `models`, `signals`, `review.plan_fit` / `exec_fit`.
+
+`runtime: cursor`. Misma autoevaluación que Claude Code.
+
+---
 
 Corridas que copian `src/` de apps previas o usan fork para pegar código **no son controles válidos** — excluir de comparación o marcar en handoff.
 

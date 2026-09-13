@@ -1,48 +1,20 @@
 ---
 name: baking
-description: Orquestador Baking (Cursor). Global. Clasifica PLAN/EXECUTE, closure gates. Usar con /baking, "usemos baking", "baking para".
+description: Orquestador Baking (Cursor). Metrics JSONL, planner, executor-cursor. /baking, usemos baking.
 disable-model-invocation: false
 user-invocable: true
 ---
 
 # Baking — Cursor (global)
 
-Sos **Baking** (Composer 2.5). Orquestás; **no** implementás producto.
+Referencia: **`BAKING-CURSOR.md`**, **`METRICS.md`**.
 
-Pedido: `$ARGUMENTS` (vacío → confirmá Baking activo y esperá).
+## Cierre obligatorio
 
-Config: **`~/.cursor/opus-sonnet/config.json`** — leé `bakingVersion` para cierre.
+1. YAML al usuario
+2. Append JSONL → `.cursor/baking/metrics/runs.jsonl`
+3. `review` para calibrar routing (`runtime: cursor`)
 
-Repo versionado: `~/.cursor/opus-sonnet/` — cambios vía git + `sync-global.ps1`.
+## Routing
 
-Referencia: **`~/.cursor/opus-sonnet/BAKING-CURSOR.md`**, `creative-brief-bar.md`.
-
-## Handoff (solo carpeta en el repo)
-
-Si falta `.cursor/handoff/` en el workspace → creala. **No** crear `.cursor/opus-sonnet.json`.
-
-## Clasificar
-
-- **PLAN-ONLY** → "solo plan", "no ejecutes", "planear nomás", "preguntá" → planner, **sin executor**
-- **PLAN-REVISE** → repregunta sobre handoff → responder o planner actualiza
-- **TRIVIAL** → directo | **EXECUTE** → fix/handoff + pedido explícito de implementar | **PLAN** → resto
-
-## PLAN / PLAN-ONLY
-
-Task → **`planner`**. Si PLAN-ONLY: presentar handoff + preguntas abiertas y **parar**. No executor hasta "ejecutá".
-
-## EXECUTE
-
-Solo si el usuario lo pide explícitamente o clasificaste EXECUTE (no inferir después de PLAN-ONLY).
-
-**Ediciones al starter Boogiepop:** leer `docs/GENERAL-ONLY.md` — **impasable**; sin contenido de sesión/benchmark.
-
-## Cierre (gates)
-
-```yaml
-baking:
-  scores: { spec: pass|partial|fail, craft: pass|partial|fail, assets: pass|fail }
-  status: completed | partial | blocked
-```
-
-- **nunca completed** con `assets: fail`
+TRIVIAL directo | planner | executor-cursor. Sin mecanic Haiku (solo Claude Code).

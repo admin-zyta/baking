@@ -150,6 +150,24 @@ Mensaje breve al usuario + ruta handoff.
 
 ---
 
+## Paso 4 — Métricas (obligatorio)
+
+Leé **`~/.cursor/opus-sonnet/METRICS.md`**. Append **una línea JSON** a:
+
+`<metrics.dir>/runs.jsonl` (default `.cursor/baking/metrics/runs.jsonl`)
+
+Creá la carpeta si falta. Respetar `metrics.enabled` en config (default true).
+
+Ejemplo:
+
+```json
+{"ts":"2026-09-13T15:00:00-03:00","bakingVersion":"1.2.0","runtime":"claude-code","profile":"claude","prompt":"usemos baking para...","handoff":".cursor/handoff/....md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"planner","exec_agent":"mecanic","plan_mode":"auto","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"opus","executor":"haiku"},"signals":["mechanical","handoff_no_craft"],"explicit":{"plan_deep":false,"plan_only":false,"no_execute":false,"plan_fast":false},"outcome":{"status":"completed","scores":{"spec":"pass","craft":"n/a","assets":"n/a"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
+```
+
+Completá **`review`** honesto (ver METRICS.md) — es la señal para saber si hyper/mecanic/planner fue acertado.
+
+---
+
 ## Anti-patterns
 
 - Parafrasear el plan al executor (solo ruta).
