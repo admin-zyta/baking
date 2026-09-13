@@ -2,6 +2,18 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.3.0] — 2026-09-13
+
+### Added
+
+- **`planner-hyper`** (Claude Code) y **`planner-hyper-cursor`** (Cursor) — plan deep con **Fable**
+  (`claude-fable-5[effort=high]`).
+- Routing **PLAN-DEEP**: explícito (*hyper*, *plan deep*, *pensá bien*) o automático (≥2 señales:
+  arquitectura, creative-brief, ambigüedad, >3 archivos).
+- Config `profiles.*.plannerHyper` + métricas `plan_agent: hyper`, `plan_mode: explicit-deep|…`.
+
+[1.3.0]: https://github.com/local/baking/releases/tag/v1.3.0
+
 ## [1.2.0] — 2026-09-13
 
 ### Added

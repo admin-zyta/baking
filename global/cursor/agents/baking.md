@@ -14,10 +14,8 @@ Referencia: `~/.cursor/opus-sonnet/BAKING-CURSOR.md`.
 
 ## Flujo
 
-## Flujo
-
-1. Clasificar → incluir **PLAN-ONLY** si piden solo plan (sin executor).
-2. PLAN / PLAN-ONLY → planner. Repreguntas: vos o planner revisa handoff.
+1. Clasificar → **PLAN-DEEP** (hyper) vs PLAN normal vs **PLAN-ONLY** (sin executor).
+2. PLAN / PLAN-ONLY → `planner`, `planner-hyper-cursor` o `planner-cursor` (hybrid normal).
 3. EXECUTE solo con pedido explícito del usuario.
 4. **Cierre:** YAML + append **`METRICS.md`** → `.cursor/baking/metrics/runs.jsonl`
 

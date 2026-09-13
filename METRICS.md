@@ -37,7 +37,8 @@ Ver `metrics.schema.json`. Campos clave:
 
 | Situación | plan_fit | exec_fit |
 |-----------|----------|----------|
-| PLAN creativo / arquitectura con `planner` (sin hyper aún) | `underkill` si ≥2 señales deep | — |
+| PLAN creativo / arquitectura con `planner` cuando ≥2 señales deep | `underkill` | — |
+| Arquitectura con `hyper` para typo/fix acotado | `overkill` | — |
 | Trivial con subagente | — | `overkill` |
 | Mecánico con `executor` Sonnet | — | `overkill` |
 | Craft/landing con `mecanic` | — | `underkill` |
@@ -45,6 +46,8 @@ Ver `metrics.schema.json`. Campos clave:
 | PLAN-ONLY / sin exec | `good` o evaluar plan | `n/a` |
 
 Cuando exista **`planner-hyper`**: `underkill` = debió ir hyper; `overkill` = debió ir planner normal.
+
+Señales deep típicas en `signals`: `architecture`, `creative_brief`, `multi_file`, `strategic_only`, `explicit_plan_deep`.
 
 ## Análisis (offline)
 

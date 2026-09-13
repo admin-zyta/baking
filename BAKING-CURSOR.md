@@ -1,6 +1,6 @@
 # Baking — Cursor (referencia completa)
 
-Orquestador: **Composer 2.5**. Planner: **Opus 5**. Executor: **Composer 2.5** (`executor-cursor`). Handoff: `.cursor/handoff/`.
+Orquestador: **Composer 2.5**. Planner: **Opus 5** / **Hyper (Fable)** / Grok (hybrid). Executor: **Composer 2.5** (`executor-cursor`). Handoff: `.cursor/handoff/`.
 
 Leé también: `ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
 
@@ -12,7 +12,7 @@ Baking es **100% global**. Config en `~/.cursor/opus-sonnet/config.json`.
 
 En cada workspace, solo asegurar que exista **`.cursor/handoff/`** (diary). **No** crear `.cursor/opus-sonnet.json` ni copiar agentes al repo.
 
-Subagentes globales: `~/.cursor/agents/` (planner, executor-cursor, baking).
+Subagentes globales: `~/.cursor/agents/` (planner, planner-hyper-cursor, planner-cursor, executor-cursor, baking).
 
 ---
 
@@ -28,15 +28,28 @@ Subagentes globales: `~/.cursor/agents/` (planner, executor-cursor, baking).
 
 Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY** (no inferir EXECUTE después).
 
+### PLAN-DEEP → `planner-hyper-cursor` (Fable)
+
+**Explícito:** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper-cursor`**, `plan_mode: explicit-deep`.
+
+**Explícito normal:** *"plan simple"*, *"plan rápido"* → **`planner`** (Opus) o **`planner-cursor`** (Grok en perfil `hybrid`), `plan_mode: explicit-normal`.
+
+**Automático** → **`planner-hyper-cursor`** si **≥2 señales**: arquitectura/migración/trade-offs; creative-brief-bar; PLAN-ONLY estratégico; >3 archivos sin handoff; ambigüedad alta.
+
+**Automático** → planner normal si plan acotado o PLAN-REVISE menor.
+
 ---
 
-## Paso 1 — PLAN (Opus)
+## Paso 1 — PLAN
 
-Task → subagente **`planner`** (Opus 5, fresco).
+| Routing | Subagente (perfil) | Modelo |
+|---------|-------------------|--------|
+| PLAN-DEEP | **`planner-hyper-cursor`** | Fable |
+| PLAN normal | **`planner`** (`cursor`/`claude`) o **`planner-cursor`** (`hybrid`) | Opus / Grok |
 
-**Fallback Cursor:** si Task no expone `planner`, el padre (Baking) escribe el handoff usando plantilla `~/.cursor/agents/planner.md` + **creative-brief-bar** completa. **Nunca** omitir secciones creativas por falta de subagente.
+Task → subagente fresco. **Fallback Cursor:** si Task no expone el subagente, el padre escribe el handoff con plantilla `~/.cursor/agents/planner.md` + **creative-brief-bar** completa.
 
-Prompt al planner:
+Prompt (ambos tiers):
 
 - Pedido **completo** del usuario (no acortar brief visual).
 - Handoff en `handoffDir` con plantilla `~/.cursor/agents/planner.md`.
@@ -51,7 +64,7 @@ Esperar **ruta exacta** del `.md`. Preguntas bloqueantes → usuario antes de EX
 
 **Señales:** "solo plan", "no ejecutes", "planear nomás", "preguntá y repreguntá", "solo diseño/arquitectura".
 
-1. Task → **`planner`** (igual que PLAN).
+1. Task → **`planner`**, **`planner-hyper-cursor`** o **`planner-cursor`** (según routing).
 2. **No** llamar a `executor-cursor`. **No** editar `src/`.
 3. Presentar al usuario: ruta handoff, resumen, **Preguntas abiertas** del plan.
 4. Cierre:
@@ -113,14 +126,15 @@ baking:
   version: "1.0.0"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | PLAN-ONLY | PLAN-REVISE | EXECUTE | TRIVIAL
-  plan_mode: planner | parent-fallback | skipped
+  plan_agent: planner | hyper | skipped
+  plan_mode: auto | explicit-deep | explicit-normal | explicit-only | skipped
   exec_mode: executor-cursor | direct
   scores:
     spec: pass | partial | fail
     craft: pass | partial | fail
     assets: pass | fail
   status: completed | partial | blocked
-  models: { planner: opus-5, executor: composer-2.5 }
+  models: { planner: opus-5|fable|grok, executor: composer-2.5 }
 ```
 
 **Reglas de cierre:**

@@ -1,6 +1,6 @@
 # Baking — Claude Code (referencia completa)
 
-Orquestador: **Sonnet**. Planner: **Opus**. Executor: **Sonnet** o **Mecanic (Haiku)**. Handoff: `.cursor/handoff/`.
+Orquestador: **Sonnet**. Planner: **Opus** o **Hyper (Fable)**. Executor: **Sonnet** o **Mecanic (Haiku)**. Handoff: `.cursor/handoff/`.
 
 Leé también: `~/.cursor/opus-sonnet/ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
 
@@ -27,17 +27,38 @@ Solo crear **`.cursor/handoff/`** en el workspace si falta. **No** `.claude/plan
 
 Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY**.
 
+### PLAN-DEEP → `planner-hyper` (Fable)
+
+**Explícito (siempre gana):** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper`**, `plan_mode: explicit-deep`.
+
+**Explícito normal:** *"plan simple"*, *"plan rápido"* → **`planner`** (Opus), `plan_mode: explicit-normal`.
+
+**Automático** → **`planner-hyper`** si **≥2 señales**:
+
+- arquitectura, migración, comparar opciones / trade-offs
+- creative-brief-bar (landing, portfolio, vibe, visual)
+- PLAN-ONLY estratégico
+- >3 archivos sin handoff previo
+- ambigüedad alta
+
+**Automático** → **`planner`** (Opus) si plan acotado, fix con plan, PLAN-REVISE menor.
+
+**Nunca `fork`** para plan.
+
 ---
 
-## Paso 1 — PLAN (Opus)
+## Paso 1 — PLAN
 
-**Siempre** subagente fresco **`planner`** (Opus). **Nunca `fork`** para plan — fork hereda modelo del padre, no sube a Opus.
+| Routing | Subagente | Modelo |
+|---------|-----------|--------|
+| PLAN-DEEP | **`planner-hyper`** | Fable |
+| PLAN normal | **`planner`** | Opus |
 
-Prompt al planner:
+Prompt (ambos):
 
 - Pedido **completo** del usuario (no acortar brief visual).
-- Escribir handoff en `handoffDir` con plantilla `~/.cursor/agents/planner.md`.
-- Si brief creativo → **"incluí creative-brief-bar"** + modo **prod+spec+craft** (`creative-brief-bar.md`).
+- Handoff con plantilla `~/.cursor/agents/planner.md`.
+- Si brief creativo → **"incluí creative-brief-bar"** + **prod+spec+craft** (+ visual si starter v0.1.0+).
 - Tabla Assets si hay URLs externas.
 
 Esperar **ruta exacta** del `.md`. Preguntas bloqueantes → usuario antes de EXECUTE.
@@ -48,7 +69,7 @@ Esperar **ruta exacta** del `.md`. Preguntas bloqueantes → usuario antes de EX
 
 **Señales:** "solo plan", "no ejecutes", "planear nomás", "preguntá y repreguntá".
 
-1. Agent → **`planner`** — **nunca `fork`**.
+1. Agent → **`planner`** o **`planner-hyper`** — **nunca `fork`**.
 2. **No** llamar `executor` ni `fork` para implementar. **No** editar `src/`.
 3. Presentar handoff + **Preguntas abiertas**. Esperar repreguntas o "ejecutá".
 
@@ -126,14 +147,15 @@ baking:
   version: "1.1.1"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | PLAN-ONLY | EXECUTE | TRIVIAL
-  plan_mode: planner | skipped
+  plan_agent: planner | hyper | skipped
+  plan_mode: auto | explicit-deep | explicit-normal | explicit-only | skipped
   exec_agent: mecanic | executor | fork | direct
   scores:
     spec: pass | partial | fail
     craft: pass | partial | fail
     assets: pass | fail
   status: completed | partial | blocked
-  models: { planner: opus?, exec: haiku|sonnet|fork-parent }
+  models: { planner: opus|fable, exec: haiku|sonnet|fork-parent }
 ```
 
 **Reglas:** partial si craft/assets fallan; nunca completed con `assets: fail`.
@@ -161,7 +183,7 @@ Creá la carpeta si falta. Respetar `metrics.enabled` en config (default true).
 Ejemplo:
 
 ```json
-{"ts":"2026-09-13T15:00:00-03:00","bakingVersion":"1.2.0","runtime":"claude-code","profile":"claude","prompt":"usemos baking para...","handoff":".cursor/handoff/....md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"planner","exec_agent":"mecanic","plan_mode":"auto","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"opus","executor":"haiku"},"signals":["mechanical","handoff_no_craft"],"explicit":{"plan_deep":false,"plan_only":false,"no_execute":false,"plan_fast":false},"outcome":{"status":"completed","scores":{"spec":"pass","craft":"n/a","assets":"n/a"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
+{"ts":"2026-09-13T15:00:00-03:00","bakingVersion":"1.3.0","runtime":"claude-code","profile":"claude","prompt":"usemos baking para...","handoff":".cursor/handoff/....md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"hyper","exec_agent":"mecanic","plan_mode":"explicit-deep","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"fable","executor":"haiku"},"signals":["architecture","creative_brief","explicit_plan_deep"],"explicit":{"plan_deep":true,"plan_only":false,"no_execute":false,"plan_fast":false},"outcome":{"status":"completed","scores":{"spec":"pass","craft":"n/a","assets":"n/a"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
 ```
 
 Completá **`review`** honesto (ver METRICS.md) — es la señal para saber si hyper/mecanic/planner fue acertado.

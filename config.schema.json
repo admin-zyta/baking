@@ -35,6 +35,13 @@
         "model": { "type": "string" }
       }
     },
+    "plannerHyper": {
+      "type": "object",
+      "properties": {
+        "subagent": { "type": "string" },
+        "model": { "type": "string" }
+      }
+    },
     "executor": {
       "type": "object",
       "properties": {

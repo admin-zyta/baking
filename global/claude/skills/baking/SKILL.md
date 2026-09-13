@@ -19,4 +19,4 @@ Referencia: **`claude-code/BAKING.md`**, **`METRICS.md`**.
 
 ## Routing
 
-TRIVIAL directo → mecanic → executor → fork. PLAN-ONLY → planner, sin exec.
+TRIVIAL directo → mecanic → executor → fork. PLAN-DEEP → **planner-hyper** (Fable). PLAN normal → planner. PLAN-ONLY → planner/hyper, sin exec.

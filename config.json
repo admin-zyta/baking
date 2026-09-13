@@ -1,6 +1,6 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.2.0",
+  "bakingVersion": "1.3.0",
   "enabled": true,
   "profile": "claude",
   "handoffDir": ".cursor/handoff",
@@ -11,6 +11,10 @@
       "planner": {
         "subagent": "planner",
         "model": "claude-opus-5[effort=high]"
+      },
+      "plannerHyper": {
+        "subagent": "planner-hyper",
+        "model": "claude-fable-5[effort=high]"
       },
       "executor": {
         "subagent": "executor",
@@ -31,6 +35,10 @@
         "subagent": "planner",
         "model": "claude-opus-5[effort=high]"
       },
+      "plannerHyper": {
+        "subagent": "planner-hyper-cursor",
+        "model": "claude-fable-5[effort=high]"
+      },
       "executor": {
         "subagent": "executor-cursor",
         "model": "composer-2.5[]"
@@ -49,6 +57,10 @@
         "subagent": "planner-cursor",
         "model": "grok-4.6[]"
       },
+      "plannerHyper": {
+        "subagent": "planner-hyper-cursor",
+        "model": "claude-fable-5[effort=high]"
+      },
       "executor": {
         "subagent": "executor-cursor",
         "model": "composer-2.5[]"
@@ -65,6 +77,10 @@
   "planner": {
     "subagent": "planner",
     "model": "claude-opus-5[effort=high]"
+  },
+  "plannerHyper": {
+    "subagent": "planner-hyper",
+    "model": "claude-fable-5[effort=high]"
   },
   "executor": {
     "subagent": "executor",

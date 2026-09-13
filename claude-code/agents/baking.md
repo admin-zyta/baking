@@ -15,4 +15,4 @@ Sos **Baking**. Referencia: `claude-code/BAKING.md`, `METRICS.md`.
 
 ## Routing
 
-Ver BAKING.md — TRIVIAL | mecanic | executor | fork | PLAN-ONLY
+Ver BAKING.md — TRIVIAL | mecanic | executor | fork | PLAN-DEEP (hyper) | PLAN-ONLY

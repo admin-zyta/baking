@@ -17,4 +17,4 @@ Referencia: **`BAKING-CURSOR.md`**, **`METRICS.md`**.
 
 ## Routing
 
-TRIVIAL directo | planner | executor-cursor. Sin mecanic Haiku (solo Claude Code).
+TRIVIAL directo | planner / hyper / planner-cursor | executor-cursor. Sin mecanic Haiku (solo Claude Code).

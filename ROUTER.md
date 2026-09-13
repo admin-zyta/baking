@@ -7,18 +7,18 @@ Orquestador de costo: **Opus planifica**, **Sonnet ejecuta**. Cada corrida deja 
 1. Leé **`~/.cursor/opus-sonnet/config.json`** (global — única fuente).
 2. **No** existe `.cursor/opus-sonnet.json` por proyecto; no mezclar overrides locales.
 3. Resolvé el **perfil** activo desde `profile` global (default `cursor`).
-4. Cargá `planner`, `executor` y `orchestrator` desde `profiles[<profile>]`.
+4. Cargá `planner`, `plannerHyper`, `executor` y `orchestrator` desde `profiles[<profile>]`.
 5. Usá `handoffDir`, subagentes y flags de `consumption` del config global.
 
 Si `enabled` no es `true`, **no aplicar** este router (invocar `/baking` manualmente).
 
 ## Perfiles de modelo
 
-| Perfil | Planner | Executor | Pool de billing |
-|--------|---------|----------|-----------------|
-| `claude` | Opus 5 (`planner`) | Sonnet (`executor`) | Other Models (Claude) |
-| `cursor` | Opus 5 (`planner`) | Composer 2.5 (`executor-cursor`) | Mixto — **default** |
-| `hybrid` | Grok 4.6 (`planner-cursor`) | Composer 2.5 (`executor-cursor`) | Cursor Models (sin Opus) |
+| Perfil | Planner normal | Planner deep (Hyper) | Executor | Pool de billing |
+|--------|----------------|----------------------|----------|-----------------|
+| `claude` | Opus 5 (`planner`) | Fable (`planner-hyper`) | Sonnet (`executor`) | Other Models (Claude) |
+| `cursor` | Opus 5 (`planner`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Mixto — **default** |
+| `hybrid` | Grok 4.6 (`planner-cursor`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Cursor Models (sin Opus plan normal) |
 
 **Perfil global** — editar en `~/.cursor/opus-sonnet/config.json`:
 
@@ -57,7 +57,9 @@ Creá la carpeta si no existe. **No borrar** entradas viejas.
 
 **EXECUTE** → cambio acotado, fix puntual, plan/handoff ya existente **y el usuario pidió implementar**.
 
-**PLAN-ONLY** → "solo plan", "no ejecutes", "planear nomás", "preguntá antes" → planner, **sin executor**.
+**PLAN-DEEP** → explícito (*hyper*, *plan deep*) o ≥2 señales (arquitectura, creative-brief, ambigüedad) → subagente `plannerHyper` del perfil.
+
+**PLAN-ONLY** → "solo plan", "no ejecutes", "planear nomás", "preguntá antes" → planner o hyper, **sin executor**.
 
 **PLAN-REVISE** → repregunta o "cambiá el plan" → planner actualiza handoff o orquestador responde desde el `.md`.
 
@@ -69,7 +71,7 @@ Reglas de config:
 
 ## Paso 1 — PLAN (si aplica)
 
-Delegá al subagente del perfil activo (`planner` o `planner-cursor`, según config):
+Delegá al subagente del perfil (`planner`, `planner-cursor` o `plannerHyper` según routing PLAN-DEEP):
 
 - Pedido completo del usuario.
 - Handoff en `handoffDir` con plantilla completa (ver agente planner correspondiente).
