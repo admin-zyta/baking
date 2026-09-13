@@ -42,10 +42,12 @@ Aplicar cuando el router está activo (`enabled: true` en **`~/.cursor/opus-sonn
 
 - El diary evita re-explicar contexto en el chat.
 - Pasar **ruta de archivo**, no el contenido del plan, al executor.
-- Pedidos triviales (≤12 palabras, una acción): EXECUTE directo con handoff mínimo.
-- Executor mecánico (rename, un campo, doc-only, verificación sin diseño): modelo más barato
-  (`haiku` en Claude Code — ver `claude-code/BAKING.md`; Composer/Grok ya son el barato en los
-  perfiles Cursor). Reservar Sonnet/Composer normal para lo que toca lógica real.
+- Pedidos triviales (≤12 palabras, una acción): **directo** (Baking, sin subagente) — más barato que mecánico.
+- Pasos mecánicos con handoff (rename, campo suelto, doc-only, verify simple, sin craft/assets):
+  delegar **`executor-mecanic`** (Haiku fijo en frontmatter — Claude Code). No usar override
+  `model:` en Agent call; no usar mecánico si el handoff trae creative-brief-bar / asset verify.
+- Lógica, craft, landings, schema: **`executor`** (Sonnet). Composer/Grok ya son el barato en Cursor
+  (`executor-cursor`); ahí TRIVIAL directo o executor-cursor, sin mecánico Haiku.
 - Al cerrar una tarea (`status: completed`), sugerir `/compact` — el handoff en disco ya preserva
   plan+ejecución, no se pierde nada. `/clear` si el próximo pedido es un tema no relacionado.
   Evidencia: reporte de uso 24h — 84% subagent-heavy, 74% de uso a >150k de contexto.

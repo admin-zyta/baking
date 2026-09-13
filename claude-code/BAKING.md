@@ -1,6 +1,6 @@
 # Baking — Claude Code (referencia completa)
 
-Orquestador: **Sonnet**. Planner: **Opus**. Executor: **Sonnet**. Handoff: `.cursor/handoff/`.
+Orquestador: **Sonnet**. Planner: **Opus**. Executor: **Sonnet** o **Mecanic (Haiku)**. Handoff: `.cursor/handoff/`.
 
 Leé también: `~/.cursor/opus-sonnet/ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
 
@@ -18,11 +18,12 @@ Solo crear **`.cursor/handoff/`** en el workspace si falta. **No** `.claude/plan
 
 | Tipo | Señales |
 |------|---------|
-| **EXECUTE** | typo, color, rename, un archivo, stack trace obvio, handoff ya existe |
+| **EXECUTE-MECANIC** | rename, typo, doc-only, un campo, wiring trivial, verify simple; handoff sin craft/visual/assets | → **`executor-mecanic`** (Haiku) |
+| **EXECUTE** | lógica, multi-archivo, craft, assets, landing, schema | → **`executor`** (Sonnet) o **`fork`** |
 | **PLAN** | arquitectura, multi-archivo, ambigüedad, landing/portfolio/vibe |
 | **PLAN-ONLY** | "solo plan", "no ejecutes", "planear nomás", "preguntá antes" | → planner, **sin executor** |
 | **PLAN-REVISE** | repregunta / "cambiá el plan" con handoff existente | → planner actualiza o Baking responde desde handoff |
-| **TRIVIAL** | 2–3 comandos, status check | → **resolver vos**, sin subagentes ni handoff |
+| **TRIVIAL** | 2–3 comandos, una acción obvia | → **directo** (sin subagente — más barato que mecánico) |
 
 Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY**.
 
@@ -61,23 +62,28 @@ Cierre: `flow: PLAN-ONLY`, `exec_mode: skipped`, `status: plan-ready | blocked-o
 
 ## Paso 2 — EXECUTE (solo si aplica)
 
+**Escalera de costo:** TRIVIAL directo → **mecanic** (Haiku) → **executor** (Sonnet) → **fork** (sesión).
+
 Antes de delegar, ¿la tarea depende de contexto **ya cargado en esta sesión**?
 
 | Señal | Modo | Cómo |
 |-------|------|------|
-| Login/puerto/token/proceso ya obtenido acá | **`fork`** | Agent → fork con prompt de ejecución |
-| Archivos ya leídos en esta sesión; debug iterativo | **`fork`** | idem |
-| Handoff autocontenido; corrida larga; aislar contexto | **`executor`** fresco | Agent → `executor` + **solo ruta** handoff |
-| Plan pide Sonnet y tenés todo en el `.md` | **`executor`** fresco | preferido |
-| Trivial post-plan (un comando) | **directo** | vos, sin subagente |
+| 2–3 comandos, una acción obvia | **directo** | vos, sin subagente |
+| Mecánica con handoff (sin craft/assets/visual) | **`executor-mecanic`** | Agent → **solo ruta** handoff |
+| Login/puerto/token/proceso ya obtenido acá | **`fork`** | Agent → fork |
+| Archivos ya leídos; debug iterativo | **`fork`** | idem |
+| Lógica, craft, assets, landing, schema | **`executor`** | Agent → **solo ruta** handoff |
+| Handoff autocontenido; aislar contexto | **`executor`** o **`executor-mecanic`** según tabla arriba | idem |
 
-**Regla de oro:** handoff autocontenido → `executor` fresco OK. Si el executor tendría que **re-descubrir** lo que ya sabés → **`fork`**.
+**Regla de oro:** handoff autocontenido → agente fresco OK. Si depende de contexto de sesión → **`fork`**. No uses **`executor-mecanic`** si el handoff pide creative-brief-bar, asset verify o VISUAL-BAR.
 
-**Modelo del executor — no siempre Sonnet.** Si la tarea es mecánica (rename, un campo suelto,
-doc-only, wiring sin decisión de diseño, una verificación de ida y vuelta) pasá `model: "haiku"` en
-el Agent call en vez del Sonnet default del perfil. Reservá Sonnet para lo que toca lógica real
-(schema, prompt, migraciones, varios archivos con decisiones). Evidencia: reporte de uso 24h del
-usuario — *"84% subagent-heavy... consider configuring a cheaper model for simpler subagents"*.
+Prompt **`executor-mecanic`** (solo ruta):
+
+```text
+Implementá pasos mecánicos según: .cursor/handoff/YYYY-MM-DD-slug.md
+Read primero. Si no es mecánico, pará y pedí executor Sonnet al padre.
+Append ## Ejecución al mismo archivo.
+```
 
 Prompt **`executor`** (solo ruta):
 
@@ -117,17 +123,17 @@ Modo default: **prod + spec + craft**.
 
 ```yaml
 baking:
-  version: "1.0.0"   # config.bakingVersion
+  version: "1.1.1"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
-  flow: PLAN+EXECUTE | EXECUTE | TRIVIAL
+  flow: PLAN+EXECUTE | PLAN-ONLY | EXECUTE | TRIVIAL
   plan_mode: planner | skipped
-  exec_mode: executor | fork | direct
+  exec_agent: mecanic | executor | fork | direct
   scores:
     spec: pass | partial | fail
     craft: pass | partial | fail
     assets: pass | fail
   status: completed | partial | blocked
-  models: { planner: opus?, executor: sonnet|fork-parent }
+  models: { planner: opus?, exec: haiku|sonnet|fork-parent }
 ```
 
 **Reglas:** partial si craft/assets fallan; nunca completed con `assets: fail`.
@@ -149,7 +155,8 @@ Mensaje breve al usuario + ruta handoff.
 - Parafrasear el plan al executor (solo ruta).
 - Opus en el chat principal.
 - `fork` para PLAN (pierde Opus).
-- `executor` fresco para debug de algo que ya investigaste en sesión (quema tokens).
+- `executor` Sonnet para mecánica con handoff (usar **`executor-mecanic`**).
+- `executor-mecanic` en landings / craft / assets (usar **`executor`**).
 - Marcar completado solo por `build` en briefs creativos.
 
 ---

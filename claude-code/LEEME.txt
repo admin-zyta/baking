@@ -19,7 +19,7 @@ CURSOR
 CLAUDE CODE
 -----------
   ~/.claude/skills/baking/SKILL.md
-  ~/.claude/agents/baking.md, planner.md, executor.md
+  ~/.claude/agents/baking.md, planner.md, executor.md, executor-mecanic.md
 
   Actualizar globals:
     & "$env:USERPROFILE\.cursor\opus-sonnet\claude-code\install-claude-skills.ps1"

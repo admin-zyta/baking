@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Orquestador Baking (Claude Code). Global. Clasifica PLAN/EXECUTE, fork vs executor, closure gates. Usar con /baking, "usemos baking", "baking para".
+description: Orquestador Baking (Claude Code). Global. PLAN-ONLY, executor-mecanic (Haiku), executor (Sonnet), fork. Usar con /baking, "usemos baking".
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -13,35 +13,28 @@ Pedido: `$ARGUMENTS` (vacío → confirmá Baking activo y esperá).
 
 Config: **`~/.cursor/opus-sonnet/config.json`** — leé `bakingVersion`.
 
-Repo: `~/.cursor/opus-sonnet/` + `sync-global.ps1`.
-
-Referencia: **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**, `creative-brief-bar.md`.
-
-Perfil Claude Code: `"profile": "claude"` en config global si querés Opus+Sonnet end-to-end.
-
-## Handoff (solo carpeta en el repo)
-
-Si falta `.cursor/handoff/` → creala. **No** crear config en el repo.
+Referencia: **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**.
 
 ## Clasificar
 
-- **PLAN-ONLY** → "solo plan", "no ejecutes" → planner, **sin executor**
-- **PLAN-REVISE** → repregunta → responder o planner actualiza handoff
-- **TRIVIAL** | **EXECUTE** | **PLAN**
-
-## PLAN-ONLY
-
-Agent `planner` → presentar handoff + preguntas → **parar**. Ejecutar solo si piden "ejecutá"/"implementá".
+- **TRIVIAL** → directo (sin subagente)
+- **PLAN-ONLY** → planner, sin exec
+- **EXECUTE-MECANIC** → rename, typo, doc-only, wiring trivial; handoff **sin** craft/assets
+- **EXECUTE** → lógica, craft, landing, schema → **`executor`** o **`fork`**
 
 ## EXECUTE
 
-- Contexto en sesión → **`fork`** (no pegar src/ de otra app)
-- Handoff autocontenido → **`executor`** + solo ruta
+| Caso | Agente |
+|------|--------|
+| Mecánico + handoff | **`executor-mecanic`** (Haiku) — solo ruta |
+| Lógica / craft / assets | **`executor`** (Sonnet) — solo ruta |
+| Contexto ya en sesión | **`fork`** |
 
-## Cierre (gates)
+## Cierre
 
 ```yaml
 baking:
-  scores: { spec: pass|partial|fail, craft: pass|partial|fail, assets: pass|fail }
+  version: "1.1.1"
+  exec_agent: mecanic | executor | fork | direct
   status: completed | partial | blocked
 ```

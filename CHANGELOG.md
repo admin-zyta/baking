@@ -2,6 +2,18 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.1.1] — 2026-09-12
+
+### Added
+
+- **`executor-mecanic`** — subagente Haiku fijo (`model: haiku` en frontmatter) para pasos
+  mecánicos con handoff (rename, doc-only, wiring trivial). Reemplaza override `model: haiku`
+  en Agent call (poco confiable).
+- Escalera EXECUTE: TRIVIAL directo → mecanic → executor → fork.
+- Cierre YAML: `exec_agent: mecanic | executor | fork | direct`.
+
+[1.1.1]: https://github.com/local/baking/releases/tag/v1.1.1
+
 ## [1.1.0] — 2026-09-12
 
 ### Added
