@@ -2,6 +2,24 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.4.1] — 2026-09-14
+
+### Fixed
+
+- **Métricas de cierre no se escribían tras un update en caliente** — `consumption.md` documenta el
+  caso real: el orquestador dejó de releer `SKILL.md` tras un bump de versión a mitad de sesión y
+  siguió orquestando de memoria, sin volver a ver el requisito de `runs.jsonl` (ya vigente desde
+  1.2.0). Regla nueva: releer `SKILL.md`/`BAKING.md`/`METRICS.md` cuando el harness informe
+  agentes/skills nuevos disponibles, no asumir que el workflow sigue siendo el mismo.
+
+### Evidence
+
+- Sesión lore-forge, 2026-09-14: baking pasó de v1.1.0 a v1.4.0 en la misma sesión; ~15 corridas de
+  `planner-hyper`/`executor`/`executor-mecanic` sin una sola línea de métricas, detectado recién
+  cuando el usuario preguntó directo "¿se está generando el JSON?".
+
+[1.4.1]: https://github.com/admin-zyta/baking/releases/tag/v1.4.1
+
 ## [1.4.0] — 2026-09-14
 
 ### Added

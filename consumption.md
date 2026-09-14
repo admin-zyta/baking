@@ -115,6 +115,28 @@ o intacto):
 No hace falta que el usuario note el stall para que se reintente — la única razón para escalarlo es
 que el reintento también falle.
 
+## Cierre de métricas — releer la skill tras un cambio, no confiar en memoria del workflow
+
+Baking ≥1.2.0 agregó un paso obligatorio de cierre: appendear una línea a
+`.cursor/baking/metrics/runs.jsonl` (ver `METRICS.md`). El orquestador puede dejar de aplicarlo si,
+después de que la skill/config global se actualiza a mitad de sesión, sigue orquestando de memoria
+(despachando `planner`/`executor`/`fork` directo, sin pasar por `/baking`) en vez de volver a
+invocar la skill o releer `SKILL.md` — el contenido nuevo nunca vuelve a entrar en su contexto,
+aunque el archivo en disco ya lo tenga.
+
+**Evidencia real** (sesión lore-forge, 2026-09-14): baking subió de v1.1.0 a v1.4.0 a mitad de
+sesión (visible por un system-reminder de "New agent types are now available"), agregando
+`executor-mecanic` y el requisito de métricas. El orquestador siguió despachando
+`planner-hyper`/`executor`/`executor-mecanic` directo (patrón ya aprendido antes del update) sin
+volver a leer `SKILL.md` ni una sola vez en ~15 corridas siguientes — cero líneas de métricas
+escritas, hasta que el usuario preguntó directo "¿se está generando el JSON?".
+
+**Regla:** cuando el harness informe agentes/skills nuevos disponibles (o cualquier señal de que la
+config global de baking cambió), releer `SKILL.md`/`BAKING.md`/`METRICS.md` antes de la próxima
+corrida — no asumir que el workflow sigue siendo el mismo que se aprendió al principio de la sesión.
+En sesiones largas (varias horas, muchas corridas), vale re-chequear esto aunque no haya
+notificación explícita — el config puede sincronizarse en caliente sin avisar en el chat.
+
 ## Revisión de gasto
 
 - Cursor → Settings → Usage: filtrar por pool (Cursor Models vs Other Models).
