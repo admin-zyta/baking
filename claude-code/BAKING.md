@@ -180,13 +180,13 @@ Leé **`~/.cursor/opus-sonnet/METRICS.md`**. Append **una línea JSON** a:
 
 Creá la carpeta si falta. Respetar `metrics.enabled` en config (default true).
 
-Ejemplo:
+Completá **`review`** honesto (ver METRICS.md). Si es **bench** (S0/S3, baseline vs Baking), agregá **`benchmark`** + **`usage.total_usd`** desde Usage.
+
+Ejemplo (routing + costo bench):
 
 ```json
-{"ts":"2026-09-13T15:00:00-03:00","bakingVersion":"1.3.0","runtime":"claude-code","profile":"claude","prompt":"usemos baking para...","handoff":".cursor/handoff/....md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"hyper","exec_agent":"mecanic","plan_mode":"explicit-deep","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"fable","executor":"haiku"},"signals":["architecture","creative_brief","explicit_plan_deep"],"explicit":{"plan_deep":true,"plan_only":false,"no_execute":false,"plan_fast":false},"outcome":{"status":"completed","scores":{"spec":"pass","craft":"n/a","assets":"n/a"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
+{"ts":"2026-09-14T16:00:00-03:00","bakingVersion":"1.4.0","runtime":"claude-code","profile":"claude","prompt":"…","handoff":".cursor/handoff/….md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"planner","exec_agent":"mecanic","plan_mode":"auto","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"opus","executor":"haiku"},"signals":["mechanical"],"benchmark":{"scenario_id":"S3-plan-complex","arm":"baking","pair_id":"stream-plans-s3-badge"},"usage":{"total_usd":0.35,"total_tokens":95000,"source":"manual"},"outcome":{"status":"completed","scores":{"spec":"pass"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
 ```
-
-Completá **`review`** honesto (ver METRICS.md) — es la señal para saber si hyper/mecanic/planner fue acertado.
 
 ---
 

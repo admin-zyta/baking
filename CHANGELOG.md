@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.4.0] — 2026-09-14
+
+### Added
+
+- **Métricas de costo** — campos opcionales `usage` (tokens, `total_usd`, `source`) y
+  `benchmark` (`scenario_id`, `arm`, `pair_id`) en `metrics.schema.json` / `METRICS.md`.
+- **`baking metrics-summary`** — compara brazos emparejados (S0 vs S3) y calcula `savings_pct`.
+
+[1.4.0]: https://github.com/admin-zyta/baking/releases/tag/v1.4.0
+
 ## [1.3.1] — 2026-09-14
 
 ### Fixed

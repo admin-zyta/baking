@@ -38,6 +38,34 @@
         "plan_fast": { "type": "boolean" }
       }
     },
+    "benchmark": {
+      "type": "object",
+      "description": "Opcional — correlacionar corridas bench (S0 vs S3, baseline vs Baking)",
+      "properties": {
+        "scenario_id": { "type": "string", "examples": ["S0-baseline", "S3-plan-complex"] },
+        "arm": { "enum": ["baseline", "baking", "opus-parent", "other"] },
+        "pair_id": {
+          "type": "string",
+          "description": "Mismo valor en ambos brazos del mismo prompt para comparar costo"
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "description": "Opcional — costo/tokens para justificar ahorro (desde Usage manual o export)",
+      "properties": {
+        "orchestrator_tokens_in": { "type": ["integer", "null"], "minimum": 0 },
+        "orchestrator_tokens_out": { "type": ["integer", "null"], "minimum": 0 },
+        "planner_tokens_in": { "type": ["integer", "null"], "minimum": 0 },
+        "planner_tokens_out": { "type": ["integer", "null"], "minimum": 0 },
+        "executor_tokens_in": { "type": ["integer", "null"], "minimum": 0 },
+        "executor_tokens_out": { "type": ["integer", "null"], "minimum": 0 },
+        "total_tokens": { "type": ["integer", "null"], "minimum": 0 },
+        "total_usd": { "type": ["number", "null"], "minimum": 0 },
+        "source": { "enum": ["manual", "transcript", "usage_export"] },
+        "notes": { "type": "string", "maxLength": 200 }
+      }
+    },
     "outcome": {
       "type": "object",
       "properties": {

@@ -14,7 +14,7 @@ Referencia: **`claude-code/BAKING.md`**, **`METRICS.md`**.
 ## Cierre obligatorio
 
 1. YAML al usuario (`exec_agent`, `status`, scores)
-2. **Append** una línea JSON a `.cursor/baking/metrics/runs.jsonl` (ver METRICS.md)
+2. **Append** una línea JSON a `.cursor/baking/metrics/runs.jsonl` (bench: `benchmark` + `usage`)
 3. Completar **`review`** (plan_fit / exec_fit) para mejorar routing
 
 ## Routing

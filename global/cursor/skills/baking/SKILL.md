@@ -12,7 +12,7 @@ Referencia: **`BAKING-CURSOR.md`**, **`METRICS.md`**.
 ## Cierre obligatorio
 
 1. YAML al usuario
-2. Append JSONL → `.cursor/baking/metrics/runs.jsonl`
+2. Append JSONL → `.cursor/baking/metrics/runs.jsonl` (routing + opcional `usage`/`benchmark` en bench)
 3. `review` para calibrar routing (`runtime: cursor`)
 
 ## Routing

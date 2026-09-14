@@ -149,7 +149,7 @@ Mensaje breve al usuario + ruta handoff.
 
 ## Paso 4 — Métricas (obligatorio)
 
-`METRICS.md` — append JSONL a `.cursor/baking/metrics/runs.jsonl`. Incluir `prompt`, agentes, `models`, `signals`, `review.plan_fit` / `exec_fit`.
+`METRICS.md` — append JSONL a `.cursor/baking/metrics/runs.jsonl`. Incluir `prompt`, agentes, `models`, `signals`, `review`. **Bench/costo:** `benchmark` + `usage.total_usd` (ver METRICS.md). Resumen: `baking metrics-summary`.
 
 `runtime: cursor`. Misma autoevaluación que Claude Code.
 

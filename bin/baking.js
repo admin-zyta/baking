@@ -3,6 +3,8 @@
 
 const { install, readVersion } = require('../lib/install');
 const { doctor, listInstalledAgents } = require('../lib/doctor');
+const { summarize, formatReport } = require('../lib/metrics-summary');
+const path = require('path');
 
 const HELP = `
 @boogiepop/baking — orquestador planner → executor (Cursor + Claude Code)
@@ -11,6 +13,7 @@ Usage:
   baking install [--force-config]   Deploy skills, agents, rules, config global
   baking sync                       Alias de install
   baking doctor                     Verificar agentes en ~/.cursor y ~/.claude
+  baking metrics-summary [path]     Resumen routing + costo (runs.jsonl)
   baking version                    Show installed package version
 
 Examples:
@@ -56,6 +59,21 @@ function main() {
       console.log('Ver AGENTS.md — executor-mecanic NO existe en Cursor (solo Claude Code).');
     }
     process.exit(report.ok ? 0 : 1);
+  }
+
+  if (cmd === 'metrics-summary') {
+    const fileArg = rest.find((a) => !a.startsWith('-'));
+    const filePath = path.resolve(
+      fileArg || path.join(process.cwd(), '.cursor', 'baking', 'metrics', 'runs.jsonl')
+    );
+    try {
+      const report = summarize(filePath);
+      console.log(formatReport(report));
+      process.exit(0);
+    } catch (err) {
+      console.error(`metrics-summary failed: ${err.message}`);
+      process.exit(1);
+    }
   }
 
   if (cmd === 'version' || cmd === '-v') {
