@@ -4,9 +4,26 @@ Paquete npm que instala Baking global en Cursor + Claude Code (skills, agentes, 
 
 ## Instalar (otra máquina)
 
+**Desde npm** (después de `npm publish`):
+
 ```bash
 npx @boogiepop/baking install
 ```
+
+**Desde GitHub** (sin npm):
+
+```bash
+git clone https://github.com/admin-zyta/baking.git ~/.cursor/opus-sonnet
+cd ~/.cursor/opus-sonnet && node bin/baking.js install
+```
+
+O en una línea:
+
+```bash
+npx github:admin-zyta/baking install
+```
+
+*(Requiere que el repo sea accesible con tu token GitHub; si es privado, configurá `GH_TOKEN`.)*
 
 Global:
 

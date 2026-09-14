@@ -12,6 +12,7 @@ Orquestador **Baking**: Opus planifica, executor implementa, diary en `.cursor/h
   CHANGELOG.md
   config.json
   sync-global.ps1
+  package.json
   global/cursor/     → deploy a ~/.cursor/
   global/claude/     → deploy a ~/.claude/
   BAKING-CURSOR.md
@@ -29,7 +30,10 @@ O desde npm (otra máquina o sin clonar el repo):
 
 ```bash
 npx @boogiepop/baking install
+# o desde GitHub (privado): clone https://github.com/admin-zyta/baking
 ```
+
+Repo: https://github.com/admin-zyta/baking
 
 Ver `NPM.md` para publicar.
 

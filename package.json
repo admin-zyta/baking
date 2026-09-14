@@ -36,7 +36,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/boogiepop/baking.git"
+    "url": "git+https://github.com/admin-zyta/baking.git"
   },
   "publishConfig": {
     "access": "restricted"
