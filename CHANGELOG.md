@@ -2,6 +2,16 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.3.1] — 2026-09-14
+
+### Fixed
+
+- **`planner-hyper`** en Cursor — alias en `global/cursor/agents/planner-hyper.md` (Task ya no falla si Baking invoca `planner-hyper` en vez de `planner-hyper-cursor`).
+- **`baking doctor`** — verifica agentes en `~/.cursor/agents/` y `~/.claude/agents/`.
+- **`AGENTS.md`** — tabla de nombres exactos; aclara que **`executor-mecanic` no existe en Cursor**.
+
+[1.3.1]: https://github.com/admin-zyta/baking/releases/tag/v1.3.1
+
 ## [1.3.0] — 2026-09-13
 
 ### Added

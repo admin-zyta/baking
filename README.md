@@ -4,6 +4,9 @@ Orquestador **Baking**: Opus planifica, executor implementa, diary en `.cursor/h
 
 **Versión:** ver `VERSION` y `config.json` → `bakingVersion`.
 
+> **Clonar GitHub ≠ instalar.** Después del clone: `node bin/baking.js install`  
+> Verificar: `node bin/baking.js doctor` · Nombres de agentes: **`AGENTS.md`**
+
 ## Repo (fuente de verdad)
 
 ```

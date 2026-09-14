@@ -2,6 +2,7 @@
 'use strict';
 
 const { install, readVersion } = require('../lib/install');
+const { doctor, listInstalledAgents } = require('../lib/doctor');
 
 const HELP = `
 @boogiepop/baking — orquestador planner → executor (Cursor + Claude Code)
@@ -9,6 +10,7 @@ const HELP = `
 Usage:
   baking install [--force-config]   Deploy skills, agents, rules, config global
   baking sync                       Alias de install
+  baking doctor                     Verificar agentes en ~/.cursor y ~/.claude
   baking version                    Show installed package version
 
 Examples:
@@ -32,6 +34,30 @@ function main() {
     process.exit(0);
   }
 
+  if (cmd === 'doctor') {
+    const report = doctor();
+    console.log(`Baking ${report.version} — doctor`);
+    console.log('');
+    console.log('Cursor (~/.cursor/agents/):');
+    for (const a of report.cursor) {
+      console.log(`  ${a.ok ? 'OK' : 'MISSING'}  ${a.file}`);
+    }
+    console.log('');
+    console.log('Claude Code (~/.claude/agents/):');
+    for (const a of report.claude) {
+      console.log(`  ${a.ok ? 'OK' : 'MISSING'}  ${a.file}`);
+    }
+    console.log('');
+    console.log(`  config.json: ${report.configOk ? 'OK' : 'MISSING'}`);
+    console.log(`  skill baking: ${report.skillOk ? 'OK' : 'MISSING'}`);
+    if (!report.ok) {
+      console.log('');
+      console.log(report.hint);
+      console.log('Ver AGENTS.md — executor-mecanic NO existe en Cursor (solo Claude Code).');
+    }
+    process.exit(report.ok ? 0 : 1);
+  }
+
   if (cmd === 'version' || cmd === '-v') {
     console.log(readVersion());
     process.exit(0);
@@ -48,6 +74,11 @@ function main() {
         console.log('  Note: config.json existente — no reemplazado (usa --force-config)');
       }
       console.log('');
+      const installed = listInstalledAgents();
+      console.log('  Agentes Cursor:', installed.cursor.filter((a) => a.ok).length + '/' + installed.cursor.length);
+      console.log('  Agentes Claude:', installed.claude.filter((a) => a.ok).length + '/' + installed.claude.length);
+      console.log('');
+      console.log('Verificar: baking doctor');
       console.log('Uso: /baking o "usemos baking para …"');
       console.log('Perfil: editar ~/.cursor/opus-sonnet/config.json');
       process.exit(0);
