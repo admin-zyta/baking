@@ -12,6 +12,7 @@ user-invocable: true
 - Config: `~/.cursor/opus-sonnet/config.json`
 - Cursor: `~/.cursor/skills/baking/`, `~/.cursor/agents/`
 - Claude Code: `~/.claude/skills/baking/`, `~/.claude/agents/`
+- Otra PC: `npx @boogiepop/baking install`
 
 ## Uso
 

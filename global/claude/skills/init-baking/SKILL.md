@@ -12,6 +12,7 @@ user-invocable: true
 - Config: `~/.cursor/opus-sonnet/config.json`
 - Cursor: `~/.cursor/skills/baking/`, `~/.cursor/agents/`
 - Claude Code: `~/.claude/skills/baking/`, `~/.claude/agents/`
+- Otra PC: `npx @boogiepop/baking install`
 
 ## Uso
 
@@ -23,10 +24,12 @@ Baking crea solo `.cursor/handoff/` en el workspace si falta.
 
 Editá **`~/.cursor/opus-sonnet/config.json`** (ej. `"profile": "cursor"` | `"claude"` | `"hybrid"`).
 
-## Actualizar skills Claude
+## Actualizar global
 
-```powershell
-& "$env:USERPROFILE\.cursor\opus-sonnet\claude-code\install-claude-skills.ps1"
+```bash
+npx @boogiepop/baking install
 ```
+
+O desde el repo git: `sync-global.ps1` / `install-claude-skills.ps1`.
 
 No uses `enable-project.ps1` — deprecado.

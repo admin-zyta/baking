@@ -25,14 +25,22 @@ Orquestador **Baking**: Opus planifica, executor implementa, diary en `.cursor/h
 & "$env:USERPROFILE\.cursor\opus-sonnet\sync-global.ps1"
 ```
 
+O desde npm (otra máquina o sin clonar el repo):
+
+```bash
+npx @boogiepop/baking install
+```
+
+Ver `NPM.md` para publicar.
+
 Copia skills, agents y rule gate a Cursor + Claude Code. **No** toca proyectos.
 
 ## Uso
 
-| Entorno | Invocación |
-|---------|------------|
-| Cursor | `/baking` o *"usemos baking para …"* |
-| Claude Code | `/baking` o *"usemos baking para …"* |
+| Entorno | Invocación | Instalar global |
+|---------|------------|-----------------|
+| Cursor | `/baking` o *"usemos baking para …"* | `npx @boogiepop/baking install` |
+| Claude Code | `/baking` o *"usemos baking para …"* | idem |
 
 Perfil: editar `"profile"` en `config.json` (`cursor` | `claude` | `hybrid`).
 

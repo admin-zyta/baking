@@ -6,6 +6,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en
 
 ### Added
 
+- **npm `@boogiepop/baking`** — `npx @boogiepop/baking install` despliega skills, agentes, rules y config global (ver `NPM.md`).
+
+### Added (Hyper)
+
 - **`planner-hyper`** (Claude Code) y **`planner-hyper-cursor`** (Cursor) — plan deep con **Fable**
   (`claude-fable-5[effort=high]`).
 - Routing **PLAN-DEEP**: explícito (*hyper*, *plan deep*, *pensá bien*) o automático (≥2 señales:

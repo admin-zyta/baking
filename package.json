@@ -1,0 +1,44 @@
+{
+  "name": "@boogiepop/baking",
+  "version": "1.3.0",
+  "description": "Baking — orquestador planner → executor global para Cursor y Claude Code",
+  "license": "UNLICENSED",
+  "bin": {
+    "baking": "bin/baking.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "global",
+    "claude-code/BAKING.md",
+    "config.json",
+    "config.schema.json",
+    "VERSION",
+    "CHANGELOG.md",
+    "README.md",
+    "ROUTER.md",
+    "BAKING-CURSOR.md",
+    "METRICS.md",
+    "metrics.schema.json",
+    "consumption.md",
+    "creative-brief-bar.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "cursor",
+    "claude-code",
+    "agent",
+    "baking",
+    "planner",
+    "executor"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boogiepop/baking.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}
