@@ -2,6 +2,12 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.9.3] — 2026-09-15
+
+### Changed
+
+- **`usage` scope clarified** — LLM/orchestration cost only (Cursor/Claude Usage). Explicit exclusion of product APIs (Z.ai images, Stripe, AWS, …) in `METRICS.md` and schema.
+
 ## [1.9.2] — 2026-09-15
 
 ### Changed

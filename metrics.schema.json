@@ -52,7 +52,7 @@
     },
     "usage": {
       "type": "object",
-      "description": "Required on every run — cost/tokens (fill from Usage or mark pending)",
+      "description": "Required — LLM/orchestration cost only (Cursor/Claude Usage). Not product APIs (Z.ai, Stripe, …).",
       "required": ["source"],
       "properties": {
         "orchestrator_tokens_in": { "type": ["integer", "null"], "minimum": 0 },

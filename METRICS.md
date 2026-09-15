@@ -39,7 +39,7 @@ See `metrics.schema.json`. Key fields:
 | **`benchmark.arm`** | `baseline` \| `baking` \| `opus-parent` |
 | **`benchmark.pair_id`** | Same ID on both arms of the **same prompt** |
 | **`usage`** | **Required** — `total_usd` + `source: manual` when known; else `source: pending` + note |
-| **`usage.total_usd`** | Run cost from Cursor/Claude Usage (not optional when `metrics.usageRequired`) |
+| **`usage.total_usd`** | **LLM/orchestration only** — Cursor or Claude Code Usage for this run |
 | **`usage.total_tokens`** | Optional detail — or sum of in/out tokens per layer |
 | **`usage.source`** | `manual` \| `transcript` \| `usage_export` \| **`pending`** (backfill before metrics-review) |
 | **`outcome.scores.verify`** | `pass` \| `partial` \| `fail` \| `skipped` — light stack handoff vs diff |
@@ -55,7 +55,19 @@ Cursor and Claude Code **do not** expose per-run USD to the orchestrator automat
 2. Write `"usage": { "total_usd": 0.42, "total_tokens": 185000, "source": "manual" }`.
 3. If you cannot read cost yet → `"usage": { "total_usd": null, "source": "pending", "notes": "backfill from Usage" }` — **never omit `usage`.**
 
-Bench pairs (S0 vs S3) still need **`benchmark.pair_id`** + **`total_usd`** on both arms before `metrics-review` can prove savings.
+### What does **not** belong in `usage`
+
+**Never** put product or third-party API spend here — those have their own ledgers in the app:
+
+| Exclude from `usage.total_usd` | Track instead in |
+|--------------------------------|------------------|
+| Image APIs (Z.ai, Gemini images, DALL·E, …) | App ledger (`imagen_generaciones`, `gastoAcumuladoUsd`, …) |
+| Stripe, SES, external SaaS | Billing / infra metrics |
+| AWS, Turso, etc. | Cloud cost tools |
+
+Baking `usage` measures **orchestrator + planner + executor token cost** (the routing savings story). Mixing in Z.ai or similar makes `metrics-summary` and bench pairs meaningless.
+
+Bench pairs (S0 vs S3) still need **`benchmark.pair_id`** + **`total_usd`** (LLM only) on both arms before `metrics-review` can prove savings.
 
 ## Cost and benchmark
 
