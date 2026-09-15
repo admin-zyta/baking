@@ -118,12 +118,35 @@ baking doctor              # Engram MCP: OK
 baking version
 baking doctor
 baking skill-registry [--force]
+baking init-memory [--force]       # bootstrap AGENTS + Engram (ver INIT-MEMORY.md)
+baking auto-route on|off|status    # Baking por default sin /baking cada vez
 baking metrics-summary
+baking metrics-review --status
 ```
 
 ---
 
-## 8. Documentación siguiente
+## 8. Init memoria de proyecto (legacy / nuevo repo)
+
+```bash
+baking init-memory
+# luego en chat: /init-memory  (PLAN-ONLY + mem_save)
+```
+
+Ver [../../INIT-MEMORY.md](../../INIT-MEMORY.md).
+
+---
+
+## 9. Auto-route (opcional)
+
+```bash
+baking auto-route on     # implementación → Baking automático
+baking auto-route status
+```
+
+---
+
+## 10. Documentación siguiente
 
 - [intended-usage.md](./intended-usage.md) — modelo mental  
 - [use-cases.md](./use-cases.md) — escenarios  

@@ -41,7 +41,9 @@ Una config global: `~/.cursor/opus-sonnet/config.json`. **No** instalar por repo
 | **Executor** | Implementa según handoff · append `## Ejecución` |
 | **Handoff diary** | Plan + ejecución en un `.md` por tarea |
 | **Light stack** | Engram · Verify · Witch · Skill registry |
-| **Métricas** | `runs.jsonl` — routing, costo, autocalibración |
+| **Métricas** | `runs.jsonl` — routing, costo, `metrics-review` |
+| **Init-memory** | Bootstrap AGENTS + Engram (`baking init-memory`) |
+| **Auto-route** | Toggle: Baking por default (`baking auto-route on`) |
 | **creative-brief-bar** | Calidad perceptual en landings (craft, visual) |
 
 Detalle: [components.md](./components.md)
@@ -86,6 +88,7 @@ Guía completa: [quickstart.md](./quickstart.md)
 | [components.md](./components.md) | Cada pieza, agentes, perfiles |
 | [routing.md](./routing.md) | PLAN / EXECUTE / Hyper / mecanic / fork |
 | [quickstart.md](./quickstart.md) | Instalar, perfiles, primer corrida |
+| [../../INIT-MEMORY.md](../../INIT-MEMORY.md) | Bootstrap memoria de proyecto |
 | [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Engram, Verify, Witch, registry |
 | [../../METRICS.md](../../METRICS.md) | JSONL, benchmark S0 vs S3, costo |
 | [../../AGENTS.md](../../AGENTS.md) | Nombres exactos Task / Agent |

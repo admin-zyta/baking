@@ -24,6 +24,7 @@ Documentación estilo producto para el orquestador **Baking** (`@boogiepop/bakin
 | [BAKING-CURSOR.md](./BAKING-CURSOR.md) | Cursor — spec completa |
 | [claude-code/BAKING.md](./claude-code/BAKING.md) | Claude Code — spec completa |
 | [LIGHT-STACK.md](./LIGHT-STACK.md) | Engram · Verify · Witch · registry |
+| [INIT-MEMORY.md](./INIT-MEMORY.md) | Bootstrap memoria de proyecto |
 | [METRICS.md](./METRICS.md) | JSONL · benchmark · costo |
 | [ROUTER.md](./ROUTER.md) | Router automático |
 | [AGENTS.md](./AGENTS.md) | Nombres Task / Agent |
