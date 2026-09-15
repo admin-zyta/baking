@@ -8,6 +8,11 @@ Full reference: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](../..
 
 ## Step 0 — Classify
 
+First branch: **GATE-OUT** vs **BAKING**.
+
+- **GATE-OUT** — question, explanation, review-only, no code change → direct answer; say *"Baking not needed"* optionally; skip everything below.
+- **BAKING** — implementation request or explicit `/baking` / *use baking* → continue.
+
 ```
                     ┌─────────────┐
                     │    User     │
@@ -17,6 +22,13 @@ Full reference: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](../..
               │  Baking orchestrator   │
               └────────────┬───────────┘
                            │
+              ┌────────────┴────────────┐
+              ▼                         ▼
+         GATE-OUT                   BAKING
+      (direct reply)          (router below)
+              │                         │
+              └────────────┬────────────┘
+                           ▼ (BAKING only)
      ┌─────────────────────┼─────────────────────┐
      ▼                     ▼                     ▼
  TRIVIAL              PLAN / PLAN-ONLY        EXECUTE
@@ -42,6 +54,7 @@ Full reference: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](../..
 
 | Flow | Signals | Subagent | Model |
 |------|---------|-----------|--------|
+| **GATE-OUT** | Q&A, explain, review-only, no code change | Orchestrator (direct) | Composer/Sonnet — **no** handoff/metrics |
 | **TRIVIAL** | 2–3 commands, status | Orchestrator | Composer/Sonnet |
 | **PLAN** | multi-file, ambiguity, landing | `planner` | Opus / Grok |
 | **PLAN-DEEP** | "hyper", architecture, ≥2 signals | `planner-hyper` | Fable |

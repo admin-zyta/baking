@@ -14,6 +14,17 @@ If `enabled` is not `true`, **do not apply** this router (invoke `/baking` manua
 
 **Auto-route (optional, v1.6+):** if `autoRoute.enabled` is `true`, apply this router on implementation requests **without** the user saying `/baking` every time. Toggle: `baking auto-route on|off`. See **`INIT-MEMORY.md`**.
 
+## Gate-out (before Baking)
+
+Classify every message **before** planner/executor/handoff/metrics:
+
+| Class | Trigger | Action |
+|-------|---------|--------|
+| **GATE-OUT** | Q&A, explain, review-only, opinion, status — **no** code change requested | Normal reply. Optional: *"Baking not needed here."* No subagents, handoff, YAML, or JSONL. |
+| **BAKING** | implement / fix / refactor / deploy / edit files — or explicit `/baking` / *use baking* | Full router below. |
+
+Explicit **`/baking`** or *use baking* → always **BAKING**, even for PLAN-ONLY.
+
 **Project memory init:** `baking init-memory` + `/init-memory` (Claude `/init` style).
 
 ## Light stack (v1.5+)

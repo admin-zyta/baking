@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Baking orchestrator (Claude Code). Mecanic, executor, fork, metrics JSONL, light stack. /baking, use baking.
+description: Baking-AI orchestrator (Claude Code). Mecanic, executor, fork, metrics JSONL, light stack. /baking, use baking.
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -10,6 +10,14 @@ user-invocable: true
 Reference: **`claude-code/BAKING.md`**, **`METRICS.md`**, **`LIGHT-STACK.md`**.
 
 Config: **`~/.cursor/opus-sonnet/config.json`** (typically `claude` profile). Metrics: `runtime: claude-code`.
+
+## Gate-out — when **not** to use Baking
+
+Classify **before** subagents, handoff, or metrics.
+
+**GATE-OUT** for pure Q&A, explanation, review-only, or status — no code change requested. Reply directly; optional *"Baking not needed here — …"*. No YAML, JSONL, or handoff.
+
+**Always Baking** for implement/fix/refactor/deploy or explicit **`/baking`** / *use baking*.
 
 ## Light stack (lightweight — if `lightStack.enabled`)
 

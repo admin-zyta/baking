@@ -1,6 +1,6 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.7.1",
+  "bakingVersion": "1.7.2",
   "language": "en",
   "enabled": true,
   "autoRoute": {

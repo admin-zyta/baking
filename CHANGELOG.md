@@ -2,6 +2,12 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.7.2] — 2026-09-15
+
+### Added
+
+- **Gate-out** — router rule, baking skill, and `ROUTER.md` / `routing.md`: classify Q&A vs implementation; optional *"Baking not needed here"*; no handoff/metrics on gate-out.
+
 ## [1.7.1] — 2026-09-15
 
 ### Changed

@@ -9,6 +9,25 @@ user-invocable: true
 
 Reference: **`BAKING-CURSOR.md`**, **`METRICS.md`**, **`LIGHT-STACK.md`**. Claude Code: **`claude-code/BAKING.md`** (same `lightStack` config).
 
+## Gate-out — when **not** to use Baking
+
+**Before** light stack, subagents, handoff, or metrics — classify the user message.
+
+Use **GATE-OUT** (direct answer, normal chat) when the request is:
+
+- Pure question or explanation (no code change implied)
+- Review / opinion only (*"what do you think?"*, *"does X make sense?"*)
+- Status or meta about Baking, config, tools
+- Conceptual *"is there a way to…?"* without *implement / build / fix*
+
+On GATE-OUT:
+
+1. **Do not** spawn planner/executor, write handoff, append metrics, or emit closing YAML.
+2. Answer normally.
+3. Optional short line (once): *"Baking not needed here — …"* so the user knows why you're not routing.
+
+**Always use Baking** when the user says **`/baking`**, *use baking*, or the message clearly asks to **implement, fix, refactor, deploy, or edit code** — including large complete features.
+
 ## Light stack (lightweight — if `lightStack.enabled`)
 
 1. **Start** (non-trivial): Engram `mem_context` + `mem_search` if applicable.
