@@ -16,10 +16,10 @@
 
 ```bash
 # From npm (once published)
-npx @admin-zyta/baking install
+npx @admin-zyta/baking-ai install
 
 # Or from a clone
-git clone https://github.com/admin-zyta/baking ~/.cursor/opus-sonnet
+git clone https://github.com/admin-zyta/baking-ai ~/.cursor/opus-sonnet
 node ~/.cursor/opus-sonnet/bin/baking.js install
 ```
 

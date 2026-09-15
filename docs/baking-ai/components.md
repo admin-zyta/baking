@@ -60,7 +60,7 @@ See [AGENTS.md](../../AGENTS.md).
 
 ---
 
-## CLI (`@admin-zyta/baking`)
+## CLI (`@admin-zyta/baking-ai`)
 
 | Command | Action |
 |---------|--------|

@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Baking orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Engram, verify, skill registry). /baking, use baking.
+description: Baking-AI orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Engram, verify, skill registry). /baking, use baking.
 disable-model-invocation: false
 user-invocable: true
 ---

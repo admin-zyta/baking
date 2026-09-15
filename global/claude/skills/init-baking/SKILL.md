@@ -12,7 +12,7 @@ user-invocable: true
 - Config: `~/.cursor/opus-sonnet/config.json`
 - Cursor: `~/.cursor/skills/baking/`, `~/.cursor/agents/`
 - Claude Code: `~/.claude/skills/baking/`, `~/.claude/agents/`
-- Another machine: `npx @admin-zyta/baking install`
+- Another machine: `npx @admin-zyta/baking-ai install`
 
 ## Usage
 
@@ -27,7 +27,7 @@ Edit **`~/.cursor/opus-sonnet/config.json`** (e.g. `"profile": "cursor"` | `"cla
 ## Update globally
 
 ```bash
-npx @admin-zyta/baking install
+npx @admin-zyta/baking-ai install
 ```
 
 Or from the git repo: `sync-global.ps1` / `install-claude-skills.ps1`.

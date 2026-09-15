@@ -1,6 +1,13 @@
-# Changelog — Baking
+# Changelog — Baking-AI
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
+
+## [1.7.1] — 2026-09-15
+
+### Changed
+
+- **Project name: Baking-AI** — npm `@admin-zyta/baking-ai`, GitHub `admin-zyta/baking-ai`, CLI `baking-ai` (`baking` remains an alias).
+- README and docs use **Baking-AI** as the product name; `/baking` and the `baking` skill unchanged as invocation shortcuts.
 
 ## [1.7.0] — 2026-09-15
 

@@ -1,9 +1,10 @@
 {
-  "name": "@admin-zyta/baking",
-  "version": "1.7.0",
-  "description": "Baking — global planner → executor orchestrator for Cursor and Claude Code",
+  "name": "@admin-zyta/baking-ai",
+  "version": "1.7.1",
+  "description": "Baking-AI — global planner → executor orchestrator for Cursor and Claude Code",
   "license": "UNLICENSED",
   "bin": {
+    "baking-ai": "bin/baking.js",
     "baking": "bin/baking.js"
   },
   "files": [
@@ -35,13 +36,14 @@
     "cursor",
     "claude-code",
     "agent",
+    "baking-ai",
     "baking",
     "planner",
     "executor"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/admin-zyta/baking.git"
+    "url": "git+https://github.com/admin-zyta/baking-ai.git"
   },
   "publishConfig": {
     "access": "restricted"

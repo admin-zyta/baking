@@ -1,26 +1,26 @@
-# Publishing `@admin-zyta/baking`
+# Publishing `@admin-zyta/baking-ai`
 
-npm package that installs Baking globally in Cursor + Claude Code (skills, agents, rules, config).
+npm package that installs Baking-AI globally in Cursor + Claude Code (skills, agents, rules, config).
 
 ## Install (another machine)
 
 **From npm** (after `npm publish`):
 
 ```bash
-npx @admin-zyta/baking install
+npx @admin-zyta/baking-ai install
 ```
 
 **From GitHub** (no npm):
 
 ```bash
-git clone https://github.com/admin-zyta/baking.git ~/.cursor/opus-sonnet
+git clone https://github.com/admin-zyta/baking-ai.git ~/.cursor/opus-sonnet
 cd ~/.cursor/opus-sonnet && node bin/baking.js install
 ```
 
 Or in one line:
 
 ```bash
-npx github:admin-zyta/baking install
+npx github:admin-zyta/baking-ai install
 ```
 
 *(Requires the repo to be accessible with your GitHub token; if it's private, configure `GH_TOKEN`.)*
@@ -28,16 +28,18 @@ npx github:admin-zyta/baking install
 Global:
 
 ```bash
-npm i -g @admin-zyta/baking
-baking install
+npm i -g @admin-zyta/baking-ai
+baking-ai install
 ```
+
+(`baking` CLI alias still works after global install.)
 
 If you already have a custom `config.json` and don't want an automatic backup, install respects the existing one (it copies to `config.json.bak` only when overwriting docs; config is backed up if it exists).
 
 Force config replacement:
 
 ```bash
-baking install --force-config
+baking-ai install --force-config
 ```
 
 ## Publish (maintainers)

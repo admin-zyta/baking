@@ -12,10 +12,11 @@ const { lightStackReport } = require('../lib/light-stack');
 const path = require('path');
 
 const HELP = `
-@admin-zyta/baking — planner → executor orchestrator (Cursor + Claude Code)
+@admin-zyta/baking-ai — planner → executor orchestrator (Cursor + Claude Code)
 
 Usage:
-  baking install [--force-config]   Deploy skills, agents, rules, global config
+  baking-ai install [--force-config]   Deploy skills, agents, rules, global config
+  baking install                       Alias of baking-ai install
   baking sync                       Alias for install
   baking doctor                     Verify agents + light stack
   baking skill-registry [--force]   Lightweight skills index (~/.cursor/baking/)
@@ -27,8 +28,8 @@ Usage:
   baking version                    Show installed package version
 
 Examples:
-  npx @admin-zyta/baking install
-  npm i -g @admin-zyta/baking && baking install
+  npx @admin-zyta/baking-ai install
+  npm i -g @admin-zyta/baking-ai && baking-ai install
 
 Targets:
   ~/.cursor/skills/baking/          Cursor skill
@@ -49,7 +50,7 @@ function main() {
 
   if (cmd === 'doctor') {
     const report = doctor();
-    console.log(`Baking ${report.version} — doctor`);
+    console.log(`Baking-AI ${report.version} — doctor`);
     console.log('');
     console.log('Cursor (~/.cursor/agents/):');
     for (const a of report.cursor) {
@@ -220,7 +221,7 @@ function main() {
   if (cmd === 'install' || cmd === 'sync') {
     try {
       const result = install({ forceConfig });
-      console.log(`Baking ${result.version} — installed`);
+      console.log(`Baking-AI ${result.version} — installed`);
       console.log(`  Cursor:  ${result.cursorRoot}`);
       console.log(`  Claude:  ${result.claudeRoot}`);
       console.log(`  Config:  ${result.configRoot}`);

@@ -1,6 +1,6 @@
 # Baking-AI — documentation index
 
-Product-style documentation for the **Baking** orchestrator (`@admin-zyta/baking`).
+Product-style documentation for **Baking-AI** (`@admin-zyta/baking-ai`).
 
 **Start here:** [docs/baking-ai/README.md](./docs/baking-ai/README.md)
 

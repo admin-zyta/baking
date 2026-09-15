@@ -4,13 +4,13 @@
 
 Opus (or Fable) plans. Composer or Sonnet executes. The plan lives on disk. You spend fewer tokens. You know what happened.
 
-**Repo:** [github.com/admin-zyta/baking](https://github.com/admin-zyta/baking) · **Version:** `1.7.0` (see `VERSION` and `config.json` → `bakingVersion`)
+**Repo:** [github.com/admin-zyta/baking-ai](https://github.com/admin-zyta/baking-ai) · **Version:** `1.7.1` (see `VERSION` and `config.json` → `bakingVersion`)
 
 ---
 
-Your agent codes with the expensive model for the whole chat, the plan stays in the conversation and gets lost, and “build OK” does not mean the request was actually fulfilled. **Baking** sits in front as a router: it classifies work, delegates to cheaper planner/executor subagents, writes a **diary to disk**, and closes with metrics.
+Your agent codes with the expensive model for the whole chat, the plan stays in the conversation and gets lost, and “build OK” does not mean the request was actually fulfilled. **Baking-AI** sits in front as a router: it classifies work, delegates to cheaper planner/executor subagents, writes a **diary to disk**, and closes with metrics.
 
-Baking is **router + handoff + creative gates + optional light stack** — built for day-to-day work in Cursor and Claude Code.
+Baking-AI is **router + handoff + creative gates + optional light stack** — built for day-to-day work in Cursor and Claude Code.
 
 **Full docs:** [BAKING-AI.md](./BAKING-AI.md) → [docs/baking-ai/](./docs/baking-ai/README.md)
 
@@ -114,7 +114,7 @@ Perceptual quality gate for visual work (craft, assets, prod+spec). See `creativ
 ### macOS / Linux
 
 ```bash
-git clone https://github.com/admin-zyta/baking.git ~/.cursor/opus-sonnet
+git clone https://github.com/admin-zyta/baking-ai.git ~/.cursor/opus-sonnet
 cd ~/.cursor/opus-sonnet && node bin/baking.js install
 baking doctor
 ```
@@ -122,7 +122,7 @@ baking doctor
 ### Windows (PowerShell)
 
 ```powershell
-git clone https://github.com/admin-zyta/baking.git $env:USERPROFILE\.cursor\opus-sonnet
+git clone https://github.com/admin-zyta/baking-ai.git $env:USERPROFILE\.cursor\opus-sonnet
 cd $env:USERPROFILE\.cursor\opus-sonnet
 node bin/baking.js install
 node bin/baking.js doctor
@@ -131,8 +131,8 @@ node bin/baking.js doctor
 ### Without cloning
 
 ```bash
-npx github:admin-zyta/baking install
-# private repo: GH_TOKEN=ghp_... npx github:admin-zyta/baking install
+npx github:admin-zyta/baking-ai install
+# private repo: GH_TOKEN=ghp_... npx github:admin-zyta/baking-ai install
 ```
 
 ### Engram (cross-session memory, recommended)
@@ -246,7 +246,7 @@ User → Baking (cheap orchestrator)
 ## Repo (maintainers)
 
 ```
-~/.cursor/opus-sonnet/          ← clone of admin-zyta/baking
+~/.cursor/opus-sonnet/          ← clone of admin-zyta/baking-ai
   global/cursor/                → deploy to ~/.cursor/
   global/claude/                → deploy to ~/.claude/
   bin/baking.js                 → CLI

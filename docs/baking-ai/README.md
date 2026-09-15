@@ -70,7 +70,7 @@ Concrete cases: [use-cases.md](./use-cases.md)
 ## Get started
 
 ```bash
-npx @admin-zyta/baking install
+npx @admin-zyta/baking-ai install
 baking doctor
 baking skill-registry
 ```
@@ -101,4 +101,4 @@ Technical references: `BAKING-CURSOR.md` · `claude-code/BAKING.md`
 
 ## Version
 
-`bakingVersion` in `config.json` · package `@admin-zyta/baking` · repo [admin-zyta/baking](https://github.com/admin-zyta/baking)
+`bakingVersion` in `config.json` · package `@admin-zyta/baking-ai` · repo [admin-zyta/baking-ai](https://github.com/admin-zyta/baking-ai)
