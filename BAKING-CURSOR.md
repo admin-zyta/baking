@@ -34,8 +34,8 @@ If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Three hooks, minimal
 
 | Piece | When | Action |
 |-------|--------|--------|
-| **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2 calls) |
-| **Engram** | Close | `mem_session_summary` (5 bullets) |
+| **Baking memory** | Non-trivial start | `baking memory context/search` |
+| **Baking memory** | Close | `baking memory save` (session summary) |
 | **Skill registry** | If the request matches a skill | Read `~/.cursor/baking/skill-registry.md` → Read only that SKILL.md |
 | **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML `verify:` |
 

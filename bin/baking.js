@@ -8,6 +8,13 @@ const { runReview } = require('../lib/metrics-review');
 const { runInitMemory } = require('../lib/init-memory');
 const { autoRouteStatus, setAutoRoute } = require('../lib/auto-route');
 const { projectRequiredStatus, setProjectRequired } = require('../lib/project-required');
+const {
+  saveObservation,
+  searchObservations,
+  contextObservations,
+  memoryStatus,
+  formatHits,
+} = require('../lib/baking-memory');
 const { buildRegistry } = require('../lib/skill-registry');
 const { lightStackReport } = require('../lib/light-stack');
 const path = require('path');
@@ -23,6 +30,7 @@ Usage:
   baking skill-registry [--force]   Lightweight skills index (~/.cursor/baking/)
   baking init-memory [--force] [--dry-run] [--require]
                                     Scan repo → AGENTS + init/ (then /init-memory)
+  baking memory status|save|search|context   Global memory (SQLite FTS, Cursor + Claude)
   baking require on|off|status      Mark this repo: implementation must use Baking-AI
   baking auto-route on|off|status   Global fallback (all repos); prefer baking require on
   baking metrics-review [--status] [--force] [--close-cycle]
@@ -41,7 +49,28 @@ Targets:
   ~/.claude/skills/ + agents/       Claude Code
 `;
 
-function main() {
+function parseFlag(rest, flag) {
+  const i = rest.indexOf(flag);
+  if (i < 0 || i + 1 >= rest.length || rest[i + 1].startsWith('-')) return null;
+  return rest[i + 1];
+}
+
+function parseMemoryCli(rest) {
+  const sub = rest.find((a) => !a.startsWith('-'));
+  const positional = rest.filter((a, i) => !a.startsWith('-') && a !== sub);
+  return {
+    sub,
+    topic: parseFlag(rest, '--topic'),
+    title: parseFlag(rest, '--title'),
+    body: parseFlag(rest, '--body'),
+    type: parseFlag(rest, '--type'),
+    project: parseFlag(rest, '--project'),
+    query: parseFlag(rest, '--query') || positional.join(' '),
+    limit: Number(parseFlag(rest, '--limit')) || 5,
+  };
+}
+
+async function main() {
   const [cmd, ...rest] = process.argv.slice(2);
   const forceConfig = rest.includes('--force-config');
 
@@ -70,9 +99,11 @@ function main() {
       console.log('');
       console.log('Light stack:');
       console.log(`  enabled: ${report.lightStack.enabled ? 'yes' : 'no'}`);
-      console.log(`  Engram MCP: ${report.lightStack.engram.ok ? 'OK' : 'MISSING (optional)'}`);
-      if (!report.lightStack.engram.ok) {
-        console.log(`    → ${report.lightStack.engram.hint}`);
+      const mem = report.lightStack.bakingMemory;
+      if (mem) {
+        console.log(
+          `  Baking memory: ${mem.ok ? 'OK' : 'empty'} (${mem.mode}, ${mem.count} obs) — ${mem.path}`
+        );
       }
       const reg = report.lightStack.skillRegistry;
       if (reg.ok) {
@@ -158,6 +189,58 @@ function main() {
       process.exit(0);
     } catch (err) {
       console.error(`init-memory failed: ${err.message}`);
+      process.exit(1);
+    }
+  }
+
+  if (cmd === 'memory') {
+    const args = parseMemoryCli(rest);
+    try {
+      if (!args.sub || args.sub === 'status') {
+        const s = memoryStatus();
+        console.log(`Baking memory (${s.mode}): ${s.path}`);
+        console.log(`Observations: ${s.count}`);
+        if (s.note) console.log(`Note: ${s.note}`);
+        process.exit(0);
+      }
+      if (args.sub === 'save') {
+        if (!args.title || !args.body) {
+          console.error('Usage: baking memory save --title "..." --body "..." [--topic key] [--type decision]');
+          process.exit(1);
+        }
+        const r = saveObservation(args);
+        console.log(`Saved (${r.mode}) id=${r.id ?? 'jsonl'} → ${r.path}`);
+        process.exit(0);
+      }
+      if (args.sub === 'search') {
+        if (!args.query) {
+          console.error('Usage: baking memory search "query terms" [--limit 5]');
+          process.exit(1);
+        }
+        const r = searchObservations(args.query, args.limit);
+        console.log(`Search (${r.mode}): ${r.hits.length} hit(s)`);
+        for (const h of formatHits(r.hits)) {
+          console.log('');
+          console.log(`#${h.id ?? '—'} [${h.type}] ${h.title}`);
+          if (h.topic_key) console.log(`  topic: ${h.topic_key}`);
+          console.log(`  ${h.body}`);
+        }
+        process.exit(0);
+      }
+      if (args.sub === 'context') {
+        const r = contextObservations(args.query, args.limit);
+        console.log(`Context (${r.mode}): ${r.hits.length} item(s)`);
+        for (const h of formatHits(r.hits)) {
+          console.log('');
+          console.log(`#${h.id ?? '—'} [${h.type}] ${h.title}`);
+          console.log(`  ${h.body}`);
+        }
+        process.exit(0);
+      }
+      console.error('Usage: baking memory status|save|search|context');
+      process.exit(1);
+    } catch (err) {
+      console.error(`memory failed: ${err.message}`);
       process.exit(1);
     }
   }

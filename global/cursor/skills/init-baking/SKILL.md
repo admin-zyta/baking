@@ -1,6 +1,6 @@
 ---
 name: init-baking
-description: Alias of init-memory — bootstrap AGENTS + Engram. Use /init-memory or baking init-memory.
+description: Alias of init-memory — bootstrap AGENTS + Baking Memory. Use /init-memory or baking init-memory.
 disable-model-invocation: false
 user-invocable: true
 ---

@@ -14,7 +14,7 @@ Real cases. Each one: request → classification → what runs → what's left o
 |---|---|
 | **Classification** | TRIVIAL or direct EXECUTE |
 | **Subagents** | None (orchestrator resolves it) or executor if a handoff exists |
-| **Light stack** | Skip Engram search · skip verify if there's a single obvious criterion |
+| **Light stack** | Skip memory search · skip verify if there's a single obvious criterion |
 | **Handoff** | Optional minimal or none |
 | **Savings** | Not paying Opus to plan a color |
 
@@ -49,7 +49,7 @@ Real cases. Each one: request → classification → what runs → what's left o
 | **Planner** | Handoff with explicit **Done criteria** |
 | **Executor** | Implements |
 | **Verify** | Table: "badge only on Pro" → pass/fail vs diff |
-| **Engram** | `mem_save` if it's a recurring product convention |
+| **Baking Memory** | `baking memory save` if it's a recurring product convention |
 | **Metrics** | `verify: fail` if it copied the component to all plans |
 
 **Problem it solves:** build OK but the rule was violated — Verify catches misinterpretation.
@@ -125,12 +125,12 @@ See [consumption.md](../../consumption.md) § fork vs fresh.
 
 | | |
 |---|---|
-| **Light stack** | Start: `mem_search "transactional comms template"` |
-| **Engram** | Recovers: "on Tuesday we decided to always use template X, never ad hoc HTML" |
+| **Light stack** | Start: `baking memory search "transactional comms template"` |
+| **Baking Memory** | Recovers: "on Tuesday we decided to always use template X, never ad hoc HTML" |
 | **Baking** | Short PLAN or EXECUTE with a minimal handoff |
-| **Close** | `mem_session_summary` 5 bullets |
+| **Close** | `baking memory save` — session summary, 5 bullets |
 
-**A code map ≠ a decision log** — use Engram for cross-session conventions.
+**A code map ≠ a decision log** — use Baking Memory for cross-session conventions.
 
 ---
 
@@ -164,7 +164,7 @@ See [METRICS.md](../../METRICS.md).
 
 ## Quick matrix — what to enable
 
-| Case | PLAN | Hyper | Verify | Engram |
+| Case | PLAN | Hyper | Verify | Memory |
 |------|------|-------|--------|--------|
 | Color / typo | — | — | skip | optional |
 | Craft landing | ✓ | sometimes | ✓ | ✓ |

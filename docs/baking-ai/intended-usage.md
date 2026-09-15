@@ -84,7 +84,7 @@ You edit `"profile"` in `~/.cursor/opus-sonnet/config.json`:
 
 Three **lightweight** hooks (not Gentle-AI):
 
-1. **Engram** — memory across sessions/repos
+1. **Baking Memory** — decisions across sessions/repos (`baking memory …`)
 2. **Verify** — handoff vs diff at close
 3. **Skill registry** — find the right skill
 

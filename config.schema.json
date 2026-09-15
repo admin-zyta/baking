@@ -107,10 +107,20 @@
     },
     "lightStack": {
       "type": "object",
-      "description": "Light stack: Engram + verify + skill registry (see LIGHT-STACK.md)",
+      "description": "Light stack: Baking Memory + verify + skill registry (see LIGHT-STACK.md)",
       "properties": {
         "enabled": { "type": "boolean" },
-        "memory": { "type": "object" },
+        "memory": {
+          "type": "object",
+          "properties": {
+            "provider": { "enum": ["none", "baking"] },
+            "globalDir": { "type": "string" },
+            "dbFile": { "type": "string" },
+            "onSessionStart": { "type": "array", "items": { "type": "string" } },
+            "onSessionEnd": { "type": "array", "items": { "type": "string" } },
+            "onDecision": { "type": "string" }
+          }
+        },
         "verify": { "type": "object" },
         "skillRegistry": { "type": "object" }
       }

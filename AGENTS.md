@@ -61,6 +61,6 @@ Same `lightStack` config in `~/.cursor/opus-sonnet/config.json`. See **`LIGHT-ST
 | Baking docs | `BAKING-CURSOR.md` | `claude-code/BAKING.md` |
 | Planner template | `~/.cursor/agents/planner.md` | **same path** |
 | `runtime` metrics | `cursor` | `claude-code` |
-| Engram | `engram setup cursor` | plugin / Claude MCP |
+| Baking memory | `baking memory …` | same CLI + DB |
 
 Commands: `baking skill-registry` · `baking doctor` (reports light stack).

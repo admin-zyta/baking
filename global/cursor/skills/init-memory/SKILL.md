@@ -1,6 +1,6 @@
 ---
 name: init-memory
-description: Claude /init-style project memory bootstrap — scan + AGENTS.md + Engram. baking init-memory + PLAN-ONLY.
+description: Claude /init-style project memory bootstrap — scan + AGENTS.md + Baking Memory. baking init-memory + PLAN-ONLY.
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -21,7 +21,7 @@ baking init-memory
 baking init-memory --force
 ```
 
-Generates `.cursor/baking/init/` (scan, draft, Engram topics, `NEXT.md`).
+Generates `.cursor/baking/init/` (scan, draft, memory topics, `NEXT.md`).
 
 ## Step 1 — PLAN-ONLY (agent)
 
@@ -30,11 +30,11 @@ Generates `.cursor/baking/init/` (scan, draft, Engram topics, `NEXT.md`).
 3. Deliverables in the handoff:
    - Final **`AGENTS.md`** (create) or **audit/merge** (if it already existed).
    - Concise **`.cursor/rules/baking-project.mdc`** if Cursor context is missing.
-   - **`mem_save`** for each topic in `engram-topics.json` (structured, not a transcript).
+   - **`baking memory save`** for each topic in `memory-topics.json` (structured, not a transcript).
 4. Close: YAML + metrics JSONL.
 
 ## Rules
 
-- Don't dump the whole README/handoff into Engram.
+- Don't dump the whole README/handoff into Baking Memory.
 - Only what the agent **would misinfer** without context (non-standard commands, ports, monorepo, gotchas).
 - **audit** mode if `AGENTS.md` or `CLAUDE.md` already exists — don't overwrite without user review.

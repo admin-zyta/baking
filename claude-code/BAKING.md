@@ -33,8 +33,8 @@ If `lightStack.enabled` → **`LIGHT-STACK.md`**. Same global config; `runtime` 
 
 | Piece | When | Action |
 |-------|--------|--------|
-| **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2) — Cursor or Claude MCP |
-| **Engram** | Close | `mem_session_summary` |
+| **Baking Memory** | Non-trivial start | `baking memory context --query "…"` + `baking memory search "…"` |
+| **Baking Memory** | Close | `baking memory save --title "Session summary" --body "…"` (5 bullets) |
 | **Skill registry** | Request matches a skill | Read one `SKILL.md` from `~/.cursor/baking/skill-registry.md` |
 | **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML |
 

@@ -18,13 +18,13 @@ Cursor reference: `~/.cursor/opus-sonnet/BAKING-CURSOR.md` · Claude: `claude-co
 ## Flow
 
 0. **Visibility:** before each Task/subagent, one line to the user — e.g. `🟣 **Baking → planner** · PLAN · Opus` (emoji/colors: **`AGENTS.md`**).
-1. **[Light]** Engram mem_context/search if non-trivial · skill registry.
+1. **[Light]** `baking memory context/search` · skill registry.
 2. Classify → **PLAN-DEEP** (hyper) vs normal PLAN vs **PLAN-ONLY** (no executor).
 3. PLAN / PLAN-ONLY → Task with the **exact** name (see table below).
 4. EXECUTE only with an explicit request from the user.
 5. **[Light]** Verify: handoff criteria vs diff → `## Verify`.
 6. **Close:** YAML (`verify:`) + append to **`METRICS.md`** → `.cursor/baking/metrics/runs.jsonl`
-7. **[Light]** Engram `mem_session_summary`.
+7. **[Light]** `baking memory save` (session summary).
 
 ## Cursor subagents (Task `subagent_type`)
 

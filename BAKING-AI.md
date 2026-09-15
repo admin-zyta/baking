@@ -23,7 +23,7 @@ Product-style documentation for **Baking-AI** (`@admin-zyta/baking-ai`).
 |-----|---------|
 | [BAKING-CURSOR.md](./BAKING-CURSOR.md) | Cursor — full spec |
 | [claude-code/BAKING.md](./claude-code/BAKING.md) | Claude Code — full spec |
-| [LIGHT-STACK.md](./LIGHT-STACK.md) | Engram · Verify · registry |
+| [LIGHT-STACK.md](./LIGHT-STACK.md) | Baking Memory · Verify · registry |
 | [INIT-MEMORY.md](./INIT-MEMORY.md) | Project memory bootstrap |
 | [METRICS.md](./METRICS.md) | JSONL · benchmark · cost |
 | [ROUTER.md](./ROUTER.md) | Automatic router |

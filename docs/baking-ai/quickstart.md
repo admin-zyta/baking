@@ -8,7 +8,7 @@
 
 - **Cursor** and/or **Claude Code**
 - **Node 18+** (for CLI install)
-- Optional: **Engram** (light stack memory)
+- Optional: **Baking Memory** (light stack — enabled by default)
 
 ---
 
@@ -100,15 +100,16 @@ You'll get:
 
 ---
 
-## 6. Light stack — Engram (optional)
+## 6. Light stack — Baking Memory
 
 ```bash
-# Install Engram from GitHub releases
-engram setup cursor      # Cursor
-# Claude: see Engram docs
-# Restart the IDE
-baking doctor              # Engram MCP: OK
+baking memory status
+baking memory save --title "..." --body "..." [--topic key]
+baking memory search "query"
+baking doctor              # Baking memory: OK (sqlite)
 ```
+
+See [../../MEMORY.md](../../MEMORY.md).
 
 ---
 
@@ -118,7 +119,8 @@ baking doctor              # Engram MCP: OK
 baking version
 baking doctor
 baking skill-registry [--force]
-baking init-memory [--force]       # bootstrap AGENTS + Engram (see INIT-MEMORY.md)
+baking init-memory [--force]       # bootstrap AGENTS + memory topics (see INIT-MEMORY.md)
+baking memory status|save|search|context
 baking auto-route on|off|status    # Baking by default without /baking every time
 baking metrics-summary
 baking metrics-review --status
@@ -130,7 +132,7 @@ baking metrics-review --status
 
 ```bash
 baking init-memory
-# then in chat: /init-memory  (PLAN-ONLY + mem_save)
+# then in chat: /init-memory  (PLAN-ONLY + baking memory save)
 ```
 
 See [../../INIT-MEMORY.md](../../INIT-MEMORY.md).
@@ -162,4 +164,4 @@ baking auto-route status
 | "planner-hyper agent doesn't exist" | `baking install` + restart Cursor |
 | runs.jsonl isn't created | Reread the baking skill · see METRICS.md |
 | Fable blocked | Accept data retention in the Cursor Dashboard |
-| Engram MISSING | `engram setup cursor` · restart |
+| Baking memory MISSING | `baking memory status` · check `lightStack.memory.provider` in config |

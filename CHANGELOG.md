@@ -2,6 +2,22 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.9.0] — 2026-09-15
+
+### Added
+
+- **Baking Memory** — global cross-session store (`MEMORY.md`): SQLite + FTS5 at `~/.cursor/baking/memory/`, CLI `baking memory save|search|context|status`. Replaces Engram as default `lightStack.memory.provider`.
+
+### Removed
+
+- **Engram** as default/recommended memory — use `baking memory` (same path for Cursor + Claude Code).
+
+## [1.8.1] — 2026-09-15
+
+### Added
+
+- **Agent colors** — `color` frontmatter on all agents; emoji delegation banners in orchestrator (`AGENTS.md`, `lib/agent-colors.js`).
+
 ## [1.8.0] — 2026-09-15
 
 ### Added

@@ -8,37 +8,36 @@ Enable: `"lightStack": { "enabled": true, ... }` (default in global config v1.5+
 
 | Environment | Baking reference | Orchestrator | Engram setup |
 |---------|-------------------|-------------|--------------|
-| **Cursor** | `BAKING-CURSOR.md` | Composer / `/baking` skill | `engram setup cursor` |
-| **Claude Code** | `claude-code/BAKING.md` | Sonnet + Agent tool | `engram setup` (plugin) or MCP in Claude |
+| **Cursor** | `BAKING-CURSOR.md` | Composer / `/baking` skill | `baking memory status` |
+| **Claude Code** | `claude-code/BAKING.md` | Sonnet + Agent tool | same CLI + global DB |
 
 `claude` profile in config → Claude Code end-to-end. `cursor` / `hybrid` profile → Cursor.
 
 ---
 
-## 1. Amnesia — Engram
+## 1. Amnesia — Baking Memory (global)
 
-**Problem:** re-explaining decisions across repos/sessions.
+**Problem:** re-explaining **decisions** across repos/sessions (not the same as a handoff).
 
-**Setup (once):**
+**Store:** `~/.cursor/baking/memory/baking-memory.db` (SQLite + FTS5, Node 22+). Fallback: `observations.jsonl`.
 
-```powershell
-# Windows — see https://github.com/Gentleman-Programming/engram/releases
-engram setup cursor    # Cursor → ~/.cursor/mcp.json
-engram setup           # Claude Code — see Engram docs
-# Restart IDE
-```
+**Setup:** `lightStack.memory.provider: "baking"` in config (default in template v1.9+). No MCP.
 
-Verify: `baking doctor` → Engram MCP line.
+Verify: `baking doctor` → Baking memory line · `baking memory status`.
 
-**Light usage (Baking orchestrator):**
+Full reference: **`MEMORY.md`**.
 
-| When | Tool | Max |
-|--------|------|--------|
-| Start of a non-trivial run | `mem_context` + `mem_search` (request terms) | 2 calls |
-| Closed decision/convention/bug | `mem_save` (structured, not a transcript) | 1 per relevant finding |
-| Baking close (any flow) | `mem_session_summary` | 1 — 5 bullets |
+**Light usage (orchestrator):**
 
-**Don't:** `mem_save` every turn; dump the whole handoff into Engram (it's already in `.cursor/handoff/`).
+| When | CLI | Max |
+|--------|-----|--------|
+| Start of a non-trivial run | `baking memory context --query "<terms>"` | 1–2 |
+| Closed decision/convention | `baking memory save --topic … --title … --body …` | 1 per finding |
+| Baking close | `baking memory save --type session --title "Summary" --body "5 bullets"` | 1 |
+
+**Don't:** paste whole handoffs; save structured What/Why/Where.
+
+**Not Engram** — same global path for Cursor and Claude Code; queries via FTS5.
 
 ---
 
@@ -87,13 +86,13 @@ Writes: `~/.cursor/baking/skill-registry.md` (global, not per repo).
 ## Order in a Baking run
 
 ```
-[optional] mem_context / mem_search
+[optional] baking memory context / search
 → classify → PLAN / EXECUTE
 → [optional] read skill from the registry
 → executor
 → Verify (handoff vs diff)
 → YAML + metrics JSONL
-→ mem_session_summary
+→ baking memory save (session summary)
 ```
 
 ---
@@ -104,4 +103,4 @@ Writes: `~/.cursor/baking/skill-registry.md` (global, not per repo).
 baking doctor
 ```
 
-Reports: Baking agents, Engram MCP (optional), skill-registry (age), lightStack.enabled.
+Reports: Baking agents, Baking memory (if enabled), skill-registry (age), lightStack.enabled.

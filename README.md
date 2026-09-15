@@ -51,7 +51,7 @@ Three optional pieces under `lightStack` (on by default since v1.5):
 
 | Piece | Purpose |
 |-------|---------|
-| **Engram** | Decisions across sessions/repos (`mem_save`, `mem_context`) |
+| **Baking memory** | Cross-session decisions (`baking memory search/save`) |
 | **Verify** | Handoff criteria vs `git diff` at close |
 | **Skill registry** | `baking skill-registry` → invoke the right skill |
 
@@ -61,12 +61,12 @@ Three optional pieces under `lightStack` (on by default since v1.5):
 
 ### Init-memory — Project bootstrap
 
-Scans the repo, drafts `AGENTS.md`, Engram topics, and a Cursor rule. A **PLAN-ONLY** run then fills persistent memory.
+Scans the repo, drafts `AGENTS.md`, memory topics, and a Cursor rule. A **PLAN-ONLY** run then fills persistent memory.
 
 ```bash
 baking init-memory          # scan → .cursor/baking/init/
 # in chat:
-/init-memory                # PLAN-ONLY + mem_save
+/init-memory                # PLAN-ONLY + baking memory save
 ```
 
 **[INIT-MEMORY.md →](INIT-MEMORY.md)**
@@ -147,13 +147,16 @@ npx github:admin-zyta/baking-ai install
 # private repo: GH_TOKEN=ghp_... npx github:admin-zyta/baking-ai install
 ```
 
-### Engram (cross-session memory, recommended)
+### Baking Memory (cross-session, recommended)
 
 ```bash
-go install github.com/Gentleman-Programming/engram/cmd/engram@latest
-engram setup cursor
-# restart Cursor → baking doctor → Engram MCP: OK
+baking memory status
+baking memory save --title "..." --body "..." [--topic key] [--type decision]
+baking memory search "query terms"
+baking memory context --query "terms"   # start-of-session context
 ```
+
+SQLite + FTS5 at `~/.cursor/baking/memory/baking-memory.db` — same store for Cursor and Claude Code. See **[MEMORY.md](MEMORY.md)**.
 
 Step-by-step: **[docs/baking-ai/quickstart.md](docs/baking-ai/quickstart.md)**
 
@@ -213,7 +216,8 @@ Edit `~/.cursor/opus-sonnet/config.json`:
 baking install [--force-config]   # deploy globally to Cursor + Claude
 baking doctor                     # agents + light stack + auto-route
 baking skill-registry [--force]   # skill index (~/.cursor/baking/)
-baking init-memory [--force]      # bootstrap AGENTS + Engram topics
+baking init-memory [--force]      # bootstrap AGENTS + memory topics
+baking memory status|save|search|context   # global SQLite memory
 baking require on|off|status       # per-repo mandatory Baking
 baking auto-route on|off|status   # global fallback (default off)
 baking metrics-summary [path]     # JSONL summary
@@ -234,7 +238,7 @@ Publishing npm: **[NPM.md](NPM.md)**
 | **[Use cases](docs/baking-ai/use-cases.md)** | Real scenarios |
 | **[Components](docs/baking-ai/components.md)** | Pieces, agents, profiles |
 | **[Routing](docs/baking-ai/routing.md)** | PLAN / EXECUTE / Hyper / mecanic / fork |
-| **[LIGHT-STACK.md](LIGHT-STACK.md)** | Engram, Verify, registry |
+| **[LIGHT-STACK.md](LIGHT-STACK.md)** | Baking Memory, Verify, registry |
 | **[INIT-MEMORY.md](INIT-MEMORY.md)** | Project memory bootstrap |
 | **[METRICS.md](METRICS.md)** | JSONL, S0 vs S3 bench, `metrics-review` |
 | **[ROUTER.md](ROUTER.md)** · **[consumption.md](consumption.md)** | Orchestrator rules |
@@ -246,12 +250,12 @@ Publishing npm: **[NPM.md](NPM.md)**
 
 ```
 User → Baking (cheap orchestrator)
-         ├─ [optional] mem_context / mem_search (Engram)
+         ├─ [optional] baking memory context / search
          ├─ PLAN → planner | planner-hyper
          └─ EXECUTE → executor | executor-mecanic | direct
          → .cursor/handoff/YYYY-MM-DD-slug.md
          → Verify (handoff vs diff)
-         → YAML + runs.jsonl + mem_session_summary
+         → YAML + runs.jsonl + baking memory save (summary)
 ```
 
 ---

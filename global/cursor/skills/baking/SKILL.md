@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Baking-AI orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Engram, verify, skill registry). /baking, use baking.
+description: Baking-AI orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Baking memory, verify, skill registry). /baking, use baking.
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -32,10 +32,10 @@ Per-project: `baking require on` · Global fallback only: `baking auto-route on`
 
 ## Light stack (lightweight — if `lightStack.enabled`)
 
-1. **Start** (non-trivial): Engram `mem_context` + `mem_search` if applicable.
+1. **Start** (non-trivial): `baking memory context --query "<terms>"` (see **`MEMORY.md`**).
 2. **Skill:** match the request against `~/.cursor/baking/skill-registry.md` → Read one SKILL.md.
 3. **EXECUTE close:** handoff criteria vs diff → `## Verify` in the handoff.
-4. **End:** YAML with `verify:` + Engram `mem_session_summary`.
+4. **End:** YAML with `verify:` + `baking memory save` (session summary, 5 bullets).
 
 Registry: `baking skill-registry` · Doctor: `baking doctor`.
 

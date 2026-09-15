@@ -51,7 +51,7 @@ Explicit **`/baking`** or *use baking* → always **BAKING**, even for PLAN-ONLY
 
 One config (`lightStack` in `config.json`) for **Cursor and Claude Code**. Details: **`LIGHT-STACK.md`**.
 
-- **Engram** — amnesia (MCP in Cursor or Claude)
+- **Baking memory** — cross-session decisions (`MEMORY.md`, `baking memory …`)
 - **Verify** — handoff criteria vs diff at EXECUTE close
 - **Skill registry** — `baking skill-registry` → global index
 
@@ -151,7 +151,7 @@ Respect `consumption.maxParallelSubagents` (default 2).
 3. **[Light]** Verify + YAML `verify:` if there was code (see `LIGHT-STACK.md`)
 4. Status: completed | partial | blocked
 5. Brief summary
-6. **[Light]** Engram `mem_session_summary` if `lightStack.enabled`
+6. **[Light]** `baking memory save` (session summary) if `lightStack.enabled`
 
 ## Hard rules
 

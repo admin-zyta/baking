@@ -149,10 +149,10 @@ If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Same global config; 
 
 | Hook | Orchestrator | Tokens |
 |------|-------------|--------|
-| Engram start | `mem_context` + `mem_search` if non-trivial | ≤2 calls |
+| Baking memory start | `baking memory context/search` if non-trivial | ≤2 calls |
 | Skill registry | Read 1 SKILL.md if it matches the index | 1 read |
 | Verify close | Handoff criteria vs `git diff` → `## Verify` | no SDD subagent |
-| Engram end | `mem_session_summary` | 1 call |
+| Baking memory end | `baking memory save` (session summary) | 1 call |
 
 Skip verify on TRIVIAL / PLAN-ONLY. Claude Code: verify at the orchestrator's close or in the executor/fork's `## Execution`.
 

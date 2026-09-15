@@ -15,7 +15,7 @@ Opus (or Fable) plans. Composer or Sonnet executes. The plan stays on disk. You 
 | Opus coding the whole chat | Expensive, slow | Opus **only plans** (1 subagent) |
 | Plan in the chat, gets lost | Re-explain every session | Persistent **Handoff** in `.cursor/handoff/` |
 | "Build OK" but poorly done | Blind trust | **Verify** — criteria vs diff |
-| Forgetting decisions across repos | Manual friction | **Engram** (light stack, optional) |
+| Forgetting decisions across repos | Manual friction | **Baking Memory** (SQLite FTS, light stack) |
 | Generic landings | Clean template | **creative-brief-bar** + on-disk craft bars |
 
 Baking is a **router + diary + gates** for Cursor and Claude Code — not a full SDD pipeline, just what you need to plan cheaply, execute safely, and keep context on disk.
@@ -42,9 +42,9 @@ One global config: `~/.cursor/opus-sonnet/config.json`. **Do not** install per r
 | **Planner Hyper** | Deep plan (Fable) — architecture, complex landings |
 | **Executor** | Implements per the handoff · appends `## Execution` |
 | **Handoff diary** | Plan + execution in one `.md` per task |
-| **Light stack** | Engram · Verify · Skill registry |
+| **Light stack** | Baking Memory · Verify · Skill registry |
 | **Metrics** | `runs.jsonl` — routing, cost, `metrics-review` |
-| **Init-memory** | Bootstrap AGENTS + Engram (`baking init-memory`) |
+| **Init-memory** | Bootstrap AGENTS + memory topics (`baking init-memory`) |
 | **Auto-route** | Toggle: Baking by default (`baking auto-route on`) |
 | **creative-brief-bar** | Perceptual quality on landings (craft, visual) |
 
@@ -91,7 +91,7 @@ Full guide: [quickstart.md](./quickstart.md)
 | [routing.md](./routing.md) | PLAN / EXECUTE / Hyper / mecanic / fork |
 | [quickstart.md](./quickstart.md) | Install, profiles, first run |
 | [../../INIT-MEMORY.md](../../INIT-MEMORY.md) | Project memory bootstrap |
-| [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Engram, Verify, registry |
+| [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Baking Memory, Verify, registry |
 | [../../METRICS.md](../../METRICS.md) | JSONL, S0 vs S3 benchmark, cost |
 | [../../AGENTS.md](../../AGENTS.md) | Exact Task / Agent names |
 

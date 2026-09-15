@@ -1,6 +1,6 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.8.1",
+  "bakingVersion": "1.9.0",
   "language": "en",
   "enabled": true,
   "autoRoute": {
@@ -124,15 +124,17 @@
   "lightStack": {
     "enabled": true,
     "memory": {
-      "provider": "engram",
+      "provider": "baking",
+      "globalDir": "~/.cursor/baking/memory",
+      "dbFile": "baking-memory.db",
       "onSessionStart": [
-        "mem_context",
-        "mem_search"
+        "memory_context",
+        "memory_search"
       ],
       "onSessionEnd": [
-        "mem_session_summary"
+        "memory_session_summary"
       ],
-      "onDecision": "mem_save"
+      "onDecision": "memory_save"
     },
     "verify": {
       "enabled": true,

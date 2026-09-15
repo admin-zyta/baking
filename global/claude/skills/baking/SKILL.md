@@ -23,10 +23,10 @@ Per-project: `baking require on` · Global fallback: `baking auto-route on`.
 
 ## Light stack (lightweight — if `lightStack.enabled`)
 
-1. **Start** (non-trivial): Engram `mem_context` + `mem_search` if applicable.
+1. **Start** (non-trivial): `baking memory context/search` if applicable.
 2. **Skill:** match the request against `~/.cursor/baking/skill-registry.md` → Read one SKILL.md.
 3. **EXECUTE close:** handoff criteria vs diff → `## Verify` in the handoff.
-4. **End:** YAML with `verify:` + Engram `mem_session_summary`.
+4. **End:** YAML with `verify:` + `baking memory save` (session summary).
 
 Registry: `baking skill-registry` · Doctor: `baking doctor`.
 

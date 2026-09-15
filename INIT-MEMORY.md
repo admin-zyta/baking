@@ -31,7 +31,7 @@ Global `autoRoute` is only a fallback for repos **without** the marker — prefe
 |---------|-----|
 | `.cursor/baking/init/scan.json` | Detected signals (stack, CI, create/audit mode) |
 | `.cursor/baking/init/AGENTS.draft.md` | Draft — base for the agent |
-| `.cursor/baking/init/engram-topics.json` | Suggested topics for `mem_save` |
+| `.cursor/baking/init/memory-topics.json` | Suggested topics for `baking memory save` |
 | `.cursor/baking/init/NEXT.md` | PLAN-ONLY instructions |
 | `AGENTS.md` | Written only in **create** mode (repo with no AGENTS/CLAUDE) |
 | `.cursor/rules/baking-project.mdc` | Cursor alwaysApply rule (concise) |

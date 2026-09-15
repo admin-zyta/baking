@@ -24,7 +24,7 @@
 
 | ID | Component | Problem it addresses |
 |----|------------|-------------------|
-| `engram` | **Engram MCP** | Amnesia — decisions across repos/sessions |
+| `baking-memory` | **Baking Memory** (SQLite FTS) | Amnesia — decisions across repos/sessions |
 | `verify` | **Handoff vs diff** | Build OK but criteria not met |
 | `skill-registry` | **Skill index** | Not using a skill you already have installed |
 
@@ -65,7 +65,7 @@ See [AGENTS.md](../../AGENTS.md).
 | Command | Action |
 |---------|--------|
 | `baking install` | Global deploy to Cursor + Claude |
-| `baking doctor` | Agents + light stack + Engram |
+| `baking doctor` | Agents + light stack + Baking Memory |
 | `baking skill-registry` | Regenerates the skill index |
 | `baking metrics-summary` | S0 vs S3 savings, averages |
 | `baking metrics-review` | Routing/savings conclusion (7 days or 50 runs) |

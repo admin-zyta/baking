@@ -13,13 +13,13 @@ Reference: **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**, **`METRICS.md`**, 
 
 ## Flow
 
-1. **[Light]** Engram mem_context/search · skill registry.
+1. **[Light]** `baking memory context/search` · skill registry.
 2. Classify → PLAN-DEEP (hyper) | PLAN | PLAN-ONLY | EXECUTE (mecanic | executor | fork) | TRIVIAL.
 3. PLAN → Agent **`planner`** or **`planner-hyper`** — never fork for planning.
 4. EXECUTE only with an explicit request — see the ladder in BAKING.md.
 5. **[Light]** Verify: handoff criteria vs diff → `## Verify`.
 6. **Close:** YAML (`verify:`) + append to **`METRICS.md`** → `.cursor/baking/metrics/runs.jsonl`
-7. **[Light]** Engram `mem_session_summary`.
+7. **[Light]** `baking memory save` (session summary, 5 bullets).
 
 ## Rules
 
