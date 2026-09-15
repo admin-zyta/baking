@@ -1,0 +1,13 @@
+---
+description: Baking-AI repo — implementation must use Baking-AI orchestrator
+alwaysApply: true
+---
+
+# baking-ai (this repo)
+
+**Baking required** — see `.cursor/baking/required.json`.
+
+- **Implementation** (feature, fix, refactor, docs product code): ROUTER + handoff (`.cursor/handoff/`) + metrics. Do not ship inline without Baking flow.
+- **Pure Q&A / review-only**: gate-out OK — direct answer, no handoff.
+
+Handoffs: `.cursor/handoff/YYYY-MM-DD-slug.md` · Specs: `ROUTER.md`, `BAKING-CURSOR.md`.
