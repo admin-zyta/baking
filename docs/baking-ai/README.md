@@ -16,11 +16,11 @@ Opus (o Fable) planifica. Composer o Sonnet ejecuta. El plan queda en disco. Pag
 | Olvidás decisiones entre repos | Fricción manual | **Engram** (light stack, opcional) |
 | Landings genéricas | Template limpio | **creative-brief-bar** + starter Boogiepop |
 
-Baking **no** es Gentle-AI: no SDD de 10 fases, no ecosistema de 16 IDEs. Es **router + diary + gates** optimizado para tu flujo.
+Baking is a **router + diary + gates** for Cursor and Claude Code — not a full SDD pipeline, just what you need to plan cheaply, execute safely, and keep context on disk.
 
 ---
 
-## Funciona con
+## Works with
 
 | Entorno | Invocación | Perfil típico |
 |---------|------------|---------------|
@@ -94,13 +94,6 @@ Guía completa: [quickstart.md](./quickstart.md)
 | [../../AGENTS.md](../../AGENTS.md) | Nombres exactos Task / Agent |
 
 Referencias técnicas: `BAKING-CURSOR.md` · `claude-code/BAKING.md`
-
----
-
-## Baking-AI vs Gentle-AI (una línea)
-
-**Gentle-AI** = ecosistema completo (SDD, RDD, 16 agentes).  
-**Baking-AI** = orquestador de costo + handoff + gates creativos — **liviano por diseño**.
 
 ---
 

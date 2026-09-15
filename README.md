@@ -1,72 +1,72 @@
 # Baking-AI
 
-**Orquestador liviano para Cursor y Claude Code.**
+**A lightweight orchestrator for Cursor and Claude Code.**
 
-Opus (o Fable) planifica. Composer o Sonnet ejecuta. El plan queda en disco. Pagás menos tokens. Sabés qué pasó.
+Opus (or Fable) plans. Composer or Sonnet executes. The plan lives on disk. You spend fewer tokens. You know what happened.
 
-**Repo:** [github.com/admin-zyta/baking](https://github.com/admin-zyta/baking) · **Versión:** `1.6.0` (ver `VERSION` y `config.json` → `bakingVersion`)
-
----
-
-Tu agente codea con el modelo caro todo el chat, el plan vive en la conversación y se pierde, y “build OK” no significa que cumplió lo pedido. **Baking** pone un router delante: clasifica, delega planner/executor baratos, deja un **diary en disco** y cierra con métricas.
-
-No es Gentle-AI completo (sin SDD de 10 fases ni 16 IDEs). Es **router + handoff + gates creativos + light stack opcional**, optimizado para Boogiepop / Zyta / Cursor day-to-day.
-
-**Documentación extendida:** [BAKING-AI.md](./BAKING-AI.md) → [docs/baking-ai/](./docs/baking-ai/README.md)
+**Repo:** [github.com/admin-zyta/baking](https://github.com/admin-zyta/baking) · **Version:** `1.6.0` (see `VERSION` and `config.json` → `bakingVersion`)
 
 ---
 
-## Funciona con
+Your agent codes with the expensive model for the whole chat, the plan stays in the conversation and gets lost, and “build OK” does not mean the request was actually fulfilled. **Baking** sits in front as a router: it classifies work, delegates to cheaper planner/executor subagents, writes a **diary to disk**, and closes with metrics.
 
-| Entorno | Invocación | Perfil típico en config |
-|---------|------------|-------------------------|
-| **Cursor** | `/baking` · skill baking · *usemos baking para…* | `"profile": "cursor"` |
-| **Claude Code** | `/baking` · skill baking · lenguaje natural | `"profile": "claude"` |
+Baking is **router + handoff + creative gates + optional light stack** — built for day-to-day work in Cursor and Claude Code.
 
-Una sola config global: `~/.cursor/opus-sonnet/config.json`. **No** hace falta instalar Baking por repo.
+**Full docs:** [BAKING-AI.md](./BAKING-AI.md) → [docs/baking-ai/](./docs/baking-ai/README.md)
+
+---
+
+## Works with
+
+| Environment | How to invoke | Typical config profile |
+|-------------|---------------|------------------------|
+| **Cursor** | `/baking` · baking skill · *“use baking for…”* | `"profile": "cursor"` |
+| **Claude Code** | `/baking` · baking skill · natural language | `"profile": "claude"` |
+
+Single global config: `~/.cursor/opus-sonnet/config.json`. **No** per-repo Baking install.
 
 ---
 
 ## Features
 
-### Handoff diary — El plan no se pierde en el chat
+### Handoff diary — Plans do not die in the chat
 
-Cada corrida seria deja un archivo en `.cursor/handoff/YYYY-MM-DD-slug.md`: contexto, criterios de done, ejecución y verify. El executor recibe **la ruta**, no un resumen. La próxima sesión retoma desde ahí.
+Every serious run leaves a file at `.cursor/handoff/YYYY-MM-DD-slug.md`: context, done criteria, execution, and verify. The executor gets the **path**, not a summary. The next session picks up from there.
 
-**[Modelo mental →](docs/baking-ai/intended-usage.md)** · **[Referencia Cursor →](BAKING-CURSOR.md)** · **[Claude Code →](claude-code/BAKING.md)**
-
----
-
-### Routing — Opus planifica, executor barato implementa
-
-Baking clasifica **PLAN / EXECUTE / TRIVIAL / PLAN-ONLY**, elige `planner` vs `planner-hyper` (Fable) vs executor directo, y evita Opus como chat principal.
-
-**[Routing completo →](docs/baking-ai/routing.md)** · **[Casos reales →](docs/baking-ai/use-cases.md)**
+**[Mental model →](docs/baking-ai/intended-usage.md)** · **[Cursor reference →](BAKING-CURSOR.md)** · **[Claude Code →](claude-code/BAKING.md)**
 
 ---
 
-### Light stack — Memoria, verify, skills (opcional)
+### Routing — Opus plans, a cheaper executor implements
 
-Cuatro piezas en `lightStack` (default on en v1.5+):
+Baking classifies **PLAN / EXECUTE / TRIVIAL / PLAN-ONLY**, picks `planner` vs `planner-hyper` (Fable) vs a direct executor, and avoids Opus as the main chat model.
 
-| Pieza | Para qué |
-|-------|----------|
-| **Engram** | Decisiones entre sesiones/repos (`mem_save`, `mem_context`) |
-| **Verify** | Criterios del handoff vs `git diff` al cierre |
-| **Skill registry** | `baking skill-registry` → invocar la skill correcta |
-| **Witch** | Solo Boogiepop/starter (off por default) |
+**[Routing →](docs/baking-ai/routing.md)** · **[Use cases →](docs/baking-ai/use-cases.md)**
+
+---
+
+### Light stack — Memory, verify, skills (optional)
+
+Four optional pieces under `lightStack` (on by default since v1.5):
+
+| Piece | Purpose |
+|-------|---------|
+| **Engram** | Decisions across sessions/repos (`mem_save`, `mem_context`) |
+| **Verify** | Handoff criteria vs `git diff` at close |
+| **Skill registry** | `baking skill-registry` → invoke the right skill |
+| **Witch** | Boogiepop/starter code orientation only (off by default) |
 
 **[LIGHT-STACK.md →](LIGHT-STACK.md)**
 
 ---
 
-### Init-memory — Bootstrap estilo Claude `/init`
+### Init-memory — Project bootstrap
 
-Escanea el repo, genera borrador de `AGENTS.md`, temas Engram y regla Cursor. Luego una corrida **PLAN-ONLY** completa la memoria persistente.
+Scans the repo, drafts `AGENTS.md`, Engram topics, and a Cursor rule. A **PLAN-ONLY** run then fills persistent memory.
 
 ```bash
 baking init-memory          # scan → .cursor/baking/init/
-# en el chat:
+# in chat:
 /init-memory                # PLAN-ONLY + mem_save
 ```
 
@@ -74,43 +74,43 @@ baking init-memory          # scan → .cursor/baking/init/
 
 ---
 
-### Auto-route — Baking por default (toggle)
+### Auto-route — Baking by default (toggle)
 
-Opcional. Sin repetir `/baking` en cada prompt de implementación:
+Optional. Stop repeating `/baking` on every implementation prompt:
 
 ```bash
-baking auto-route on    # pedidos de código → ROUTER automático
-baking auto-route off   # volver a invocar /baking explícito
+baking auto-route on    # code tasks → ROUTER automatically
+baking auto-route off   # require explicit /baking again
 baking auto-route status
 ```
 
-Config: `autoRoute.enabled` en `~/.cursor/opus-sonnet/config.json`.
+Config: `autoRoute.enabled` in `~/.cursor/opus-sonnet/config.json`.
 
 ---
 
-### Métricas — ¿El routing y el ahorro son ciertos?
+### Metrics — Is routing (and savings) real?
 
-Append JSONL por corrida (`.cursor/baking/metrics/runs.jsonl`). Revisión cada **7 días o 50 runs**:
+One JSONL line per run (`.cursor/baking/metrics/runs.jsonl`). Review every **7 days or 50 runs**:
 
 ```bash
 baking metrics-summary
 baking metrics-review --status
-baking metrics-review              # conclusión routing/ahorro
+baking metrics-review              # routing/savings conclusion
 ```
 
 **[METRICS.md →](METRICS.md)**
 
 ---
 
-### creative-brief-bar — Landings que no parecen template
+### creative-brief-bar — Landings that do not look like templates
 
-Gate de calidad perceptual para pedidos visuales (craft, assets, prod+spec). Ver `creative-brief-bar.md`.
+Perceptual quality gate for visual work (craft, assets, prod+spec). See `creative-brief-bar.md`.
 
 ---
 
 ## Get started
 
-> **Clonar GitHub ≠ instalar.** Después del clone hay que correr `install`.
+> **Cloning GitHub ≠ installing.** Run `install` after clone.
 
 ### macOS / Linux
 
@@ -129,31 +129,31 @@ node bin/baking.js install
 node bin/baking.js doctor
 ```
 
-### Sin clonar
+### Without cloning
 
 ```bash
 npx github:admin-zyta/baking install
-# repo privado: GH_TOKEN=ghp_... npx github:admin-zyta/baking install
+# private repo: GH_TOKEN=ghp_... npx github:admin-zyta/baking install
 ```
 
-### Engram (memoria cross-sesión, recomendado)
+### Engram (cross-session memory, recommended)
 
 ```bash
 go install github.com/Gentleman-Programming/engram/cmd/engram@latest
 engram setup cursor
-# reiniciar Cursor → baking doctor → Engram MCP: OK
+# restart Cursor → baking doctor → Engram MCP: OK
 ```
 
-Guía paso a paso: **[docs/baking-ai/quickstart.md](docs/baking-ai/quickstart.md)**
+Step-by-step: **[docs/baking-ai/quickstart.md](docs/baking-ai/quickstart.md)**
 
 ---
 
-## Uso diario
+## Daily usage
 
-### Primera corrida en un proyecto
+### First run in a project
 
 ```bash
-mkdir -p .cursor/handoff .cursor/baking/metrics   # o dejar que Baking lo cree
+mkdir -p .cursor/handoff .cursor/baking/metrics   # or let Baking create them
 ```
 
 **Cursor / Claude Code:**
@@ -161,23 +161,23 @@ mkdir -p .cursor/handoff .cursor/baking/metrics   # o dejar que Baking lo cree
 ```
 /baking
 
-Agregá validación de email en el formulario de signup
+Add email validation to the signup form
 ```
 
-Recibís: clasificación · path del handoff (si hubo plan) · YAML de cierre · línea en `runs.jsonl`.
+You get: classification · handoff path (if planned) · closing YAML · line in `runs.jsonl`.
 
-### Modos que importan
+### Modes that matter
 
-| Modo | Cuándo |
-|------|--------|
-| **PLAN+EXECUTE** | Feature, multi-archivo, ambigüedad |
-| **PLAN-ONLY** | *"solo plan"* / *"planifiquemos"* — sin código hasta *"ejecutá"* |
-| **EXECUTE** | Handoff ya existe, fix obvio, typo |
-| **TRIVIAL** | 2–3 comandos, status check |
+| Mode | When |
+|------|------|
+| **PLAN+EXECUTE** | Feature, multi-file, ambiguity |
+| **PLAN-ONLY** | *“plan only”* — no code until *“execute”* |
+| **EXECUTE** | Handoff exists, obvious fix, typo |
+| **TRIVIAL** | 2–3 commands, status check |
 
-### Perfil de modelos
+### Model profiles
 
-Editar `~/.cursor/opus-sonnet/config.json`:
+Edit `~/.cursor/opus-sonnet/config.json`:
 
 ```json
 {
@@ -188,10 +188,10 @@ Editar `~/.cursor/opus-sonnet/config.json`:
 }
 ```
 
-| Perfil | Planner | Executor | Pool |
-|--------|---------|----------|------|
-| `cursor` | Opus / Fable | Composer | Mixto (default) |
-| `hybrid` | Grok | Composer | 100% Cursor Models |
+| Profile | Planner | Executor | Pool |
+|---------|---------|----------|------|
+| `cursor` | Opus / Fable | Composer | Mixed (default) |
+| `hybrid` | Grok | Composer | Cursor Models only |
 | `claude` | Opus / Fable | Sonnet + Haiku mecanic | Claude Code |
 
 ---
@@ -199,47 +199,47 @@ Editar `~/.cursor/opus-sonnet/config.json`:
 ## CLI
 
 ```bash
-baking install [--force-config]   # deploy global Cursor + Claude
-baking doctor                     # agentes + light stack + auto-route
-baking skill-registry [--force]   # índice de skills (~/.cursor/baking/)
+baking install [--force-config]   # deploy globally to Cursor + Claude
+baking doctor                     # agents + light stack + auto-route
+baking skill-registry [--force]   # skill index (~/.cursor/baking/)
 baking init-memory [--force]      # bootstrap AGENTS + Engram topics
-baking auto-route on|off|status   # toggle Baking por default
-baking metrics-summary [path]     # resumen JSONL
-baking metrics-review [--status]  # conclusión 7d / 50 runs
+baking auto-route on|off|status   # toggle Baking as default
+baking metrics-summary [path]     # JSONL summary
+baking metrics-review [--status]  # 7d / 50-run conclusion
 baking version
 ```
 
-Publicar npm: **[NPM.md](NPM.md)**
+Publishing npm: **[NPM.md](NPM.md)**
 
 ---
 
-## Documentación
+## Documentation
 
-| Dónde | Qué encontrás |
-|-------|----------------|
-| **[Intended usage](docs/baking-ai/intended-usage.md)** | Modelo mental — **si leés una, que sea esta** |
-| **[Quickstart](docs/baking-ai/quickstart.md)** | Instalar, perfiles, primera corrida, troubleshooting |
-| **[Use cases](docs/baking-ai/use-cases.md)** | Zyta, Boogiepop, deploy, fixes… |
-| **[Components](docs/baking-ai/components.md)** | Cada pieza, agentes, perfiles |
+| Doc | Contents |
+|-----|----------|
+| **[Intended usage](docs/baking-ai/intended-usage.md)** | Mental model — **start here if you read one page** |
+| **[Quickstart](docs/baking-ai/quickstart.md)** | Install, profiles, first run, troubleshooting |
+| **[Use cases](docs/baking-ai/use-cases.md)** | Real scenarios |
+| **[Components](docs/baking-ai/components.md)** | Pieces, agents, profiles |
 | **[Routing](docs/baking-ai/routing.md)** | PLAN / EXECUTE / Hyper / mecanic / fork |
 | **[LIGHT-STACK.md](LIGHT-STACK.md)** | Engram, Verify, Witch, registry |
-| **[INIT-MEMORY.md](INIT-MEMORY.md)** | Bootstrap memoria de proyecto |
-| **[METRICS.md](METRICS.md)** | JSONL, bench S0 vs S3, `metrics-review` |
-| **[ROUTER.md](ROUTER.md)** · **[consumption.md](consumption.md)** | Reglas del orquestador |
-| **[AGENTS.md](AGENTS.md)** | Nombres exactos Task / Agent en Cursor |
+| **[INIT-MEMORY.md](INIT-MEMORY.md)** | Project memory bootstrap |
+| **[METRICS.md](METRICS.md)** | JSONL, S0 vs S3 bench, `metrics-review` |
+| **[ROUTER.md](ROUTER.md)** · **[consumption.md](consumption.md)** | Orchestrator rules |
+| **[AGENTS.md](AGENTS.md)** | Exact Task / Agent names in Cursor |
 
 ---
 
-## Flujo (30 segundos)
+## Flow (30 seconds)
 
 ```
-Usuario → Baking (orquestador barato)
-           ├─ [opcional] mem_context / mem_search (Engram)
-           ├─ PLAN → planner | planner-hyper
-           └─ EXECUTE → executor | executor-mecanic | directo
-           → .cursor/handoff/YYYY-MM-DD-slug.md
-           → Verify (handoff vs diff)
-           → YAML + runs.jsonl + mem_session_summary
+User → Baking (cheap orchestrator)
+         ├─ [optional] mem_context / mem_search (Engram)
+         ├─ PLAN → planner | planner-hyper
+         └─ EXECUTE → executor | executor-mecanic | direct
+         → .cursor/handoff/YYYY-MM-DD-slug.md
+         → Verify (handoff vs diff)
+         → YAML + runs.jsonl + mem_session_summary
 ```
 
 ---
@@ -247,14 +247,14 @@ Usuario → Baking (orquestador barato)
 ## Repo (maintainers)
 
 ```
-~/.cursor/opus-sonnet/          ← clone de admin-zyta/baking
-  global/cursor/                → deploy a ~/.cursor/
-  global/claude/                → deploy a ~/.claude/
+~/.cursor/opus-sonnet/          ← clone of admin-zyta/baking
+  global/cursor/                → deploy to ~/.cursor/
+  global/claude/                → deploy to ~/.claude/
   bin/baking.js                 → CLI
-  config.json                   → defaults (install no pisa el tuyo)
+  config.json                   → defaults (install keeps your existing file)
 ```
 
-Después de editar:
+After editing:
 
 ```powershell
 # bump VERSION, CHANGELOG, bakingVersion
@@ -264,25 +264,12 @@ git commit && git tag vX.Y.Z && git push && git push origin vX.Y.Z
 
 ---
 
-## Baking vs Gentle-AI
+## Deprecated
 
-| | **Gentle-AI** | **Baking-AI** |
-|---|---------------|---------------|
-| Alcance | SDD, ODD, RDD, 16 agentes, binary `gentle-ai` | Router + handoff + gates |
-| Memoria | Engram (ecosistema) | Engram (light stack, MCP) |
-| Instalación | Por componente / agente | Global, una vez |
-| Ideal para | Workflow determinístico multi-IDE | Cursor + Claude Code, costo Opus/Composer |
-
-Comparativa ampliada: guía HTML en Desktop (`gentle-ai-baking-guia.html`) si la tenés local.
-
----
-
-## Deprecado
-
-`/init-baking` por repo, `enable-project.ps1`, `.cursor/opus-sonnet.json` local — ver skill `init-baking` (alias de **`init-memory`**).
+Per-repo `/init-baking`, `enable-project.ps1`, local `.cursor/opus-sonnet.json` — see `init-baking` skill (alias of **`init-memory`**).
 
 ---
 
 ## Changelog
 
-Ver **[CHANGELOG.md](CHANGELOG.md)** (Keep a Changelog).
+See **[CHANGELOG.md](CHANGELOG.md)** (Keep a Changelog).
