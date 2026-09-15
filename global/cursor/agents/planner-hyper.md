@@ -2,6 +2,7 @@
 name: planner-hyper
 description: Deep plan (Cursor) — Fable. Alias of planner-hyper-cursor; the Task name used by Baking/config.
 model: claude-fable-5[effort=high]
+color: magenta
 force-default-model: true
 readonly: false
 ---

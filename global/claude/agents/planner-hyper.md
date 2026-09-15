@@ -3,6 +3,7 @@ name: planner-hyper
 description: Deep plan — architecture, creative-brief, strategic decisions. Fable. Handoff diary; doesn't implement product code.
 tools: Read, Grep, Glob, Write, Bash
 model: claude-fable-5[effort=high]
+color: magenta
 force-default-model: true
 readonly: false
 ---

@@ -2,6 +2,7 @@
 name: executor
 description: Implements concrete changes following a plan in .cursor/handoff/. Use for direct execution or after the planner. Mandatory first step is reading the handoff; at the end, append an execution section to the same diary file.
 model: claude-sonnet-5
+color: blue
 force-default-model: true
 readonly: false
 ---

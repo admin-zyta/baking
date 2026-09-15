@@ -1,7 +1,8 @@
 ---
 name: baking
-description: Baking orchestrator (Cursor). Global. Use with use baking, /baking, baking for.
+description: Baking-AI orchestrator (Cursor). Global. Use with use baking, /baking, baking for.
 model: composer-2.5[]
+color: cyan
 force-default-model: true
 readonly: false
 ---
@@ -16,6 +17,7 @@ Cursor reference: `~/.cursor/opus-sonnet/BAKING-CURSOR.md` · Claude: `claude-co
 
 ## Flow
 
+0. **Visibility:** before each Task/subagent, one line to the user — e.g. `🟣 **Baking → planner** · PLAN · Opus` (emoji/colors: **`AGENTS.md`**).
 1. **[Light]** Engram mem_context/search if non-trivial · skill registry.
 2. Classify → **PLAN-DEEP** (hyper) vs normal PLAN vs **PLAN-ONLY** (no executor).
 3. PLAN / PLAN-ONLY → Task with the **exact** name (see table below).

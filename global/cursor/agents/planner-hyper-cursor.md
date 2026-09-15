@@ -2,6 +2,7 @@
 name: planner-hyper-cursor
 description: Deep plan (Cursor) — Fable. Architecture, creative-brief, decisions. Handoff diary; doesn't implement product code.
 model: claude-fable-5[effort=high]
+color: magenta
 force-default-model: true
 readonly: false
 ---

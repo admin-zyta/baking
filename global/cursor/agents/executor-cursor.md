@@ -2,6 +2,7 @@
 name: executor-cursor
 description: Implements with Composer (Cursor Models pool). Use in cursor or hybrid profile. Reads the handoff first; asset verify; anti-fork; appends Execution to the diary.
 model: composer-2.5[]
+color: green
 force-default-model: true
 readonly: false
 ---

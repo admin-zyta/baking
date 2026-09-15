@@ -2,6 +2,7 @@
 name: planner-cursor
 description: Plans or researches with Cursor models (Grok). Use in the cursor profile. Writes the handoff diary in handoffDir. Doesn't implement product code.
 model: grok-4.6[]
+color: yellow
 force-default-model: true
 readonly: false
 ---

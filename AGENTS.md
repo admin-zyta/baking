@@ -2,6 +2,24 @@
 
 **Important:** agents live in **`~/.cursor/agents/`** and **`~/.claude/agents/`** after `node bin/baking.js install`. Cloning the repo is **not** enough.
 
+## Agent colors
+
+Frontmatter `color:` (Claude Code UI; Cursor may ignore). The orchestrator **must** announce each delegation in chat:
+
+`🟣 **Baking → planner** · PLAN · Opus`
+
+| Agent | Color | Emoji | Role |
+|-------|-------|-------|------|
+| `baking` | cyan | 🩵 | Orchestrator |
+| `planner` | purple | 🟣 | Plan · Opus |
+| `planner-hyper` / `planner-hyper-cursor` | magenta | 🩷 | Deep plan · Fable |
+| `planner-cursor` | yellow | 🟡 | Plan · Grok (hybrid) |
+| `executor-cursor` | green | 🟢 | Execute · Composer |
+| `executor` | blue | 🔵 | Execute · Sonnet |
+| `executor-mecanic` | orange | 🟠 | Mecanic · Haiku (Claude only) |
+
+Programmatic map: `lib/agent-colors.js`.
+
 ## Cursor (`~/.cursor/agents/`)
 
 | Task `subagent_type` | File | Role |

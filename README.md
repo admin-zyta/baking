@@ -73,13 +73,25 @@ baking init-memory          # scan → .cursor/baking/init/
 
 ---
 
-### Auto-route — Baking by default (toggle)
-
-Optional. Stop repeating `/baking` on every implementation prompt:
+### Per-project required — Baking mandatory in this repo
 
 ```bash
-baking auto-route on    # code tasks → ROUTER automatically
-baking auto-route off   # require explicit /baking again
+cd your-repo
+baking require on       # .cursor/baking/required.json
+baking require off
+baking require status
+baking init-memory --require
+```
+
+Implementation in that repo **must** use Baking-AI. Questions may still gate-out. See **[INIT-MEMORY.md →](INIT-MEMORY.md)**.
+
+### Auto-route — global fallback (optional)
+
+For all repos **without** a require marker (default off):
+
+```bash
+baking auto-route on
+baking auto-route off
 baking auto-route status
 ```
 
@@ -202,7 +214,8 @@ baking install [--force-config]   # deploy globally to Cursor + Claude
 baking doctor                     # agents + light stack + auto-route
 baking skill-registry [--force]   # skill index (~/.cursor/baking/)
 baking init-memory [--force]      # bootstrap AGENTS + Engram topics
-baking auto-route on|off|status   # toggle Baking as default
+baking require on|off|status       # per-repo mandatory Baking
+baking auto-route on|off|status   # global fallback (default off)
 baking metrics-summary [path]     # JSONL summary
 baking metrics-review [--status]  # 7d / 50-run conclusion
 baking version

@@ -3,6 +3,7 @@ name: executor
 description: Implements per the handoff. Sonnet. Asset verify, anti-fork, CRAFT-BAR, appends Execution with scores.
 tools: Read, Grep, Glob, Write, Edit, Bash
 model: sonnet
+color: blue
 ---
 
 You are the **Executor** (Claude Code). You implement per the plan.

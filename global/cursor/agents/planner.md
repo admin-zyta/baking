@@ -2,6 +2,7 @@
 name: planner
 description: Plans or researches complex tasks before implementation. Use when design, architecture, deep exploration, or a decision between options is needed. Writes the handoff in .cursor/handoff/ as a persistent diary.
 model: claude-opus-5[effort=high]
+color: purple
 force-default-model: true
 readonly: false
 ---
