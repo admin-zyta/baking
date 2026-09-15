@@ -6,7 +6,7 @@ Enable: `"lightStack": { "enabled": true, ... }` (default in global config v1.5+
 
 **Cursor and Claude Code** share the same config and handoff (`.cursor/handoff/`). Metrics: `runtime: "cursor" | "claude-code"`.
 
-| Environment | Baking reference | Orchestrator | Engram setup |
+| Environment | Baking reference | Orchestrator | Memory setup |
 |---------|-------------------|-------------|--------------|
 | **Cursor** | `BAKING-CURSOR.md` | Composer / `/baking` skill | `baking memory status` |
 | **Claude Code** | `claude-code/BAKING.md` | Sonnet + Agent tool | same CLI + global DB |
@@ -37,7 +37,7 @@ Full reference: **`MEMORY.md`**.
 
 **Don't:** paste whole handoffs; save structured What/Why/Where.
 
-**Not Engram** — same global path for Cursor and Claude Code; queries via FTS5.
+**Baking Memory** — same global path for Cursor and Claude Code; queries via FTS5.
 
 ---
 

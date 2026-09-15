@@ -1,0 +1,63 @@
+---
+description: Baking Memory — memoria global entre sesiones (light stack)
+alwaysApply: true
+---
+
+## Baking Memory — protocol
+
+Cross-repo / cross-session decisions live in **`~/.cursor/baking/memory/baking-memory.db`** (SQLite FTS). Same store for Cursor and Claude Code. CLI: `baking memory …` · spec: `~/.cursor/opus-sonnet/MEMORY.md`.
+
+Active when `lightStack.memory.provider` is `"baking"` in config.
+
+### WHEN TO SAVE (mandatory — not optional)
+
+Run `baking memory save` after any of these:
+
+- Bug fix completed
+- Architecture or design decision made
+- Non-obvious discovery about the codebase
+- Configuration change or environment setup
+- Pattern established (naming, structure, convention)
+- User preference or constraint learned
+
+Format:
+
+```bash
+baking memory save \
+  --topic "<project>/<slug>" \
+  --title "Verb + what — short, searchable" \
+  --body "**What**: … **Why**: … **Where**: … **Learned**: …" \
+  --type decision \
+  --project "<repo-slug>"
+```
+
+Types: `decision` · `session` · `architecture` · `discovery` · `pattern`
+
+Reuse the same `--topic` to update an evolving decision (new row; search by topic).
+
+### WHEN TO SEARCH
+
+When the user asks to recall past work — "remember", "recall", "recordar", "qué hicimos", etc.:
+
+1. `baking memory context --query "<terms>"` (recent + relevant)
+2. If weak, `baking memory search "<keywords>"`
+
+Also search **proactively** when starting work that may have been decided in another repo or session.
+
+### SESSION CLOSE (mandatory for non-trivial Baking runs)
+
+Before "done" / "listo", save a session summary:
+
+```bash
+baking memory save \
+  --type session \
+  --title "Session summary" \
+  --body "## Goal\n…\n## Discoveries\n- …\n## Accomplished\n- …\n## Next Steps\n- …"
+```
+
+Five bullets minimum. Skipping this leaves the next session blind.
+
+### DON'T
+
+- Dump whole handoffs or READMEs into memory
+- Save every chat turn — only durable decisions and conventions

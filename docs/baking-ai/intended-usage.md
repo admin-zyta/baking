@@ -82,7 +82,7 @@ You edit `"profile"` in `~/.cursor/opus-sonnet/config.json`:
 
 ## Light stack — optional but recommended
 
-Three **lightweight** hooks (not Gentle-AI):
+Three **lightweight** hooks (not a full SDD pipeline):
 
 1. **Baking Memory** — decisions across sessions/repos (`baking memory …`)
 2. **Verify** — handoff vs diff at close

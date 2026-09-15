@@ -102,7 +102,7 @@ Cursor: TRIVIAL → `executor-cursor` → (no native fork equivalent).
 - Paraphrasing the plan to the executor (**path** only)
 - `fork` for PLAN (loses Opus/Fable)
 - `completed` based only on build for landings
-- SDD Gentle-AI on top of the starter (duplication)
+- SDD-style multi-phase pipelines on top of the starter (duplication)
 
 ---
 

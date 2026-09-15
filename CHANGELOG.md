@@ -2,15 +2,26 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.9.1] — 2026-09-15
+
+### Added
+
+- **`baking-memory.mdc`** — global Cursor rule for Baking Memory protocol (save/search/close).
+
+### Removed
+
+- All third-party memory product references from docs and changelog history wording.
+- **`engram-memory.mdc`** — deleted from `~/.cursor/rules/` on `baking install`.
+
 ## [1.9.0] — 2026-09-15
 
 ### Added
 
-- **Baking Memory** — global cross-session store (`MEMORY.md`): SQLite + FTS5 at `~/.cursor/baking/memory/`, CLI `baking memory save|search|context|status`. Replaces Engram as default `lightStack.memory.provider`.
+- **Baking Memory** — global cross-session store (`MEMORY.md`): SQLite + FTS5 at `~/.cursor/baking/memory/`, CLI `baking memory save|search|context|status`. Default `lightStack.memory.provider: "baking"`.
 
 ### Removed
 
-- **Engram** as default/recommended memory — use `baking memory` (same path for Cursor + Claude Code).
+- Third-party MCP memory as recommended light-stack provider — use `baking memory` (same path for Cursor + Claude Code).
 
 ## [1.8.1] — 2026-09-15
 
@@ -53,14 +64,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `V
 
 ### Changed
 
-- Light stack is **three pieces**: Engram, Verify, skill registry (`LIGHT-STACK.md`).
+- Light stack is **three pieces**: cross-session memory, Verify, skill registry (`LIGHT-STACK.md`).
 - npm package renamed `@boogiepop/baking` → `@admin-zyta/baking`.
 
 ## [1.6.0] — 2026-09-15
 
 ### Added
 
-- **`baking init-memory`** — repo scan → `.cursor/baking/init/` + `AGENTS.md` (create) or audit + **`/init-memory`** skill (PLAN-ONLY + Engram).
+- **`baking init-memory`** — repo scan → `.cursor/baking/init/` + `AGENTS.md` (create) or audit + **`/init-memory`** skill (PLAN-ONLY + Baking Memory saves).
 - **`baking auto-route on|off|status`** — optional toggle: Baking by default on code requests (`autoRoute.enabled` in config).
 - **`INIT-MEMORY.md`** · updated gate rule (auto-route + Q&A exclusions).
 
@@ -89,22 +100,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `V
 ### Added
 
 - **Cursor + Claude Code parity** for the light stack: `claude-code/BAKING.md`, Claude agents/skills, `executor` verify, `consumption.md`, `ROUTER.md`.
-- Engram doctor detects `~/.cursor/mcp.json` and `~/.claude/settings.json`.
+- Light stack doctor checks memory provider + skill registry paths.
 - Metrics: `outcome.scores.verify` in the schema.
 
 ## [1.5.0] — 2026-09-15
 
 ### Added
 
-- **Light stack** (`config.lightStack`, `LIGHT-STACK.md`): Engram + handoff-vs-diff verify + Boogiepop Witch + lightweight skill registry.
+- **Light stack** (`config.lightStack`, `LIGHT-STACK.md`): cross-session memory + handoff-vs-diff verify + Boogiepop Witch + lightweight skill registry.
 - **`baking skill-registry`** — generates `~/.cursor/baking/skill-registry.md` from installed skills.
-- **`baking doctor`** — reports Engram MCP (optional) and registry age.
+- **`baking doctor`** — reports Baking Memory (when enabled) and registry age.
 - Closing YAML: `verify: pass | partial | fail | skipped` field.
 - Planner: note in "Done criteria" for verify at Baking close.
 
 ### Usage
 
-- Engram: `engram setup cursor` (once) + minimal hooks in the Baking skill.
+- Memory hooks in the Baking skill (`baking memory …` when provider is `baking`).
 - Registry: `baking skill-registry` (weekly or `--force`).
 
 ## [1.4.1] — 2026-09-14

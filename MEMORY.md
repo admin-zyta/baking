@@ -1,6 +1,6 @@
 # Baking Memory — global cross-session store
 
-Replaces **Engram** for Baking-AI. Same global path for **Cursor and Claude Code**.
+Native Baking-AI memory. Same global path for **Cursor and Claude Code**.
 
 ## Problem
 
@@ -22,7 +22,7 @@ Config: `lightStack.memory.provider: "baking"` in `~/.cursor/opus-sonnet/config.
 baking memory status
 baking memory save --topic baking/routing --title "Auto-route off by default" --body "Prefer baking require on per repo."
 baking memory search "global memory sqlite"
-baking memory context --query "engram replacement"
+baking memory context --query "cross-session memory sqlite"
 ```
 
 ### Save fields
