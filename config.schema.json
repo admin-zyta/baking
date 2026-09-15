@@ -11,6 +11,13 @@
       "type": "boolean",
       "description": "Activa el gate automático (config global única)."
     },
+    "autoRoute": {
+      "type": "object",
+      "description": "Si enabled: Baking en pedidos de código sin /baking explícito (toggle: baking auto-route on|off)",
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
     "profile": {
       "type": "string",
       "enum": ["claude", "cursor", "hybrid"],
@@ -77,7 +84,38 @@
       "properties": {
         "enabled": { "type": "boolean" },
         "dir": { "type": "string" },
-        "file": { "type": "string" }
+        "file": { "type": "string" },
+        "review": {
+          "type": "object",
+          "description": "Ciclo de conclusión: intervalDays OR minRuns (ver METRICS.md)",
+          "properties": {
+            "intervalDays": { "type": "integer", "minimum": 1 },
+            "minRuns": { "type": "integer", "minimum": 1 },
+            "routingAuditSample": { "type": "integer", "minimum": 1 },
+            "routingMaxBadPct": { "type": "number", "minimum": 0 },
+            "savingsMinPairs": { "type": "integer", "minimum": 0 },
+            "savingsMinPct": { "type": "number" }
+          }
+        }
+      }
+    },
+    "lightStack": {
+      "type": "object",
+      "description": "Light stack: Engram + verify + Witch + skill registry (ver LIGHT-STACK.md)",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "memory": { "type": "object" },
+        "verify": { "type": "object" },
+        "witch": { "type": "object" },
+        "skillRegistry": { "type": "object" }
+      }
+    },
+    "initMemory": {
+      "type": "object",
+      "properties": {
+        "agentsFile": { "type": "string" },
+        "projectRuleFile": { "type": "string" },
+        "scanDir": { "type": "string" }
       }
     }
   }

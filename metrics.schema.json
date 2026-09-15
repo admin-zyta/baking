@@ -70,7 +70,15 @@
       "type": "object",
       "properties": {
         "status": { "enum": ["completed", "partial", "blocked", "plan-ready"] },
-        "scores": { "type": "object" }
+        "scores": {
+          "type": "object",
+          "properties": {
+            "spec": { "enum": ["pass", "partial", "fail"] },
+            "craft": { "enum": ["pass", "partial", "fail"] },
+            "assets": { "enum": ["pass", "fail"] },
+            "verify": { "enum": ["pass", "partial", "fail", "skipped"] }
+          }
+        }
       }
     },
     "review": {

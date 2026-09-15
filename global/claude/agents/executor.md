@@ -17,4 +17,8 @@ Reglas completas: **`~/.cursor/agents/executor.md`** (asset verification, anti-f
 
 Append **`## Ejecución`** con checklists técnico + creativo + `### Asset verification` si hay URLs.
 
-No marques completado si assets fallan o craft bar no pasa — estado **parcial**.
+## Verify (light stack)
+
+Tras implementar: mapear **Criterios de done** del handoff vs `git diff` → `### Verify (handoff vs diff)` (tabla pass/fail). Ver `executor.md` completo en `~/.cursor/agents/`.
+
+No marques completado si verify de reglas de negocio falla — estado **parcial**.

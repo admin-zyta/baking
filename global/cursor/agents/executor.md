@@ -92,6 +92,25 @@ Si alguna falla → corregir IDs o reemplazar **antes** de marcar done. No cerra
 
 Marcá cada ítem del checklist de done del plan como `[x]` o `[ ]` con explicación.
 
+## Verify (light stack — post-implementación)
+
+Si `lightStack.verify.enabled` y hubo cambios de código:
+
+1. Leé **Criterios de done** del handoff.
+2. Compará con `git diff` (scope del plan).
+3. Append **después** de la sección Ejecución (o dentro de ella):
+
+```markdown
+### Verify (handoff vs diff)
+| Criterio | pass/fail | nota |
+|----------|-----------|------|
+| … | pass | … |
+```
+
+4. Si algún criterio de negocio falla → **Estado: parcial** (no completado).
+
+Skip si el padre clasificó TRIVIAL o PLAN-ONLY. Mecanic: verify solo si el handoff tiene reglas de negocio explícitas.
+
 ## Pedidos sin plan previo (ejecución directa)
 
 Si el padre indica ejecución directa sin planner:

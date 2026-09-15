@@ -28,6 +28,22 @@ Subagentes globales: `~/.cursor/agents/` (planner, planner-hyper-cursor, planner
 
 Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY** (no inferir EXECUTE después).
 
+### Light stack (v1.5 — ligero)
+
+Si `lightStack.enabled` en config → **`LIGHT-STACK.md`**. Cuatro hooks, uso mínimo:
+
+| Pieza | Cuándo | Acción |
+|-------|--------|--------|
+| **Engram** | Inicio no trivial | `mem_context` + `mem_search` (máx. 2 calls) |
+| **Engram** | Cierre | `mem_session_summary` (5 bullets) |
+| **Skill registry** | Si pedido matchea skill | Leer `~/.cursor/baking/skill-registry.md` → Read solo ese SKILL.md |
+| **Witch** | Boogiepop + ≥4 archivos explore | `starter_witch_plan` antes de Grep masivo |
+| **Verify** | Post-EXECUTE | Handoff criterios vs `git diff` → `## Verify` + YAML `verify:` |
+
+Skip verify en `TRIVIAL` / `PLAN-ONLY`. `verify: fail` → `status: partial`.
+
+Refresh registry: `baking skill-registry` (semanal o al agregar skills).
+
 ### PLAN-DEEP → `planner-hyper-cursor` (Fable)
 
 **Explícito:** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper-cursor`**, `plan_mode: explicit-deep`.
@@ -123,7 +139,7 @@ Antes de cerrar, evaluar scores en el handoff (executor debe haber corrido asset
 
 ```yaml
 baking:
-  version: "1.0.0"   # config.bakingVersion
+  version: "1.5.1"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | PLAN-ONLY | PLAN-REVISE | EXECUTE | TRIVIAL
   plan_agent: planner | hyper | skipped
@@ -133,13 +149,14 @@ baking:
     spec: pass | partial | fail
     craft: pass | partial | fail
     assets: pass | fail
+  verify: pass | partial | fail | skipped
   status: completed | partial | blocked
   models: { planner: opus-5|fable|grok, executor: composer-2.5 }
 ```
 
 **Reglas de cierre:**
 
-- **partial** si build OK pero `craft: partial|fail` o `assets: fail`
+- **partial** si build OK pero `craft: partial|fail`, `assets: fail`, o **`verify: fail|partial`**
 - **nunca completed** con `assets: fail`
 - **nunca completed** en landing creativa sin revisar craft bar (handoff o `docs/CRAFT-BAR.md`)
 

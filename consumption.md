@@ -143,3 +143,19 @@ notificación explícita — el config puede sincronizarse en caliente sin avisa
 - Proyectos con mucho Agent: `profile: "cursor"` (Opus plan + Composer exec).
 - Sin Opus en absoluto: `profile: "hybrid"` (Grok + Composer).
 - Proyectos críticos end-to-end Claude: `profile: "claude"`.
+
+## Light stack (Cursor + Claude Code)
+
+Si `lightStack.enabled` en config → **`LIGHT-STACK.md`**. Misma config global; métricas usan `runtime: cursor | claude-code`.
+
+| Hook | Orquestador | Tokens |
+|------|-------------|--------|
+| Engram inicio | `mem_context` + `mem_search` si no trivial | ≤2 calls |
+| Skill registry | Read 1 SKILL.md si matchea índice | 1 read |
+| Witch | `starter_witch_plan` en Boogiepop explore (≥4 archivos) | 1 call |
+| Verify cierre | Handoff criterios vs `git diff` → `## Verify` | sin subagente SDD |
+| Engram fin | `mem_session_summary` | 1 call |
+
+Skip verify en TRIVIAL / PLAN-ONLY. Claude Code: verify al cierre del orquestador o en `## Ejecución` del executor/fork.
+
+Refresh skills: `baking skill-registry` (global `~/.cursor/baking/skill-registry.md`).

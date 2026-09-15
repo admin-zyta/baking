@@ -1,6 +1,9 @@
 # Baking — planner → executor (global)
 
-Orquestador **Baking**: Opus planifica, executor implementa, diary en `.cursor/handoff/`.
+Orquestador **Baking** (Baking-AI): Opus planifica, executor implementa, diary en `.cursor/handoff/`.
+
+**Documentación producto:** **[BAKING-AI.md](./BAKING-AI.md)** → [docs/baking-ai/](./docs/baking-ai/README.md)  
+**HTML (Desktop):** `baking-ai-docs.html`
 
 **Versión:** ver `VERSION` y `config.json` → `bakingVersion`.
 
@@ -20,7 +23,7 @@ Orquestador **Baking**: Opus planifica, executor implementa, diary en `.cursor/h
   global/claude/     → deploy a ~/.claude/
   BAKING-CURSOR.md
   claude-code/BAKING.md
-  ROUTER.md, consumption.md, creative-brief-bar.md
+  ROUTER.md, consumption.md, creative-brief-bar.md, LIGHT-STACK.md
 ```
 
 ## Deploy (después de pull o editar el repo)
@@ -55,7 +58,8 @@ Perfil: editar `"profile"` en `config.json` (`cursor` | `claude` | `hybrid`).
 
 - **PLAN-ONLY** — solo plan / repreguntas; sin executor hasta *"ejecutá"*
 - **PLAN+EXECUTE** — plan + implementación
-- **Closure gates** — spec / craft / assets (landings creativas)
+- **Closure gates** — spec / craft / assets / **verify** (light stack)
+- **Light stack** — Engram + verify + Witch + skill registry — ver **`LIGHT-STACK.md`**
 
 ## Versionar cambios
 

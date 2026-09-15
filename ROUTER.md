@@ -12,6 +12,19 @@ Orquestador de costo: **Opus planifica**, **Sonnet ejecuta**. Cada corrida deja 
 
 Si `enabled` no es `true`, **no aplicar** este router (invocar `/baking` manualmente).
 
+**Auto-route (opcional, v1.6+):** si `autoRoute.enabled` es `true`, aplicar este router en pedidos de implementación **sin** que el usuario diga `/baking` cada vez. Toggle: `baking auto-route on|off`. Ver **`INIT-MEMORY.md`**.
+
+**Init memoria de proyecto:** `baking init-memory` + `/init-memory` (estilo Claude `/init`).
+
+## Light stack (v1.5+)
+
+Una config (`lightStack` en `config.json`) para **Cursor y Claude Code**. Detalle: **`LIGHT-STACK.md`**.
+
+- **Engram** — amnesia (MCP en Cursor o Claude)
+- **Verify** — handoff criterios vs diff al cierre EXECUTE
+- **Witch** — orientación Boogiepop (MCP starter)
+- **Skill registry** — `baking skill-registry` → índice global
+
 ## Perfiles de modelo
 
 | Perfil | Planner normal | Planner deep (Hyper) | Executor | Pool de billing |
@@ -105,8 +118,10 @@ Respetá `consumption.maxParallelSubagents` (default 2).
 
 1. Ruta del diary
 2. PLAN + EXECUTE o solo EXECUTE
-3. Estado: completado | parcial | bloqueado
-4. Resumen breve
+3. **[Light]** Verify + YAML `verify:` si hubo código (ver `LIGHT-STACK.md`)
+4. Estado: completado | parcial | bloqueado
+5. Resumen breve
+6. **[Light]** Engram `mem_session_summary` si `lightStack.enabled`
 
 ## Reglas duras
 

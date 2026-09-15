@@ -93,6 +93,8 @@ Qué hay que lograr y qué **no** tocar.
 
 ## Criterios de done (checklist)
 
+> **Light stack verify:** Baking mapea cada ítem de esta sección contra `git diff` al cierre (pass/fail). Escribí criterios **medibles** (archivo, comportamiento, regla de negocio).
+
 - [ ] ...
 - [ ] Comando de verificación: `...`
 - [ ] Modo verificación: prod | spec | craft (landings: **prod+spec+craft**)

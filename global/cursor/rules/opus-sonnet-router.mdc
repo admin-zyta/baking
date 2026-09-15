@@ -1,14 +1,21 @@
 ---
-description: Gate Baking — config global ~/.cursor/opus-sonnet/config.json. Invocá /baking o "usemos baking".
+description: Gate Baking — config global ~/.cursor/opus-sonnet/config.json
 alwaysApply: true
 ---
 
 # Baking gate (Cursor)
 
-En pedidos de **implementación / código**:
+En pedidos de **implementación / código** (feature, fix, refactor, wiring, deploy):
 
 1. Leé **`~/.cursor/opus-sonnet/config.json`** (única fuente — **no** hay config por proyecto).
-2. Si `enabled` **no** es `true` → **ignorá** (usá **`/baking`** o *usemos baking*).
-3. Si `enabled` es `true` → seguí **`ROUTER.md`** y **`consumption.md`**.
+2. Si `enabled` **no** es `true` → **ignorá** Baking salvo `/baking` o *usemos baking* explícito.
+3. Si `enabled` es `true`:
+   - Si **`autoRoute.enabled` es `true`** → aplicá **Baking como default** (ROUTER + skill baking) **sin** que el usuario repita "/baking" en cada prompt.
+   - Si **`autoRoute.enabled` es `false`** → Baking solo con **`/baking`**, skill baking, o *usemos baking*.
+   - Seguí **`ROUTER.md`** y **`consumption.md`**.
 
-Orquestador: **Baking** (`/baking`). Todo es **global** — no instalar por repo.
+**No auto-routear** (aunque `autoRoute` esté on): preguntas puras, review-only, explicaciones, "¿qué opinás?", status check de una línea.
+
+Toggle: `baking auto-route on|off|status` · Init proyecto: `baking init-memory` + `/init-memory`.
+
+Orquestador: **Baking**. Config global — no instalar Baking por repo.

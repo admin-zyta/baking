@@ -26,5 +26,6 @@ No marques **completado** si:
 - build OK pero craft bar falla
 - algún asset externo no responde 2xx
 - quedan hits de anti-fork sin explicar
+- **verify** (handoff vs diff) falla en criterios de negocio — ver `executor.md` § Verify
 
 Estado **parcial** en esos casos — Baking evalúa scores al cerrar.

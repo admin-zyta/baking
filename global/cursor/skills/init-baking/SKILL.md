@@ -1,33 +1,18 @@
 ---
 name: init-baking
-description: DEPRECATED — Baking es global. No instalar por repo. Usar /baking o "usemos baking".
-disable-model-invocation: true
+description: Alias de init-memory — bootstrap AGENTS + Engram. Usar /init-memory o baking init-memory.
+disable-model-invocation: false
 user-invocable: true
 ---
 
-# DEPRECATED — Baking es global
+# init-baking → usar **init-memory**
 
-**No hace falta init por proyecto.** Todo vive en:
+El init por proyecto ahora es **`/init-memory`** (Baking 1.6+).
 
-- Config: `~/.cursor/opus-sonnet/config.json`
-- Cursor: `~/.cursor/skills/baking/`, `~/.cursor/agents/`
-- Claude Code: `~/.claude/skills/baking/`, `~/.claude/agents/`
-- Otra PC: `npx @boogiepop/baking install`
-
-## Uso
-
-`/baking` o *"usemos baking para …"*
-
-Baking crea solo `.cursor/handoff/` en el workspace si falta.
-
-## Cambiar perfil / enabled / versión
-
-Editá **`~/.cursor/opus-sonnet/config.json`** en el **repo git**, commit, tag, deploy:
-
-```powershell
-cd ~/.cursor/opus-sonnet
-# editar VERSION, CHANGELOG, config.json bakingVersion
-git commit -am "baking: ..."
-git tag v1.0.1
-& ./sync-global.ps1
+```bash
+baking init-memory
 ```
+
+Ver skill **`init-memory`** y `~/.cursor/opus-sonnet/INIT-MEMORY.md`.
+
+Baking global sigue en `~/.cursor/opus-sonnet/config.json`. Toggle auto-route: `baking auto-route on`.

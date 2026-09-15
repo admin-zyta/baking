@@ -27,6 +27,22 @@ Solo crear **`.cursor/handoff/`** en el workspace si falta. **No** `.claude/plan
 
 Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY**.
 
+### Light stack (v1.5 — Cursor y Claude Code)
+
+Si `lightStack.enabled` → **`LIGHT-STACK.md`**. Misma config global; `runtime` en métricas distingue entorno.
+
+| Pieza | Cuándo | Acción |
+|-------|--------|--------|
+| **Engram** | Inicio no trivial | `mem_context` + `mem_search` (máx. 2) — MCP Cursor o Claude |
+| **Engram** | Cierre | `mem_session_summary` |
+| **Skill registry** | Pedido matchea skill | Read un `SKILL.md` de `~/.cursor/baking/skill-registry.md` |
+| **Witch** | Boogiepop + ≥4 archivos | `starter_witch_plan` (MCP starter si está) |
+| **Verify** | Post-EXECUTE | Criterios del handoff vs `git diff` → `## Verify` + YAML |
+
+Skip verify: `TRIVIAL`, `PLAN-ONLY`. `verify: fail` → `status: partial`.
+
+Claude Code: verify lo puede hacer el **orquestador** al cierre (no hace falta subagente SDD). Executor/fork append `## Verify` si implementaron.
+
 ### PLAN-DEEP → `planner-hyper` (Fable)
 
 **Explícito (siempre gana):** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper`**, `plan_mode: explicit-deep`.
@@ -144,7 +160,7 @@ Modo default: **prod + spec + craft**.
 
 ```yaml
 baking:
-  version: "1.1.1"   # config.bakingVersion
+  version: "1.5.1"   # config.bakingVersion
   handoff: .cursor/handoff/YYYY-MM-DD-slug.md
   flow: PLAN+EXECUTE | PLAN-ONLY | EXECUTE | TRIVIAL
   plan_agent: planner | hyper | skipped
@@ -154,11 +170,12 @@ baking:
     spec: pass | partial | fail
     craft: pass | partial | fail
     assets: pass | fail
+  verify: pass | partial | fail | skipped
   status: completed | partial | blocked
   models: { planner: opus|fable, exec: haiku|sonnet|fork-parent }
 ```
 
-**Reglas:** partial si craft/assets fallan; nunca completed con `assets: fail`.
+**Reglas:** partial si craft/assets/verify fallan; nunca completed con `assets: fail` o **`verify: fail`**.
 
 **Nota fork:** `fork` (Agent tool) reutiliza contexto de sesión — OK para debug. **Prohibido** usar fork/copy para pegar `src/` de otra app (bench inválido).
 

@@ -2,6 +2,52 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/). Versionado en `VERSION` y `config.json` → `bakingVersion`.
 
+## [1.6.0] — 2026-09-15
+
+### Added
+
+- **`baking init-memory`** — scan del repo → `.cursor/baking/init/` + `AGENTS.md` (create) o audit + skill **`/init-memory`** (PLAN-ONLY + Engram).
+- **`baking auto-route on|off|status`** — toggle opcional: Baking por default en pedidos de código (`autoRoute.enabled` en config).
+- **`INIT-MEMORY.md`** · regla gate actualizada (auto-route + exclusiones Q&A).
+
+## [1.5.3] — 2026-09-15
+
+### Added
+
+- **`baking metrics-review`** — conclusión automática de routing y ahorro cuando pasan **7 días** o **50 corridas** desde la última revisión (config `metrics.review`).
+- Escribe `.cursor/baking/metrics/conclusions/YYYY-MM-DD-cycle-N.md` + `review-state.json`.
+- **`baking metrics-review --close-cycle`** — archiva `runs.jsonl` a `runs-cycle-N-YYYY-MM-DD.jsonl` y arranca ciclo nuevo (no borra).
+
+## [1.5.2] — 2026-09-15
+
+### Added
+
+- **Baking-AI docs** — `docs/baking-ai/` (README, intended-usage, use-cases, components, routing, quickstart).
+- `BAKING-AI.md` índice · `baking-ai-docs.html` (Desktop) para lectura por partes.
+
+## [1.5.1] — 2026-09-15
+
+### Added
+
+- **Paridad Cursor + Claude Code** para light stack: `claude-code/BAKING.md`, agents/skills Claude, `executor` verify, `consumption.md`, `ROUTER.md`.
+- Engram doctor detecta `~/.cursor/mcp.json` y `~/.claude/settings.json`.
+- Métricas: `outcome.scores.verify` en schema.
+
+## [1.5.0] — 2026-09-15
+
+### Added
+
+- **Light stack** (`config.lightStack`, `LIGHT-STACK.md`): Engram + verify handoff-vs-diff + Witch Boogiepop + skill registry liviano.
+- **`baking skill-registry`** — genera `~/.cursor/baking/skill-registry.md` desde skills instaladas.
+- **`baking doctor`** — reporta Engram MCP (opcional) y edad del registry.
+- YAML de cierre: campo `verify: pass | partial | fail | skipped`.
+- Planner: nota en «Criterios de done» para verify al cierre Baking.
+
+### Usage
+
+- Engram: `engram setup cursor` (una vez) + hooks mínimos en skill Baking.
+- Registry: `baking skill-registry` (semanal o `--force`).
+
 ## [1.4.1] — 2026-09-14
 
 ### Fixed

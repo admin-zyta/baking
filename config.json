@@ -1,7 +1,10 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.4.1",
+  "bakingVersion": "1.6.0",
   "enabled": true,
+  "autoRoute": {
+    "enabled": false
+  },
   "profile": "claude",
   "handoffDir": ".cursor/handoff",
   "filenamePattern": "YYYY-MM-DD-<slug>.md",
@@ -107,6 +110,44 @@
   "metrics": {
     "enabled": true,
     "dir": ".cursor/baking/metrics",
-    "file": "runs.jsonl"
+    "file": "runs.jsonl",
+    "review": {
+      "intervalDays": 7,
+      "minRuns": 50,
+      "routingAuditSample": 20,
+      "routingMaxBadPct": 10,
+      "savingsMinPairs": 3,
+      "savingsMinPct": 25
+    }
+  },
+  "lightStack": {
+    "enabled": true,
+    "memory": {
+      "provider": "engram",
+      "onSessionStart": ["mem_context", "mem_search"],
+      "onSessionEnd": ["mem_session_summary"],
+      "onDecision": "mem_save"
+    },
+    "verify": {
+      "enabled": true,
+      "mode": "handoff-vs-diff",
+      "skipFlows": ["TRIVIAL", "PLAN-ONLY"]
+    },
+    "witch": {
+      "enabled": false,
+      "signals": ["witch.json", "starter-base", "boogiepop-app-studio"],
+      "minFilesBeforeExplore": 4,
+      "preferPlanOverGrep": true
+    },
+    "skillRegistry": {
+      "enabled": true,
+      "globalPath": "~/.cursor/baking/skill-registry.md",
+      "refreshMaxAgeHours": 168
+    }
+  },
+  "initMemory": {
+    "agentsFile": "AGENTS.md",
+    "projectRuleFile": ".cursor/rules/baking-project.mdc",
+    "scanDir": ".cursor/baking/init"
   }
 }

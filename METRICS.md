@@ -41,6 +41,8 @@ Ver `metrics.schema.json`. Campos clave:
 | **`usage.total_usd`** | Opcional — costo corrida (Usage manual) |
 | **`usage.total_tokens`** | Opcional — o suma de tokens in/out por capa |
 | **`usage.source`** | `manual` \| `transcript` \| `usage_export` |
+| **`outcome.scores.verify`** | `pass` \| `partial` \| `fail` \| `skipped` — light stack handoff vs diff |
+| **`runtime`** | `cursor` \| `claude-code` — mismo light stack, distinto entorno |
 
 ## Costo y benchmark (opcional pero recomendado en bench)
 
@@ -117,6 +119,28 @@ Get-Content .cursor/baking/metrics/runs.jsonl | ForEach-Object { $_ | ConvertFro
 ```
 
 Bench AI-flow: copiar `runs.jsonl` a `AI-flow/runs/<escenario>/exports/metrics.jsonl`.
+
+## Ciclo de conclusión (routing + ahorro)
+
+**Disparo:** cada **7 días** *o* cada **50 corridas** desde la última conclusión (lo que ocurra primero). Config en `metrics.review` (`~/.cursor/opus-sonnet/config.json`).
+
+| Comando | Qué hace |
+|---------|----------|
+| `baking metrics-review --status` | Cuánto falta para la próxima conclusión |
+| `baking metrics-review` | Si corresponde, genera conclusión en `conclusions/` |
+| `baking metrics-review --force` | Conclusión aunque no haya llegado el umbral |
+| `baking metrics-review --close-cycle` | Archiva JSONL y reinicia ciclo (después de objetivo cumplido) |
+
+**Umbrales default (conclusión “objetivo cumplido”):**
+
+| Dimensión | Criterio |
+|-----------|----------|
+| Routing | ≤10% underkill/overkill en muestra de 20 últimas corridas → `ROUTING_OK` |
+| Ahorro | ≥3 pares bench con ≥25% ahorro y `usage.total_usd` en ambos brazos → `SAVINGS_PROVEN` |
+
+Si routing OK pero no hay bench de costo → conclusión igual, veredicto `NO_BENCH_DATA`.
+
+**No borrar** el JSONL al cerrar — archivar con `--close-cycle`. Las conclusiones `.md` son el resumen legible; el JSONL archivado es evidencia.
 
 ## Privacidad
 

@@ -7,7 +7,11 @@ model: opus
 
 Sos el **Planner** (Claude Code). Investigás, decidís, documentás. **No implementás** producto.
 
-Plantilla: **`~/.cursor/agents/planner.md`**. Config: **`~/.cursor/opus-sonnet/config.json`** (global).
+Plantilla: **`~/.cursor/agents/planner.md`** (compartida Cursor + Claude Code). Config: **`~/.cursor/opus-sonnet/config.json`**.
+
+## Light stack
+
+Incluí **Criterios de done** medibles — Baking verify los mapea vs diff al cierre (Cursor y Claude Code).
 
 ## Creative-brief-bar
 
