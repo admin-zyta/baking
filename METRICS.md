@@ -38,13 +38,26 @@ See `metrics.schema.json`. Key fields:
 | **`benchmark.scenario_id`** | Optional — `S0-baseline`, `S3-plan-complex`, … |
 | **`benchmark.arm`** | `baseline` \| `baking` \| `opus-parent` |
 | **`benchmark.pair_id`** | Same ID on both arms of the **same prompt** |
-| **`usage.total_usd`** | Optional — run cost (manual Usage) |
-| **`usage.total_tokens`** | Optional — or sum of in/out tokens per layer |
-| **`usage.source`** | `manual` \| `transcript` \| `usage_export` |
+| **`usage`** | **Required** — `total_usd` + `source: manual` when known; else `source: pending` + note |
+| **`usage.total_usd`** | Run cost from Cursor/Claude Usage (not optional when `metrics.usageRequired`) |
+| **`usage.total_tokens`** | Optional detail — or sum of in/out tokens per layer |
+| **`usage.source`** | `manual` \| `transcript` \| `usage_export` \| **`pending`** (backfill before metrics-review) |
 | **`outcome.scores.verify`** | `pass` \| `partial` \| `fail` \| `skipped` — light stack handoff vs diff |
 | **`runtime`** | `cursor` \| `claude-code` — same light stack, different environment |
 
-## Cost and benchmark (optional but recommended in bench)
+## Cost (required — not optional)
+
+Every JSONL line **must** include a **`usage`** object (`metrics.usageRequired: true` by default).
+
+Cursor and Claude Code **do not** expose per-run USD to the orchestrator automatically. At close:
+
+1. Check **Usage** in the IDE (or export) for this run's cost.
+2. Write `"usage": { "total_usd": 0.42, "total_tokens": 185000, "source": "manual" }`.
+3. If you cannot read cost yet → `"usage": { "total_usd": null, "source": "pending", "notes": "backfill from Usage" }` — **never omit `usage`.**
+
+Bench pairs (S0 vs S3) still need **`benchmark.pair_id`** + **`total_usd`** on both arms before `metrics-review` can prove savings.
+
+## Cost and benchmark
 
 To claim **"we saved X%"** you need `usage.total_usd` (and `benchmark` to pair runs).
 

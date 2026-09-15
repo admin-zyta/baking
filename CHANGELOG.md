@@ -2,6 +2,12 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.9.2] — 2026-09-15
+
+### Changed
+
+- **`usage` required** on every `runs.jsonl` line (`metrics.usageRequired: true` by default). `source: pending` when USD not yet known — never omit the block.
+
 ## [1.9.1] — 2026-09-15
 
 ### Added

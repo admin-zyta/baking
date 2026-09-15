@@ -1,6 +1,6 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.9.1",
+  "bakingVersion": "1.9.2",
   "language": "en",
   "enabled": true,
   "autoRoute": {
@@ -110,6 +110,7 @@
   },
   "metrics": {
     "enabled": true,
+    "usageRequired": true,
     "dir": ".cursor/baking/metrics",
     "file": "runs.jsonl",
     "review": {

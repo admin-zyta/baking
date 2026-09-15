@@ -165,7 +165,7 @@ Brief message to the user + handoff path.
 
 ## Step 4 — Metrics (mandatory)
 
-`METRICS.md` — append a JSONL line to `.cursor/baking/metrics/runs.jsonl`. Include `prompt`, agents, `models`, `signals`, `review`. **Bench/cost:** `benchmark` + `usage.total_usd` (see METRICS.md). Summary: `baking metrics-summary`.
+`METRICS.md` — append a JSONL line to `.cursor/baking/metrics/runs.jsonl`. Include `prompt`, agents, `models`, `signals`, `review`, and **`usage`** (required). **`usage.total_usd`** from Usage when possible; else `source: pending`. Bench: `benchmark` + paired `total_usd`. Summary: `baking metrics-summary`.
 
 `runtime: cursor`. Same self-assessment as Claude Code.
 

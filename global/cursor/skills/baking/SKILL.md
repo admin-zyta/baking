@@ -42,7 +42,7 @@ Registry: `baking skill-registry` · Doctor: `baking doctor`.
 ## Mandatory close
 
 1. YAML to the user (incl. `verify` if there was code)
-2. Append JSONL → `.cursor/baking/metrics/runs.jsonl`
+2. Append JSONL → `.cursor/baking/metrics/runs.jsonl` — include **`usage`** (`total_usd` or `source: pending`)
 3. `review` to calibrate routing (`runtime: cursor`)
 
 ## Routing

@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Baking run metric (one JSONL line)",
   "type": "object",
-  "required": ["ts", "bakingVersion", "prompt", "classification", "models", "review"],
+  "required": ["ts", "bakingVersion", "prompt", "classification", "models", "review", "usage"],
   "properties": {
     "ts": { "type": "string", "format": "date-time" },
     "bakingVersion": { "type": "string" },
@@ -52,7 +52,8 @@
     },
     "usage": {
       "type": "object",
-      "description": "Optional — cost/tokens to justify savings (from manual Usage or export)",
+      "description": "Required on every run — cost/tokens (fill from Usage or mark pending)",
+      "required": ["source"],
       "properties": {
         "orchestrator_tokens_in": { "type": ["integer", "null"], "minimum": 0 },
         "orchestrator_tokens_out": { "type": ["integer", "null"], "minimum": 0 },
@@ -62,7 +63,7 @@
         "executor_tokens_out": { "type": ["integer", "null"], "minimum": 0 },
         "total_tokens": { "type": ["integer", "null"], "minimum": 0 },
         "total_usd": { "type": ["number", "null"], "minimum": 0 },
-        "source": { "enum": ["manual", "transcript", "usage_export"] },
+        "source": { "enum": ["manual", "transcript", "usage_export", "pending"] },
         "notes": { "type": "string", "maxLength": 200 }
       }
     },

@@ -196,7 +196,7 @@ Read **`~/.cursor/opus-sonnet/METRICS.md`**. Append **one JSON line** to:
 
 Create the folder if missing. Respect `metrics.enabled` in config (default true).
 
-Fill in an honest **`review`** (see METRICS.md). If it's a **bench** run (S0/S3, baseline vs Baking), add **`benchmark`** + **`usage.total_usd`** from Usage.
+Fill in an honest **`review`** (see METRICS.md). **`usage` is required** on every line — `total_usd` from Usage, or `source: pending`. Bench runs: add **`benchmark`** + paired **`usage.total_usd`**.
 
 Example (routing + cost bench):
 
