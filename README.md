@@ -4,7 +4,7 @@
 
 Opus (or Fable) plans. Composer or Sonnet executes. The plan lives on disk. You spend fewer tokens. You know what happened.
 
-**Repo:** [github.com/admin-zyta/baking](https://github.com/admin-zyta/baking) · **Version:** `1.6.0` (see `VERSION` and `config.json` → `bakingVersion`)
+**Repo:** [github.com/admin-zyta/baking](https://github.com/admin-zyta/baking) · **Version:** `1.7.0` (see `VERSION` and `config.json` → `bakingVersion`)
 
 ---
 
@@ -47,14 +47,13 @@ Baking classifies **PLAN / EXECUTE / TRIVIAL / PLAN-ONLY**, picks `planner` vs `
 
 ### Light stack — Memory, verify, skills (optional)
 
-Four optional pieces under `lightStack` (on by default since v1.5):
+Three optional pieces under `lightStack` (on by default since v1.5):
 
 | Piece | Purpose |
 |-------|---------|
 | **Engram** | Decisions across sessions/repos (`mem_save`, `mem_context`) |
 | **Verify** | Handoff criteria vs `git diff` at close |
 | **Skill registry** | `baking skill-registry` → invoke the right skill |
-| **Witch** | Boogiepop/starter code orientation only (off by default) |
 
 **[LIGHT-STACK.md →](LIGHT-STACK.md)**
 
@@ -222,7 +221,7 @@ Publishing npm: **[NPM.md](NPM.md)**
 | **[Use cases](docs/baking-ai/use-cases.md)** | Real scenarios |
 | **[Components](docs/baking-ai/components.md)** | Pieces, agents, profiles |
 | **[Routing](docs/baking-ai/routing.md)** | PLAN / EXECUTE / Hyper / mecanic / fork |
-| **[LIGHT-STACK.md](LIGHT-STACK.md)** | Engram, Verify, Witch, registry |
+| **[LIGHT-STACK.md](LIGHT-STACK.md)** | Engram, Verify, registry |
 | **[INIT-MEMORY.md](INIT-MEMORY.md)** | Project memory bootstrap |
 | **[METRICS.md](METRICS.md)** | JSONL, S0 vs S3 bench, `metrics-review` |
 | **[ROUTER.md](ROUTER.md)** · **[consumption.md](consumption.md)** | Orchestrator rules |

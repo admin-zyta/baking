@@ -22,7 +22,7 @@ Real cases. Each one: request → classification → what runs → what's left o
 
 ---
 
-## 2. Boogiepop landing — craft + starter
+## 2. Editorial landing — craft bar
 
 **Request:** *"use baking — editorial landing for a yoga studio, mood landing, editorial visual, VISUAL-SCORE ≥27."*
 
@@ -31,12 +31,11 @@ Real cases. Each one: request → classification → what runs → what's left o
 | **Classification** | PLAN (+ creative-brief-bar) |
 | **Planner** | Opus or **Hyper** if the brief is ambitious / multi-section |
 | **Handoff** | Spec template + layout recipes + motion + copy |
-| **Executor** | Composer/Sonnet · starter-base bars · asset verify 2xx |
+| **Executor** | Composer/Sonnet · craft bars if present · asset verify 2xx |
 | **Verify** | Done criteria vs diff + honest VISUAL-SCORE |
-| **Witch** | `starter_witch_plan` when exploring kit/flavors |
-| **Output** | App in `starter-base/apps/` + handoff with `## Execution` |
+| **Output** | App in repo + handoff with `## Execution` |
 
-**Why Baking and not SDD:** the starter **already is** an on-disk spec (CRAFT-BAR, VISUAL-BAR) — not 10 extra phases.
+**Why Baking and not SDD:** on-disk bars (CRAFT-BAR, VISUAL-BAR) replace extra phases when the repo already ships them.
 
 ---
 
@@ -75,7 +74,7 @@ Real cases. Each one: request → classification → what runs → what's left o
 
 ## 5. Deep plan — multi-service migration
 
-**Request:** *"hyper — design an auth refresh-token migration across all Boogiepop services."*
+**Request:** *"hyper — design an auth refresh-token migration across all backend services."*
 
 | | |
 |---|---|
@@ -131,7 +130,7 @@ See [consumption.md](../../consumption.md) § fork vs fresh.
 | **Baking** | Short PLAN or EXECUTE with a minimal handoff |
 | **Close** | `mem_session_summary` 5 bullets |
 
-**Witch isn't enough:** a code map ≠ a decision log.
+**A code map ≠ a decision log** — use Engram for cross-session conventions.
 
 ---
 
@@ -165,12 +164,12 @@ See [METRICS.md](../../METRICS.md).
 
 ## Quick matrix — what to enable
 
-| Case | PLAN | Hyper | Verify | Engram | Witch |
-|------|------|-------|--------|--------|-------|
-| Color / typo | — | — | skip | optional | — |
-| Craft landing | ✓ | sometimes | ✓ | ✓ | ✓ |
-| Business rule | ✓ | — | ✓ | ✓ | — |
-| Plan only | ✓ | sometimes | skip | ✓ | — |
-| Large migration | ✓ | ✓ | ✓ | ✓ | sometimes |
-| CC mechanical | — | — | light | — | — |
-| Cross-repo context | — | — | — | **✓** | — |
+| Case | PLAN | Hyper | Verify | Engram |
+|------|------|-------|--------|--------|
+| Color / typo | — | — | skip | optional |
+| Craft landing | ✓ | sometimes | ✓ | ✓ |
+| Business rule | ✓ | — | ✓ | ✓ |
+| Plan only | ✓ | sometimes | skip | ✓ |
+| Large migration | ✓ | ✓ | ✓ | ✓ |
+| CC mechanical | — | — | light | — |
+| Cross-repo context | — | — | — | **✓** |

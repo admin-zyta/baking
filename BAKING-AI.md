@@ -1,6 +1,6 @@
 # Baking-AI — documentation index
 
-Product-style documentation for the **Baking** orchestrator (`@boogiepop/baking`).
+Product-style documentation for the **Baking** orchestrator (`@admin-zyta/baking`).
 
 **Start here:** [docs/baking-ai/README.md](./docs/baking-ai/README.md)
 
@@ -23,7 +23,7 @@ Product-style documentation for the **Baking** orchestrator (`@boogiepop/baking`
 |-----|---------|
 | [BAKING-CURSOR.md](./BAKING-CURSOR.md) | Cursor — full spec |
 | [claude-code/BAKING.md](./claude-code/BAKING.md) | Claude Code — full spec |
-| [LIGHT-STACK.md](./LIGHT-STACK.md) | Engram · Verify · Witch · registry |
+| [LIGHT-STACK.md](./LIGHT-STACK.md) | Engram · Verify · registry |
 | [INIT-MEMORY.md](./INIT-MEMORY.md) | Project memory bootstrap |
 | [METRICS.md](./METRICS.md) | JSONL · benchmark · cost |
 | [ROUTER.md](./ROUTER.md) | Automatic router |

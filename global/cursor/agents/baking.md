@@ -16,7 +16,7 @@ Cursor reference: `~/.cursor/opus-sonnet/BAKING-CURSOR.md` · Claude: `claude-co
 
 ## Flow
 
-1. **[Light]** Engram mem_context/search if non-trivial · skill registry · Witch if Boogiepop explore.
+1. **[Light]** Engram mem_context/search if non-trivial · skill registry.
 2. Classify → **PLAN-DEEP** (hyper) vs normal PLAN vs **PLAN-ONLY** (no executor).
 3. PLAN / PLAN-ONLY → Task with the **exact** name (see table below).
 4. EXECUTE only with an explicit request from the user.

@@ -151,7 +151,6 @@ If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Same global config; 
 |------|-------------|--------|
 | Engram start | `mem_context` + `mem_search` if non-trivial | ≤2 calls |
 | Skill registry | Read 1 SKILL.md if it matches the index | 1 read |
-| Witch | `starter_witch_plan` on Boogiepop explore (≥4 files) | 1 call |
 | Verify close | Handoff criteria vs `git diff` → `## Verify` | no SDD subagent |
 | Engram end | `mem_session_summary` | 1 call |
 

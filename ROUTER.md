@@ -22,7 +22,6 @@ One config (`lightStack` in `config.json`) for **Cursor and Claude Code**. Detai
 
 - **Engram** — amnesia (MCP in Cursor or Claude)
 - **Verify** — handoff criteria vs diff at EXECUTE close
-- **Witch** — Boogiepop orientation (starter MCP)
 - **Skill registry** — `baking skill-registry` → global index
 
 ## Model profiles

@@ -107,12 +107,11 @@
     },
     "lightStack": {
       "type": "object",
-      "description": "Light stack: Engram + verify + Witch + skill registry (see LIGHT-STACK.md)",
+      "description": "Light stack: Engram + verify + skill registry (see LIGHT-STACK.md)",
       "properties": {
         "enabled": { "type": "boolean" },
         "memory": { "type": "object" },
         "verify": { "type": "object" },
-        "witch": { "type": "object" },
         "skillRegistry": { "type": "object" }
       }
     },

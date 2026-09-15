@@ -12,7 +12,7 @@ const { lightStackReport } = require('../lib/light-stack');
 const path = require('path');
 
 const HELP = `
-@boogiepop/baking — planner → executor orchestrator (Cursor + Claude Code)
+@admin-zyta/baking — planner → executor orchestrator (Cursor + Claude Code)
 
 Usage:
   baking install [--force-config]   Deploy skills, agents, rules, global config
@@ -27,8 +27,8 @@ Usage:
   baking version                    Show installed package version
 
 Examples:
-  npx @boogiepop/baking install
-  npm i -g @boogiepop/baking && baking install
+  npx @admin-zyta/baking install
+  npm i -g @admin-zyta/baking && baking install
 
 Targets:
   ~/.cursor/skills/baking/          Cursor skill

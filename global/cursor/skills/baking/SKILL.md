@@ -1,6 +1,6 @@
 ---
 name: baking
-description: Baking orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Engram, verify, Witch, skill registry). /baking, use baking.
+description: Baking orchestrator (Cursor). Metrics JSONL, planner, executor-cursor, light stack (Engram, verify, skill registry). /baking, use baking.
 disable-model-invocation: false
 user-invocable: true
 ---
@@ -13,9 +13,8 @@ Reference: **`BAKING-CURSOR.md`**, **`METRICS.md`**, **`LIGHT-STACK.md`**. Claud
 
 1. **Start** (non-trivial): Engram `mem_context` + `mem_search` if applicable.
 2. **Skill:** match the request against `~/.cursor/baking/skill-registry.md` → Read one SKILL.md.
-3. **Boogiepop explore (optional):** if `lightStack.witch.enabled` and the repo has `witch.json` / starter-base → `starter_witch_plan` before Grep (≥4 files).
-4. **EXECUTE close:** handoff criteria vs diff → `## Verify` in the handoff.
-5. **End:** YAML with `verify:` + Engram `mem_session_summary`.
+3. **EXECUTE close:** handoff criteria vs diff → `## Verify` in the handoff.
+4. **End:** YAML with `verify:` + Engram `mem_session_summary`.
 
 Registry: `baking skill-registry` · Doctor: `baking doctor`.
 

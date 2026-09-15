@@ -16,7 +16,7 @@
 
 ```bash
 # From npm (once published)
-npx @boogiepop/baking install
+npx @admin-zyta/baking install
 
 # Or from a clone
 git clone https://github.com/admin-zyta/baking ~/.cursor/opus-sonnet

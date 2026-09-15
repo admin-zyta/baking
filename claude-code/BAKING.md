@@ -36,7 +36,6 @@ If `lightStack.enabled` → **`LIGHT-STACK.md`**. Same global config; `runtime` 
 | **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2) — Cursor or Claude MCP |
 | **Engram** | Close | `mem_session_summary` |
 | **Skill registry** | Request matches a skill | Read one `SKILL.md` from `~/.cursor/baking/skill-registry.md` |
-| **Witch** | Boogiepop + ≥4 files | `starter_witch_plan` (starter MCP if present) |
 | **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML |
 
 Skip verify: `TRIVIAL`, `PLAN-ONLY`. `verify: fail` → `status: partial`.
@@ -74,7 +73,7 @@ Prompt (both):
 
 - The user's **full** request (don't shorten the visual brief).
 - Handoff using the `~/.cursor/agents/planner.md` template.
-- If it's a creative brief → **"include creative-brief-bar"** + **prod+spec+craft** (+ visual if starter v0.1.0+).
+- If it's a creative brief → **"include creative-brief-bar"** + **prod+spec+craft** (+ visual if the repo has visual bars).
 - Assets table if there are external URLs.
 
 Wait for the **exact path** of the `.md`. Blocking questions → ask the user before EXECUTE.
@@ -222,4 +221,4 @@ Example (routing + cost bench):
 
 - lore-forge 2026-09-11: a fresh executor spent 38.6k tokens re-reading context → use **fork** in iterative EXECUTE.
 - S5 yoga/studio: build OK, poor UI → **creative-brief-bar** made mandatory.
-- yoga bench v0.0.4: spec OK / craft weak / 404 URLs → scores + asset verify (`starter-base/docs/BAKING-IMPROVEMENTS.md`).
+- Bench runs: spec OK / craft weak / broken asset URLs → scores + asset verify in the handoff.

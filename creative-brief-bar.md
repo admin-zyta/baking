@@ -9,8 +9,6 @@ The planner→executor pipeline can produce flawless code (`build` OK) and still
 
 This bar balances: **the same rigor on paths/build, plus more specification of perceptual quality**.
 
-**Boogiepop starter:** commits to the starter follow `docs/GENERAL-ONLY.md` — general rules only, never session artifacts or names of past apps.
-
 ---
 
 ## Default build mode (creative landings)
@@ -97,7 +95,7 @@ Don't just list — specify the **curve** (`cubic-bezier`) and whether it pauses
 - **Don't** paste Unsplash IDs without marking `verify before ship`.
 - The executor must run an HTTP check and append `### Asset verification` under `## Execution`.
 
-If the repo uses **Boogiepop starter v0.0.5+**, the executor also reads `docs/CRAFT-BAR.md` and `docs/ORIGINALITY.md`.
+If the repo includes **`docs/CRAFT-BAR.md`** and **`docs/ORIGINALITY.md`**, the executor reads them at execute time.
 
 If **v0.1.0+**, also: `docs/VISUAL-BAR.md`, `docs/ART-DIRECTION.md`, `docs/COPY-CRAFT.md`, `docs/PAGE-COHESION.md`.
 
@@ -153,4 +151,4 @@ The planner compares ambition; the executor implements **from scratch**. Don't a
   - **partial** if build OK but `craft: partial|fail` or `assets: fail`
   - **never completed** with `assets: fail`
 
-See `starter-base/docs/BAKING-IMPROVEMENTS.md` for closing gates and `docs/GENERAL-ONLY.md` for edits to the starter.
+Repos with `docs/GENERAL-ONLY.md` should follow it for starter edits — general rules only, no session artifacts.

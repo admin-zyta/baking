@@ -21,7 +21,7 @@ Don't start coding without having read the plan (except for explicit one-line tr
 
 If the handoff includes **`creative-brief-bar`** sections (visual ambition, copy, motion, anti-patterns): implement that layer with the same priority as the technical steps. Mark the creative checklist in `## Execution`.
 
-If `docs/CRAFT-BAR.md` exists in the repo (Boogiepop starter v0.0.4+), read it and verify the **craft** layer in addition to the build.
+If `docs/CRAFT-BAR.md` exists in the repo, read it and verify the **craft** layer in addition to the build.
 
 ## Anti-fork (code)
 

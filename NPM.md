@@ -1,4 +1,4 @@
-# Publishing `@boogiepop/baking`
+# Publishing `@admin-zyta/baking`
 
 npm package that installs Baking globally in Cursor + Claude Code (skills, agents, rules, config).
 
@@ -7,7 +7,7 @@ npm package that installs Baking globally in Cursor + Claude Code (skills, agent
 **From npm** (after `npm publish`):
 
 ```bash
-npx @boogiepop/baking install
+npx @admin-zyta/baking install
 ```
 
 **From GitHub** (no npm):
@@ -28,7 +28,7 @@ npx github:admin-zyta/baking install
 Global:
 
 ```bash
-npm i -g @boogiepop/baking
+npm i -g @admin-zyta/baking
 baking install
 ```
 
@@ -43,7 +43,7 @@ baking install --force-config
 ## Publish (maintainers)
 
 1. Bump `VERSION`, `package.json` → `version`, `config.json` → `bakingVersion`, `CHANGELOG.md`
-2. Login to npm with access to the `@boogiepop` scope
+2. Login to npm with access to the `@admin-zyta` scope
 3. From the repo root:
 
 ```bash

@@ -1,6 +1,6 @@
 {
-  "name": "@boogiepop/baking",
-  "version": "1.6.0",
+  "name": "@admin-zyta/baking",
+  "version": "1.7.0",
   "description": "Baking — global planner → executor orchestrator for Cursor and Claude Code",
   "license": "UNLICENSED",
   "bin": {

@@ -82,12 +82,11 @@ You edit `"profile"` in `~/.cursor/opus-sonnet/config.json`:
 
 ## Light stack — optional but recommended
 
-Four **lightweight** hooks (not Gentle-AI):
+Three **lightweight** hooks (not Gentle-AI):
 
 1. **Engram** — memory across sessions/repos
 2. **Verify** — handoff vs diff at close
-3. **Witch** — orientation in Boogiepop code
-4. **Skill registry** — find the right skill
+3. **Skill registry** — find the right skill
 
 Active if `lightStack.enabled: true`. See [LIGHT-STACK.md](../../LIGHT-STACK.md).
 

@@ -2,6 +2,18 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.7.0] — 2026-09-15
+
+### Removed
+
+- **Witch** — dropped from light stack, config, skills, and docs (product-specific; did not belong in generic Baking).
+- **Boogiepop references** — docs, creative-brief-bar, and npm scope now `@admin-zyta/baking`.
+
+### Changed
+
+- Light stack is **three pieces**: Engram, Verify, skill registry (`LIGHT-STACK.md`).
+- npm package renamed `@boogiepop/baking` → `@admin-zyta/baking`.
+
 ## [1.6.0] — 2026-09-15
 
 ### Added

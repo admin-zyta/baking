@@ -16,7 +16,7 @@ Opus (or Fable) plans. Composer or Sonnet executes. The plan stays on disk. You 
 | Plan in the chat, gets lost | Re-explain every session | Persistent **Handoff** in `.cursor/handoff/` |
 | "Build OK" but poorly done | Blind trust | **Verify** — criteria vs diff |
 | Forgetting decisions across repos | Manual friction | **Engram** (light stack, optional) |
-| Generic landings | Clean template | **creative-brief-bar** + Boogiepop starter |
+| Generic landings | Clean template | **creative-brief-bar** + on-disk craft bars |
 
 Baking is a **router + diary + gates** for Cursor and Claude Code — not a full SDD pipeline, just what you need to plan cheaply, execute safely, and keep context on disk.
 
@@ -42,7 +42,7 @@ One global config: `~/.cursor/opus-sonnet/config.json`. **Do not** install per r
 | **Planner Hyper** | Deep plan (Fable) — architecture, complex landings |
 | **Executor** | Implements per the handoff · appends `## Execution` |
 | **Handoff diary** | Plan + execution in one `.md` per task |
-| **Light stack** | Engram · Verify · Witch · Skill registry |
+| **Light stack** | Engram · Verify · Skill registry |
 | **Metrics** | `runs.jsonl` — routing, cost, `metrics-review` |
 | **Init-memory** | Bootstrap AGENTS + Engram (`baking init-memory`) |
 | **Auto-route** | Toggle: Baking by default (`baking auto-route on`) |
@@ -70,7 +70,7 @@ Concrete cases: [use-cases.md](./use-cases.md)
 ## Get started
 
 ```bash
-npx @boogiepop/baking install
+npx @admin-zyta/baking install
 baking doctor
 baking skill-registry
 ```
@@ -86,12 +86,12 @@ Full guide: [quickstart.md](./quickstart.md)
 | Doc | Contents |
 |-----|-----------|
 | [intended-usage.md](./intended-usage.md) | How to think about it — if you read one, make it this one |
-| [use-cases.md](./use-cases.md) | Real scenarios (Zyta, Boogiepop, fixes…) |
+| [use-cases.md](./use-cases.md) | Real scenarios (landings, fixes, deploy…) |
 | [components.md](./components.md) | Each piece, agents, profiles |
 | [routing.md](./routing.md) | PLAN / EXECUTE / Hyper / mecanic / fork |
 | [quickstart.md](./quickstart.md) | Install, profiles, first run |
 | [../../INIT-MEMORY.md](../../INIT-MEMORY.md) | Project memory bootstrap |
-| [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Engram, Verify, Witch, registry |
+| [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Engram, Verify, registry |
 | [../../METRICS.md](../../METRICS.md) | JSONL, S0 vs S3 benchmark, cost |
 | [../../AGENTS.md](../../AGENTS.md) | Exact Task / Agent names |
 
@@ -101,4 +101,4 @@ Technical references: `BAKING-CURSOR.md` · `claude-code/BAKING.md`
 
 ## Version
 
-`bakingVersion` in `config.json` · package `@boogiepop/baking` · repo [admin-zyta/baking](https://github.com/admin-zyta/baking)
+`bakingVersion` in `config.json` · package `@admin-zyta/baking` · repo [admin-zyta/baking](https://github.com/admin-zyta/baking)

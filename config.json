@@ -1,10 +1,10 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.6.0",
+  "bakingVersion": "1.7.0",
   "language": "en",
   "enabled": true,
   "autoRoute": {
-    "enabled": false
+    "enabled": true
   },
   "profile": "claude",
   "handoffDir": ".cursor/handoff",
@@ -125,20 +125,22 @@
     "enabled": true,
     "memory": {
       "provider": "engram",
-      "onSessionStart": ["mem_context", "mem_search"],
-      "onSessionEnd": ["mem_session_summary"],
+      "onSessionStart": [
+        "mem_context",
+        "mem_search"
+      ],
+      "onSessionEnd": [
+        "mem_session_summary"
+      ],
       "onDecision": "mem_save"
     },
     "verify": {
       "enabled": true,
       "mode": "handoff-vs-diff",
-      "skipFlows": ["TRIVIAL", "PLAN-ONLY"]
-    },
-    "witch": {
-      "enabled": false,
-      "signals": ["witch.json", "starter-base", "boogiepop-app-studio"],
-      "minFilesBeforeExplore": 4,
-      "preferPlanOverGrep": true
+      "skipFlows": [
+        "TRIVIAL",
+        "PLAN-ONLY"
+      ]
     },
     "skillRegistry": {
       "enabled": true,

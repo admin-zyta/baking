@@ -26,7 +26,6 @@
 |----|------------|-------------------|
 | `engram` | **Engram MCP** | Amnesia — decisions across repos/sessions |
 | `verify` | **Handoff vs diff** | Build OK but criteria not met |
-| `witch` | **Witch MCP** | Massive Grep across starter/Boogiepop apps |
 | `skill-registry` | **Skill index** | Not using a skill you already have installed |
 
 Config: `lightStack` in `config.json`. Doc: [LIGHT-STACK.md](../../LIGHT-STACK.md).
@@ -61,7 +60,7 @@ See [AGENTS.md](../../AGENTS.md).
 
 ---
 
-## CLI (`@boogiepop/baking`)
+## CLI (`@admin-zyta/baking`)
 
 | Command | Action |
 |---------|--------|

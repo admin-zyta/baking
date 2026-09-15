@@ -13,7 +13,7 @@ Reference: **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**, **`METRICS.md`**, 
 
 ## Flow
 
-1. **[Light]** Engram mem_context/search · skill registry · Witch if Boogiepop explore.
+1. **[Light]** Engram mem_context/search · skill registry.
 2. Classify → PLAN-DEEP (hyper) | PLAN | PLAN-ONLY | EXECUTE (mecanic | executor | fork) | TRIVIAL.
 3. PLAN → Agent **`planner`** or **`planner-hyper`** — never fork for planning.
 4. EXECUTE only with an explicit request — see the ladder in BAKING.md.

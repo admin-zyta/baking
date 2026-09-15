@@ -1,6 +1,6 @@
 # Baking Light Stack
 
-Four **optional** pieces in `config.json` → `lightStack`. No full Gentle-AI. Minimal token usage.
+Three **optional** pieces in `config.json` → `lightStack`. Minimal token usage.
 
 Enable: `"lightStack": { "enabled": true, ... }` (default in global config v1.5+).
 
@@ -67,26 +67,7 @@ Verify: `baking doctor` → Engram MCP line.
 
 ---
 
-## 3. Witch — Boogiepop code orientation (optional, off by default)
-
-**Problem:** massive Grep across starter/apps.
-
-**Default in config v1.5.2+:** `"witch": { "enabled": false }` — not part of the `@boogiepop/baking` npm package; lives in starter-base + Boogiepop MCP.
-
-**When to enable it:** only Boogiepop repos with `witch.json` or starter MCP and exploration ≥ `minFilesBeforeExplore` (default 4).
-
-**Light usage:**
-
-1. `starter_witch_plan` with the full brief — **before** massive Grep/read.
-2. Read only the files the plan returns.
-3. `starter_witch_query` only if a specific symbol is missing.
-4. **Do not** run `starter_witch_build` unless the graph is broken.
-
-Witch does **not** replace Engram (a map ≠ a decision log).
-
----
-
-## 4. Skill registry — lightweight catalog
+## 3. Skill registry — lightweight catalog
 
 **Problem:** not invoking the right skill (`deploy-vercel`, `send-email`, …).
 
@@ -108,7 +89,6 @@ Writes: `~/.cursor/baking/skill-registry.md` (global, not per repo).
 ```
 [optional] mem_context / mem_search
 → classify → PLAN / EXECUTE
-→ [boogiepop] starter_witch_plan if exploring
 → [optional] read skill from the registry
 → executor
 → Verify (handoff vs diff)

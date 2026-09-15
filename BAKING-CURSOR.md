@@ -30,14 +30,13 @@ When in doubt → **PLAN**. If they ask for a plan with no code → **PLAN-ONLY*
 
 ### Light stack (v1.5 — lightweight)
 
-If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Four hooks, minimal usage:
+If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Three hooks, minimal usage:
 
 | Piece | When | Action |
 |-------|--------|--------|
 | **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2 calls) |
 | **Engram** | Close | `mem_session_summary` (5 bullets) |
 | **Skill registry** | If the request matches a skill | Read `~/.cursor/baking/skill-registry.md` → Read only that SKILL.md |
-| **Witch** | Boogiepop + ≥4 files to explore | `starter_witch_plan` before massive Grep |
 | **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML `verify:` |
 
 Skip verify on `TRIVIAL` / `PLAN-ONLY`. `verify: fail` → `status: partial`.
@@ -174,7 +173,7 @@ Brief message to the user + handoff path.
 
 Runs that copy `src/` from previous apps or use fork to paste code are **not valid controls** — exclude them from comparison or flag it in the handoff.
 
-Evidence: `starter-base/docs/BAKING-IMPROVEMENTS.md` (yoga bench v0.0.4, runs 5–6).
+Evidence: bench runs with spec OK / craft weak / broken asset URLs → scores + asset verify in the handoff.
 
 ---
 
