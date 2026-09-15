@@ -1,39 +1,39 @@
 # Baking init-memory
 
-Bootstrap de memoria de proyecto (estilo Claude `/init`).
+Project memory bootstrap (Claude `/init` style).
 
-## Comandos
+## Commands
 
 ```bash
-baking init-memory              # scan + borradores en .cursor/baking/init/
-baking init-memory --dry-run    # preview sin escribir
-baking init-memory --force      # regenera .cursor/rules/baking-project.mdc
+baking init-memory              # scan + drafts in .cursor/baking/init/
+baking init-memory --dry-run    # preview without writing
+baking init-memory --force      # regenerates .cursor/rules/baking-project.mdc
 ```
 
-Luego: **`/init-memory`** o *usemos baking PLAN-ONLY para completar init-memory*.
+Then: **`/init-memory`** or *use baking PLAN-ONLY to complete init-memory*.
 
-## Qué genera
+## What it generates
 
-| Archivo | Rol |
+| File | Role |
 |---------|-----|
-| `.cursor/baking/init/scan.json` | Señales detectadas (stack, CI, mode create/audit) |
-| `.cursor/baking/init/AGENTS.draft.md` | Borrador — base para el agente |
-| `.cursor/baking/init/engram-topics.json` | Temas sugeridos para `mem_save` |
-| `.cursor/baking/init/NEXT.md` | Instrucciones PLAN-ONLY |
-| `AGENTS.md` | Escrito solo en mode **create** (repo sin AGENTS/CLAUDE) |
-| `.cursor/rules/baking-project.mdc` | Regla Cursor alwaysApply (concisa) |
+| `.cursor/baking/init/scan.json` | Detected signals (stack, CI, create/audit mode) |
+| `.cursor/baking/init/AGENTS.draft.md` | Draft — base for the agent |
+| `.cursor/baking/init/engram-topics.json` | Suggested topics for `mem_save` |
+| `.cursor/baking/init/NEXT.md` | PLAN-ONLY instructions |
+| `AGENTS.md` | Written only in **create** mode (repo with no AGENTS/CLAUDE) |
+| `.cursor/rules/baking-project.mdc` | Cursor alwaysApply rule (concise) |
 
-## Auto-route (Baking por default)
+## Auto-route (Baking by default)
 
-Opcional — toggle global:
+Optional — global toggle:
 
 ```bash
 baking auto-route status
-baking auto-route on    # pedidos de código → Baking sin "/baking" cada vez
+baking auto-route on    # code requests → Baking without "/baking" every time
 baking auto-route off
 ```
 
-Config: `autoRoute.enabled` en `~/.cursor/opus-sonnet/config.json`.
+Config: `autoRoute.enabled` in `~/.cursor/opus-sonnet/config.json`.
 
-Con `autoRoute.on`: la rule `opus-sonnet-router.mdc` aplica ROUTER en implementación.  
-Con `off`: hace falta `/baking` o *usemos baking* (comportamiento anterior).
+With `autoRoute.on`: the `opus-sonnet-router.mdc` rule applies ROUTER on implementation.
+With `off`: `/baking` or *use baking* is required (previous behavior).

@@ -1,63 +1,63 @@
-# Baking — métricas de routing y costo
+# Baking — routing and cost metrics
 
-Archivo append-only por workspace para:
+Append-only file per workspace for:
 
-1. **Routing** — ¿planner / hyper / mecanic / executor fue acertado vs el pedido?
-2. **Costo** — ¿pagamos menos que baseline (S0 vs S3, Opus padre vs Baking)?
+1. **Routing** — was planner / hyper / mecanic / executor the right call for the request?
+2. **Cost** — do we pay less than baseline (S0 vs S3, parent Opus vs Baking)?
 
-## Ubicación
+## Location
 
-Default: **`.cursor/baking/metrics/runs.jsonl`** (una línea JSON por corrida).
+Default: **`.cursor/baking/metrics/runs.jsonl`** (one JSON line per run).
 
-Config: `metrics.dir` y `metrics.enabled` en `~/.cursor/opus-sonnet/config.json`.
+Config: `metrics.dir` and `metrics.enabled` in `~/.cursor/opus-sonnet/config.json`.
 
-Bootstrap: Baking crea la carpeta si falta (como `handoff/`).
+Bootstrap: Baking creates the folder if it's missing (like `handoff/`).
 
-## Cuándo escribir
+## When to write
 
-**Obligatorio** al cerrar **cualquier** corrida Baking (PLAN-ONLY incluido), después del YAML al usuario.
+**Mandatory** at the close of **any** Baking run (PLAN-ONLY included), after the YAML shown to the user.
 
-Usar **Write** o append (Bash) — no omitir por pereza.
+Use **Write** or append (Bash) — don't skip it out of laziness.
 
-## Formato (una línea = un run)
+## Format (one line = one run)
 
-Ver `metrics.schema.json`. Campos clave:
+See `metrics.schema.json`. Key fields:
 
-| Campo | Para qué |
+| Field | What it's for |
 |-------|----------|
-| `prompt` | Pedido original (completo o truncado 2k chars) |
+| `prompt` | Original request (full or truncated to 2k chars) |
 | `classification.flow` | PLAN+EXECUTE, PLAN-ONLY, TRIVIAL, … |
 | `classification.plan_agent` | `planner` \| `hyper` \| `skipped` |
 | `classification.exec_agent` | `mecanic` \| `executor` \| `fork` \| `direct` \| `skipped` |
 | `classification.plan_mode` | `auto` \| `explicit-deep` \| `explicit-normal` \| `explicit-only` |
-| `models.*` | Modelo **real** usado (orchestrator, planner, executor) |
-| `signals` | Señales que dispararon la clasificación |
+| `models.*` | **Actual** model used (orchestrator, planner, executor) |
+| `signals` | Signals that triggered the classification |
 | `review.plan_fit` | `good` \| `overkill` \| `underkill` \| `n/a` |
-| `review.exec_fit` | idem |
-| `review.note` | Una línea — para mejorar reglas |
-| **`benchmark.scenario_id`** | Opcional — `S0-baseline`, `S3-plan-complex`, … |
+| `review.exec_fit` | same |
+| `review.note` | One line — to improve the rules |
+| **`benchmark.scenario_id`** | Optional — `S0-baseline`, `S3-plan-complex`, … |
 | **`benchmark.arm`** | `baseline` \| `baking` \| `opus-parent` |
-| **`benchmark.pair_id`** | Mismo ID en ambos brazos del **mismo prompt** |
-| **`usage.total_usd`** | Opcional — costo corrida (Usage manual) |
-| **`usage.total_tokens`** | Opcional — o suma de tokens in/out por capa |
+| **`benchmark.pair_id`** | Same ID on both arms of the **same prompt** |
+| **`usage.total_usd`** | Optional — run cost (manual Usage) |
+| **`usage.total_tokens`** | Optional — or sum of in/out tokens per layer |
 | **`usage.source`** | `manual` \| `transcript` \| `usage_export` |
 | **`outcome.scores.verify`** | `pass` \| `partial` \| `fail` \| `skipped` — light stack handoff vs diff |
-| **`runtime`** | `cursor` \| `claude-code` — mismo light stack, distinto entorno |
+| **`runtime`** | `cursor` \| `claude-code` — same light stack, different environment |
 
-## Costo y benchmark (opcional pero recomendado en bench)
+## Cost and benchmark (optional but recommended in bench)
 
-Para **“ahorramos X%”** hace falta `usage.total_usd` (y `benchmark` para emparejar).
+To claim **"we saved X%"** you need `usage.total_usd` (and `benchmark` to pair runs).
 
-### S0 vs S3 (mismo prompt, dos brazos)
+### S0 vs S3 (same prompt, two arms)
 
-| Corrida | `benchmark.scenario_id` | `benchmark.arm` | `benchmark.pair_id` |
+| Run | `benchmark.scenario_id` | `benchmark.arm` | `benchmark.pair_id` |
 |---------|-------------------------|-----------------|---------------------|
-| Sin router (Opus/Composer todo el chat) | `S0-baseline` | `baseline` o `opus-parent` | `stream-plans-s3-badge` |
-| Con Baking | `S3-plan-complex` | `baking` | **`stream-plans-s3-badge`** (igual) |
+| Without router (Opus/Composer the whole chat) | `S0-baseline` | `baseline` or `opus-parent` | `stream-plans-s3-badge` |
+| With Baking | `S3-plan-complex` | `baking` | **`stream-plans-s3-badge`** (same) |
 
-Después del cierre, copiá costo desde **Cursor Usage** o **Claude Code usage** → `usage.total_usd`, `source: "manual"`.
+After closing, copy the cost from **Cursor Usage** or **Claude Code usage** → `usage.total_usd`, `source: "manual"`.
 
-### Ejemplo línea con costo
+### Example line with cost
 
 ```json
 {
@@ -65,7 +65,7 @@ Después del cierre, copiá costo desde **Cursor Usage** o **Claude Code usage**
   "bakingVersion": "1.4.0",
   "runtime": "claude-code",
   "profile": "claude",
-  "prompt": "Agregá badge Más popular en PlanCard…",
+  "prompt": "Add Most popular badge to PlanCard…",
   "handoff": ".cursor/handoff/2026-09-14-badge.md",
   "classification": { "flow": "PLAN+EXECUTE", "plan_agent": "planner", "exec_agent": "executor", "plan_mode": "auto", "exec_mode": "auto" },
   "models": { "orchestrator": "sonnet", "planner": "opus", "executor": "sonnet" },
@@ -77,71 +77,71 @@ Después del cierre, copiá costo desde **Cursor Usage** o **Claude Code usage**
 }
 ```
 
-**Baseline** (S0): misma estructura, `"arm": "baseline"`, `"scenario_id": "S0-baseline"`, mismo `pair_id`, `total_usd` típicamente mayor.
+**Baseline** (S0): same structure, `"arm": "baseline"`, `"scenario_id": "S0-baseline"`, same `pair_id`, `total_usd` typically higher.
 
-### Resumen de ahorro (CLI)
+### Savings summary (CLI)
 
-Desde la raíz del proyecto (donde está `.cursor/baking/metrics/runs.jsonl`):
+From the project root (where `.cursor/baking/metrics/runs.jsonl` lives):
 
 ```bash
 baking metrics-summary
-# o
+# or
 node ~/.cursor/opus-sonnet/bin/baking.js metrics-summary .cursor/baking/metrics/runs.jsonl
 ```
 
-Imprime promedios por escenario/brazo y **savings_pct** por `pair_id` cuando ambos tienen `usage.total_usd`.
+Prints averages per scenario/arm and **savings_pct** per `pair_id` when both have `usage.total_usd`.
 
-## Autoevaluación `review` (Baking al cierre)
+## `review` self-assessment (Baking at close)
 
-| Situación | plan_fit | exec_fit |
+| Situation | plan_fit | exec_fit |
 |-----------|----------|----------|
-| PLAN creativo / arquitectura con `planner` cuando ≥2 señales deep | `underkill` | — |
-| Arquitectura con `hyper` para typo/fix acotado | `overkill` | — |
-| Trivial con subagente | — | `overkill` |
-| Mecánico con `executor` Sonnet | — | `overkill` |
-| Craft/landing con `mecanic` | — | `underkill` |
-| Routing acorde a tabla BAKING.md | `good` | `good` |
-| PLAN-ONLY / sin exec | `good` o evaluar plan | `n/a` |
+| Creative PLAN / architecture with `planner` when ≥2 deep signals | `underkill` | — |
+| Architecture with `hyper` for a narrow typo/fix | `overkill` | — |
+| Trivial with a subagent | — | `overkill` |
+| Mechanical task with `executor` Sonnet | — | `overkill` |
+| Craft/landing with `mecanic` | — | `underkill` |
+| Routing per the BAKING.md table | `good` | `good` |
+| PLAN-ONLY / no exec | `good` or evaluate the plan | `n/a` |
 
-Cuando exista **`planner-hyper`**: `underkill` = debió ir hyper; `overkill` = debió ir planner normal.
+When **`planner-hyper`** exists: `underkill` = should have gone hyper; `overkill` = should have gone regular planner.
 
-Señales deep típicas en `signals`: `architecture`, `creative_brief`, `multi_file`, `strategic_only`, `explicit_plan_deep`.
+Typical deep signals in `signals`: `architecture`, `creative_brief`, `multi_file`, `strategic_only`, `explicit_plan_deep`.
 
-## Análisis (offline)
+## Analysis (offline)
 
 ```powershell
 Get-Content .cursor/baking/metrics/runs.jsonl | ForEach-Object { $_ | ConvertFrom-Json } |
   Group-Object { $_.classification.exec_agent } | Select Name, Count
 
-# plan_fit underkill
+# underkill plan_fit
 Get-Content .cursor/baking/metrics/runs.jsonl | ForEach-Object { $_ | ConvertFrom-Json } |
   Where-Object { $_.review.plan_fit -eq 'underkill' } | Select prompt, signals
 ```
 
-Bench AI-flow: copiar `runs.jsonl` a `AI-flow/runs/<escenario>/exports/metrics.jsonl`.
+AI-flow bench: copy `runs.jsonl` to `AI-flow/runs/<scenario>/exports/metrics.jsonl`.
 
-## Ciclo de conclusión (routing + ahorro)
+## Conclusion cycle (routing + savings)
 
-**Disparo:** cada **7 días** *o* cada **50 corridas** desde la última conclusión (lo que ocurra primero). Config en `metrics.review` (`~/.cursor/opus-sonnet/config.json`).
+**Trigger:** every **7 days** *or* every **50 runs** since the last conclusion (whichever comes first). Config in `metrics.review` (`~/.cursor/opus-sonnet/config.json`).
 
-| Comando | Qué hace |
+| Command | What it does |
 |---------|----------|
-| `baking metrics-review --status` | Cuánto falta para la próxima conclusión |
-| `baking metrics-review` | Si corresponde, genera conclusión en `conclusions/` |
-| `baking metrics-review --force` | Conclusión aunque no haya llegado el umbral |
-| `baking metrics-review --close-cycle` | Archiva JSONL y reinicia ciclo (después de objetivo cumplido) |
+| `baking metrics-review --status` | How much is left until the next conclusion |
+| `baking metrics-review` | If due, generates a conclusion in `conclusions/` |
+| `baking metrics-review --force` | Conclusion even if the threshold hasn't been reached |
+| `baking metrics-review --close-cycle` | Archives the JSONL and restarts the cycle (after the goal is met) |
 
-**Umbrales default (conclusión “objetivo cumplido”):**
+**Default thresholds ("goal met" conclusion):**
 
-| Dimensión | Criterio |
+| Dimension | Criterion |
 |-----------|----------|
-| Routing | ≤10% underkill/overkill en muestra de 20 últimas corridas → `ROUTING_OK` |
-| Ahorro | ≥3 pares bench con ≥25% ahorro y `usage.total_usd` en ambos brazos → `SAVINGS_PROVEN` |
+| Routing | ≤10% underkill/overkill in a sample of the last 20 runs → `ROUTING_OK` |
+| Savings | ≥3 bench pairs with ≥25% savings and `usage.total_usd` on both arms → `SAVINGS_PROVEN` |
 
-Si routing OK pero no hay bench de costo → conclusión igual, veredicto `NO_BENCH_DATA`.
+If routing is OK but there's no cost bench → conclusion is still generated, verdict `NO_BENCH_DATA`.
 
-**No borrar** el JSONL al cerrar — archivar con `--close-cycle`. Las conclusiones `.md` son el resumen legible; el JSONL archivado es evidencia.
+**Don't delete** the JSONL when closing — archive with `--close-cycle`. The `.md` conclusions are the readable summary; the archived JSONL is the evidence.
 
-## Privacidad
+## Privacy
 
-El `prompt` puede contener datos del repo — no commitear a git público sin revisar. Agregar `.cursor/baking/metrics/` al `.gitignore` del proyecto si hace falta.
+`prompt` may contain repo data — don't commit it to a public git repo without reviewing. Add `.cursor/baking/metrics/` to the project's `.gitignore` if needed.

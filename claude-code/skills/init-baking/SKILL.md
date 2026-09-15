@@ -1,12 +1,12 @@
 ---
 name: init-baking
-description: DEPRECATED — Baking es global. No instalar por repo. Usar /baking o "usemos baking".
+description: DEPRECATED — Baking is global. Don't install per repo. Use /baking or "use baking".
 disable-model-invocation: true
 user-invocable: true
 ---
 
-# DEPRECATED — Baking es global
+# DEPRECATED — Baking is global
 
-Ver `~/.cursor/skills/init-baking/SKILL.md`.
+See `~/.cursor/skills/init-baking/SKILL.md`.
 
-No uses `enable-project.ps1`.
+Don't use `enable-project.ps1`.

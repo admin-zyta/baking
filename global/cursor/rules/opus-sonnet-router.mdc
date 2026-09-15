@@ -1,21 +1,21 @@
 ---
-description: Gate Baking — config global ~/.cursor/opus-sonnet/config.json
+description: Baking gate — global config ~/.cursor/opus-sonnet/config.json
 alwaysApply: true
 ---
 
 # Baking gate (Cursor)
 
-En pedidos de **implementación / código** (feature, fix, refactor, wiring, deploy):
+On **implementation / code** requests (feature, fix, refactor, wiring, deploy):
 
-1. Leé **`~/.cursor/opus-sonnet/config.json`** (única fuente — **no** hay config por proyecto).
-2. Si `enabled` **no** es `true` → **ignorá** Baking salvo `/baking` o *usemos baking* explícito.
-3. Si `enabled` es `true`:
-   - Si **`autoRoute.enabled` es `true`** → aplicá **Baking como default** (ROUTER + skill baking) **sin** que el usuario repita "/baking" en cada prompt.
-   - Si **`autoRoute.enabled` es `false`** → Baking solo con **`/baking`**, skill baking, o *usemos baking*.
-   - Seguí **`ROUTER.md`** y **`consumption.md`**.
+1. Read **`~/.cursor/opus-sonnet/config.json`** (single source — **no** per-project config).
+2. If `enabled` is **not** `true` → **ignore** Baking unless `/baking` or an explicit *use baking*.
+3. If `enabled` is `true`:
+   - If **`autoRoute.enabled` is `true`** → apply **Baking by default** (ROUTER + baking skill) **without** the user repeating "/baking" on every prompt.
+   - If **`autoRoute.enabled` is `false`** → Baking only via **`/baking`**, the baking skill, or *use baking*.
+   - Follow **`ROUTER.md`** and **`consumption.md`**.
 
-**No auto-routear** (aunque `autoRoute` esté on): preguntas puras, review-only, explicaciones, "¿qué opinás?", status check de una línea.
+**Don't auto-route** (even if `autoRoute` is on): pure questions, review-only, explanations, "what do you think?", one-line status checks.
 
-Toggle: `baking auto-route on|off|status` · Init proyecto: `baking init-memory` + `/init-memory`.
+Toggle: `baking auto-route on|off|status` · Project init: `baking init-memory` + `/init-memory`.
 
-Orquestador: **Baking**. Config global — no instalar Baking por repo.
+Orchestrator: **Baking**. Global config — don't install Baking per repo.

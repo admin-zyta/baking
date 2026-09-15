@@ -1,35 +1,35 @@
 ---
 name: init-baking
-description: DEPRECATED — Baking es global. No instalar por repo. Usar /baking o "usemos baking".
+description: DEPRECATED — Baking is global. Don't install per repo. Use /baking or "use baking".
 disable-model-invocation: true
 user-invocable: true
 ---
 
-# DEPRECATED — Baking es global
+# DEPRECATED — Baking is global
 
-**No hace falta init por proyecto.** Todo vive en:
+**No per-project init needed.** Everything lives at:
 
 - Config: `~/.cursor/opus-sonnet/config.json`
 - Cursor: `~/.cursor/skills/baking/`, `~/.cursor/agents/`
 - Claude Code: `~/.claude/skills/baking/`, `~/.claude/agents/`
-- Otra PC: `npx @boogiepop/baking install`
+- Another machine: `npx @boogiepop/baking install`
 
-## Uso
+## Usage
 
-`/baking` o *"usemos baking para …"*
+`/baking` or *"use baking for …"*
 
-Baking crea solo `.cursor/handoff/` en el workspace si falta.
+Baking only creates `.cursor/handoff/` in the workspace if it's missing.
 
-## Cambiar perfil / enabled
+## Change profile / enabled
 
-Editá **`~/.cursor/opus-sonnet/config.json`** (ej. `"profile": "cursor"` | `"claude"` | `"hybrid"`).
+Edit **`~/.cursor/opus-sonnet/config.json`** (e.g. `"profile": "cursor"` | `"claude"` | `"hybrid"`).
 
-## Actualizar global
+## Update globally
 
 ```bash
 npx @boogiepop/baking install
 ```
 
-O desde el repo git: `sync-global.ps1` / `install-claude-skills.ps1`.
+Or from the git repo: `sync-global.ps1` / `install-claude-skills.ps1`.
 
-No uses `enable-project.ps1` — deprecado.
+Don't use `enable-project.ps1` — deprecated.

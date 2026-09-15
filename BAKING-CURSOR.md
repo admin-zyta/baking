@@ -1,89 +1,89 @@
-# Baking — Cursor (referencia completa)
+# Baking — Cursor (full reference)
 
-Orquestador: **Composer 2.5**. Planner: **Opus 5** / **Hyper (Fable)** / Grok (hybrid). Executor: **Composer 2.5** (`executor-cursor`). Handoff: `.cursor/handoff/`.
+Orchestrator: **Composer 2.5**. Planner: **Opus 5** / **Hyper (Fable)** / Grok (hybrid). Executor: **Composer 2.5** (`executor-cursor`). Handoff: `.cursor/handoff/`.
 
-Leé también: `ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
+Also read: `ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
 
 ---
 
 ## Bootstrap (handoff only)
 
-Baking es **100% global**. Config en `~/.cursor/opus-sonnet/config.json`.
+Baking is **100% global**. Config in `~/.cursor/opus-sonnet/config.json`.
 
-En cada workspace, solo asegurar que exista **`.cursor/handoff/`** (diary). **No** crear `.cursor/opus-sonnet.json` ni copiar agentes al repo.
+In each workspace, only make sure **`.cursor/handoff/`** (diary) exists. **Do not** create `.cursor/opus-sonnet.json` or copy agents into the repo.
 
-Subagentes globales: `~/.cursor/agents/` (planner, planner-hyper-cursor, planner-cursor, executor-cursor, baking).
+Global subagents: `~/.cursor/agents/` (planner, planner-hyper-cursor, planner-cursor, executor-cursor, baking).
 
 ---
 
-## Paso 0 — Clasificar
+## Step 0 — Classify
 
-| Tipo | Señales |
+| Type | Signals |
 |------|---------|
-| **EXECUTE** | typo, color, rename, un archivo, stack trace obvio, handoff ya existe |
-| **PLAN** | arquitectura, multi-archivo, ambigüedad, landing/portfolio/vibe |
-| **PLAN-ONLY** | "solo plan", "no ejecutes", "planear nomás", "preguntá antes", "solo investigar/diseñar" | → planner, **sin executor** |
-| **PLAN-REVISE** | repregunta sobre handoff existente, "cambiá el plan", "agregá al plan" | → planner actualiza el mismo `.md` o Baking responde desde el handoff |
-| **TRIVIAL** | 2–3 comandos, status check | → **resolver vos**, sin subagentes ni handoff |
+| **EXECUTE** | typo, color, rename, one file, obvious stack trace, handoff already exists |
+| **PLAN** | architecture, multi-file, ambiguity, landing/portfolio/vibe |
+| **PLAN-ONLY** | "plan only", "don't execute", "just plan", "ask before doing anything", "just research/design" | → planner, **without executor** |
+| **PLAN-REVISE** | follow-up question about an existing handoff, "change the plan", "add to the plan" | → planner updates the same `.md`, or Baking answers from the handoff |
+| **TRIVIAL** | 2–3 commands, status check | → **resolve it yourself**, no subagents or handoff |
 
-Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY** (no inferir EXECUTE después).
+When in doubt → **PLAN**. If they ask for a plan with no code → **PLAN-ONLY** (don't infer EXECUTE afterward).
 
-### Light stack (v1.5 — ligero)
+### Light stack (v1.5 — lightweight)
 
-Si `lightStack.enabled` en config → **`LIGHT-STACK.md`**. Cuatro hooks, uso mínimo:
+If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Four hooks, minimal usage:
 
-| Pieza | Cuándo | Acción |
+| Piece | When | Action |
 |-------|--------|--------|
-| **Engram** | Inicio no trivial | `mem_context` + `mem_search` (máx. 2 calls) |
-| **Engram** | Cierre | `mem_session_summary` (5 bullets) |
-| **Skill registry** | Si pedido matchea skill | Leer `~/.cursor/baking/skill-registry.md` → Read solo ese SKILL.md |
-| **Witch** | Boogiepop + ≥4 archivos explore | `starter_witch_plan` antes de Grep masivo |
-| **Verify** | Post-EXECUTE | Handoff criterios vs `git diff` → `## Verify` + YAML `verify:` |
+| **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2 calls) |
+| **Engram** | Close | `mem_session_summary` (5 bullets) |
+| **Skill registry** | If the request matches a skill | Read `~/.cursor/baking/skill-registry.md` → Read only that SKILL.md |
+| **Witch** | Boogiepop + ≥4 files to explore | `starter_witch_plan` before massive Grep |
+| **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML `verify:` |
 
-Skip verify en `TRIVIAL` / `PLAN-ONLY`. `verify: fail` → `status: partial`.
+Skip verify on `TRIVIAL` / `PLAN-ONLY`. `verify: fail` → `status: partial`.
 
-Refresh registry: `baking skill-registry` (semanal o al agregar skills).
+Refresh registry: `baking skill-registry` (weekly or when adding skills).
 
 ### PLAN-DEEP → `planner-hyper-cursor` (Fable)
 
-**Explícito:** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper-cursor`**, `plan_mode: explicit-deep`.
+**Explicit:** *"plan deep"*, *"hyper"*, *"think it through"*, *"deep plan"* → **`planner-hyper-cursor`**, `plan_mode: explicit-deep`.
 
-**Explícito normal:** *"plan simple"*, *"plan rápido"* → **`planner`** (Opus) o **`planner-cursor`** (Grok en perfil `hybrid`), `plan_mode: explicit-normal`.
+**Explicit normal:** *"simple plan"*, *"quick plan"* → **`planner`** (Opus) or **`planner-cursor`** (Grok in `hybrid` profile), `plan_mode: explicit-normal`.
 
-**Automático** → **`planner-hyper-cursor`** si **≥2 señales**: arquitectura/migración/trade-offs; creative-brief-bar; PLAN-ONLY estratégico; >3 archivos sin handoff; ambigüedad alta.
+**Automatic** → **`planner-hyper-cursor`** if **≥2 signals**: architecture/migration/trade-offs; creative-brief-bar; strategic PLAN-ONLY; >3 files with no handoff; high ambiguity.
 
-**Automático** → planner normal si plan acotado o PLAN-REVISE menor.
+**Automatic** → regular planner if the plan is narrow or it's a minor PLAN-REVISE.
 
 ---
 
-## Paso 1 — PLAN
+## Step 1 — PLAN
 
-| Routing | Subagente (perfil) | Modelo |
+| Routing | Subagent (profile) | Model |
 |---------|-------------------|--------|
 | PLAN-DEEP | **`planner-hyper-cursor`** | Fable |
-| PLAN normal | **`planner`** (`cursor`/`claude`) o **`planner-cursor`** (`hybrid`) | Opus / Grok |
+| Normal PLAN | **`planner`** (`cursor`/`claude`) or **`planner-cursor`** (`hybrid`) | Opus / Grok |
 
-Task → subagente fresco. **Fallback Cursor:** si Task no expone el subagente, el padre escribe el handoff con plantilla `~/.cursor/agents/planner.md` + **creative-brief-bar** completa.
+Task → fresh subagent. **Cursor fallback:** if Task doesn't expose the subagent, the parent writes the handoff using the `~/.cursor/agents/planner.md` template + full **creative-brief-bar**.
 
-Prompt (ambos tiers):
+Prompt (both tiers):
 
-- Pedido **completo** del usuario (no acortar brief visual).
-- Handoff en `handoffDir` con plantilla `~/.cursor/agents/planner.md`.
-- Si brief creativo → **"incluí creative-brief-bar"** + modo **prod+spec+craft**.
-- Assets table si hay URLs externas; `verify before ship`.
+- The user's **full** request (don't shorten the visual brief).
+- Handoff in `handoffDir` with the `~/.cursor/agents/planner.md` template.
+- If it's a creative brief → **"include creative-brief-bar"** + **prod+spec+craft** mode.
+- Assets table if there are external URLs; `verify before ship`.
 
-Esperar **ruta exacta** del `.md`. Preguntas bloqueantes → usuario antes de EXECUTE.
+Wait for the **exact path** of the `.md`. Blocking questions → ask the user before EXECUTE.
 
 ---
 
-## Modo PLAN-ONLY (sin ejecutar)
+## PLAN-ONLY mode (no execution)
 
-**Señales:** "solo plan", "no ejecutes", "planear nomás", "preguntá y repreguntá", "solo diseño/arquitectura".
+**Signals:** "plan only", "don't execute", "just plan", "ask and follow up", "design/architecture only".
 
-1. Task → **`planner`**, **`planner-hyper-cursor`** o **`planner-cursor`** (según routing).
-2. **No** llamar a `executor-cursor`. **No** editar `src/`.
-3. Presentar al usuario: ruta handoff, resumen, **Preguntas abiertas** del plan.
-4. Cierre:
+1. Task → **`planner`**, **`planner-hyper-cursor`**, or **`planner-cursor`** (per routing).
+2. **Do not** call `executor-cursor`. **Do not** edit `src/`.
+3. Present to the user: handoff path, summary, the plan's **Open questions**.
+4. Close:
 
 ```yaml
 baking:
@@ -92,50 +92,50 @@ baking:
   status: plan-ready | blocked-on-questions
 ```
 
-**Repreguntas del usuario:**
+**Follow-up questions from the user:**
 
-| Tipo | Acción |
+| Type | Action |
 |------|--------|
-| Aclaración menor (lee el handoff y alcanza) | Baking responde vos — **sin** subagentes |
-| Cambio de alcance, opciones, secciones creativas | Task → **`planner`**: "Actualizá `<ruta>` — …" |
-| "Ejecutá", "implementá", "dale" | Pasar a **EXECUTE** con handoff existente |
+| Minor clarification (reading the handoff is enough) | Baking answers directly — **no** subagents |
+| Scope change, options, creative sections | Task → **`planner`**: "Update `<path>` — …" |
+| "Execute", "implement", "go ahead" | Move to **EXECUTE** with the existing handoff |
 
-Hasta que el usuario pida ejecutar explícitamente → **nunca** delegar executor.
+Until the user explicitly asks to execute → **never** delegate to the executor.
 
 ---
 
-## Paso 2 — EXECUTE
+## Step 2 — EXECUTE
 
-Task → subagente **`executor-cursor`** (Composer 2.5).
+Task → **`executor-cursor`** subagent (Composer 2.5).
 
-Al executor: **solo la ruta** del handoff — nunca parafrasear el plan.
+To the executor: **only the path** of the handoff — never paraphrase the plan.
 
 ```text
-Implementá según: .cursor/handoff/YYYY-MM-DD-slug.md
-Primer paso: Read ese archivo. Append ## Ejecución al mismo archivo.
-Verificá: checklist técnico, creative-brief-bar, CRAFT-BAR si existe, asset verification (2xx).
-Anti-fork: no copiar src/ de apps previas.
+Implement per: .cursor/handoff/YYYY-MM-DD-slug.md
+First step: Read that file. Append ## Execution to the same file.
+Verify: technical checklist, creative-brief-bar, CRAFT-BAR if it exists, asset verification (2xx).
+Anti-fork: don't copy src/ from previous apps.
 ```
 
-Trivial post-plan → resolver directo, sin subagente.
+Trivial post-plan → resolve directly, no subagent.
 
-**Nota Cursor:** no hay `fork` como en Claude Code. Si el executor necesita contexto de sesión, incluí en el handoff o delegá con prompt mínimo de contexto — no re-resumir todo el plan.
-
----
-
-## Brief creativo (creative-brief-bar)
-
-Señales: landing, portfolio, vibe, paleta, tipografía, motion, copy editorial.
-
-Modo default: **prod + spec + craft**. Build OK **≠** completado.
-
-Antes de cerrar, evaluar scores en el handoff (executor debe haber corrido asset verify).
+**Cursor note:** there's no `fork` like in Claude Code. If the executor needs session context, include it in the handoff or delegate with a minimal context prompt — don't re-summarize the whole plan.
 
 ---
 
-## Paso 3 — Cierre (gates obligatorios)
+## Creative brief (creative-brief-bar)
 
-`npm run build` **≠** completed en tareas creativas.
+Signals: landing, portfolio, vibe, palette, typography, motion, editorial copy.
+
+Default mode: **prod + spec + craft**. Build OK **≠** completed.
+
+Before closing, evaluate scores in the handoff (the executor must have run asset verify).
+
+---
+
+## Step 3 — Close (mandatory gates)
+
+`npm run build` **≠** completed on creative tasks.
 
 ```yaml
 baking:
@@ -154,34 +154,34 @@ baking:
   models: { planner: opus-5|fable|grok, executor: composer-2.5 }
 ```
 
-**Reglas de cierre:**
+**Close rules:**
 
-- **partial** si build OK pero `craft: partial|fail`, `assets: fail`, o **`verify: fail|partial`**
-- **nunca completed** con `assets: fail`
-- **nunca completed** en landing creativa sin revisar craft bar (handoff o `docs/CRAFT-BAR.md`)
+- **partial** if build OK but `craft: partial|fail`, `assets: fail`, or **`verify: fail|partial`**
+- **never completed** with `assets: fail`
+- **never completed** on a creative landing without reviewing the craft bar (handoff or `docs/CRAFT-BAR.md`)
 
-Mensaje breve al usuario + ruta handoff.
-
----
-
-## Paso 4 — Métricas (obligatorio)
-
-`METRICS.md` — append JSONL a `.cursor/baking/metrics/runs.jsonl`. Incluir `prompt`, agentes, `models`, `signals`, `review`. **Bench/costo:** `benchmark` + `usage.total_usd` (ver METRICS.md). Resumen: `baking metrics-summary`.
-
-`runtime: cursor`. Misma autoevaluación que Claude Code.
+Brief message to the user + handoff path.
 
 ---
 
-Corridas que copian `src/` de apps previas o usan fork para pegar código **no son controles válidos** — excluir de comparación o marcar en handoff.
+## Step 4 — Metrics (mandatory)
 
-Evidencia: `starter-base/docs/BAKING-IMPROVEMENTS.md` (yoga bench v0.0.4, runs 5–6).
+`METRICS.md` — append a JSONL line to `.cursor/baking/metrics/runs.jsonl`. Include `prompt`, agents, `models`, `signals`, `review`. **Bench/cost:** `benchmark` + `usage.total_usd` (see METRICS.md). Summary: `baking metrics-summary`.
+
+`runtime: cursor`. Same self-assessment as Claude Code.
+
+---
+
+Runs that copy `src/` from previous apps or use fork to paste code are **not valid controls** — exclude them from comparison or flag it in the handoff.
+
+Evidence: `starter-base/docs/BAKING-IMPROVEMENTS.md` (yoga bench v0.0.4, runs 5–6).
 
 ---
 
 ## Anti-patterns
 
-- Parafrasear el plan al executor (solo ruta).
-- Opus en el chat principal (solo subagente planner).
-- Marcar completado solo por `build` en briefs creativos.
-- Copiar subagentes al repo (ya están globales).
-- Crear `.cursor/opus-sonnet.json` por proyecto (config es global).
+- Paraphrasing the plan to the executor (path only).
+- Opus in the main chat (planner subagent only).
+- Marking as completed based only on `build` for creative briefs.
+- Copying subagents into the repo (they're already global).
+- Creating a per-project `.cursor/opus-sonnet.json` (config is global).

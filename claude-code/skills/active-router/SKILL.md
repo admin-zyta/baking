@@ -1,14 +1,14 @@
 ---
 name: active-router
-description: DEPRECATED — usar /baking. Baking es global en Claude Code.
+description: DEPRECATED — use /baking. Baking is global in Claude Code.
 disable-model-invocation: true
 user-invocable: true
 ---
 
 # DEPRECATED → /baking
 
-Config global: `~/.cursor/opus-sonnet/config.json` (perfil `claude` si aplica).
+Global config: `~/.cursor/opus-sonnet/config.json` (`claude` profile if applicable).
 
-No crear `.claude/planner-executor.json`.
+Don't create `.claude/planner-executor.json`.
 
-Usá **`/baking`** o *"usemos baking para …"*.
+Use **`/baking`** or *"use baking for …"*.

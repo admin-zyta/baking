@@ -1,156 +1,156 @@
-# Barra de calidad — briefs creativos / UI
+# Quality bar — creative / UI briefs
 
-Aplicar cuando el pedido incluye diseño visual, landing, portfolio, marca, “feel”, vibe, o copy editorial.
-**No copiar referencias concretas** — traducir el brief a criterios medibles en el handoff.
+Apply when the request includes visual design, landing pages, portfolios, branding, "feel", vibe, or editorial copy.
+**Don't copy concrete references** — translate the brief into measurable criteria in the handoff.
 
-## Por qué existe
+## Why it exists
 
-El pipeline planner→executor puede producir código impecable (`build` OK) y aun así entregar una UI “template limpio” si el plan optimiza stack y archivos pero **no la ambición visual**.
+The planner→executor pipeline can produce flawless code (`build` OK) and still ship a "clean template" UI if the plan optimizes stack and files but **not visual ambition**.
 
-Esta barra equilibra: **misma rigurosidad de paths/build, más especificación de calidad perceptual**.
+This bar balances: **the same rigor on paths/build, plus more specification of perceptual quality**.
 
-**Starter Boogiepop:** commits al starter siguen `docs/GENERAL-ONLY.md` — solo reglas generales, nunca artefactos de sesión ni nombres de apps pasadas.
+**Boogiepop starter:** commits to the starter follow `docs/GENERAL-ONLY.md` — general rules only, never session artifacts or names of past apps.
 
 ---
 
-## Modo de build por defecto (landings creativas)
+## Default build mode (creative landings)
 
-Composite default: **`prod + spec + craft + visual`** (no prod + spec solo).
+Default composite: **`prod + spec + craft + visual`** (not prod + spec alone).
 
-| Capa | Qué cubre |
+| Layer | What it covers |
 |------|-----------|
-| **prod** | build, lint, componentes, paths |
-| **spec** | tabla de timings de interacciones |
-| **craft** | checklist perceptual — `creative-brief-bar` (global) o `docs/CRAFT-BAR.md` + `docs/ORIGINALITY.md` (starter v0.0.5+) |
-| **visual** | techo Visual — `docs/VISUAL-BAR.md` + `docs/ART-DIRECTION.md` + `docs/COPY-CRAFT.md` (starter v0.1.0+) |
+| **prod** | build, lint, components, paths |
+| **spec** | interaction timing table |
+| **craft** | perceptual checklist — `creative-brief-bar` (global) or `docs/CRAFT-BAR.md` + `docs/ORIGINALITY.md` (starter v0.0.5+) |
+| **visual** | visual ceiling — `docs/VISUAL-BAR.md` + `docs/ART-DIRECTION.md` + `docs/COPY-CRAFT.md` (starter v0.1.0+) |
 
-El planner debe declarar qué capas aplican. El executor verifica **las cuatro** en landings creativas boutique.
+The planner must declare which layers apply. The executor verifies **all four** on boutique creative landings.
 
 ---
 
-## Clasificación (Baking)
+## Classification (Baking)
 
-| Señales en el pedido | Acción |
+| Signals in the request | Action |
 |---------------------|--------|
-| paleta, tipografía, vibe, landing, portfolio, “feels like”, interacciones | **PLAN** + secciones creativas obligatorias |
-| fix color, rename, un componente | EXECUTE (sin barra creativa) |
-| diseño + >3 archivos | PLAN + barra creativa |
+| palette, typography, vibe, landing, portfolio, "feels like", interactions | **PLAN** + mandatory creative sections |
+| color fix, rename, one component | EXECUTE (no creative bar) |
+| design + >3 files | PLAN + creative bar |
 
 ---
 
-## Secciones extra obligatorias en el handoff
+## Extra mandatory sections in the handoff
 
-Además del template estándar del planner, incluir:
+In addition to the planner's standard template, include:
 
-### 1. Ambición visual (3–5 bullets)
+### 1. Visual ambition (3–5 bullets)
 
-Qué debe sentir el usuario en los primeros 5 segundos. Una frase antítesis si el brief la trae (“antídoto a gym culture”, “monografía impresa”, etc.).
+What the user should feel in the first 5 seconds. One antithesis phrase if the brief includes one ("antidote to gym culture", "printed monograph", etc.).
 
-**Visual ceiling (starter v0.1.0+)** — el planner debe nombrar explícitamente:
+**Visual ceiling (starter v0.1.0+)** — the planner must explicitly name:
 
-- Capas atmosféricas (máx. 3: grain, luz, textura base)
-- Sistema tipográfico editorial (label line, folios, acento en títulos)
-- Estrategia de arte: `svg-system` | `photo-treated` | `hybrid`
-- Motivo repetible en ≥3 secciones
-- Longitud del hero tagline (≥120 chars, párrafo)
+- Atmospheric layers (max 3: grain, light, base texture)
+- Editorial typographic system (label line, folios, accent on titles)
+- Art strategy: `svg-system` | `photo-treated` | `hybrid`
+- Repeatable motif across ≥3 sections
+- Hero tagline length (≥120 chars, paragraph)
 
-### 2. Jerarquía tipográfica
+### 2. Typographic hierarchy
 
-| Nivel | Fuente | Peso | Uso |
+| Level | Font | Weight | Use |
 |-------|--------|------|-----|
-| Display | … | … | hero, títulos de sección |
-| Body | … | … | párrafos |
+| Display | … | … | hero, section titles |
+| Body | … | … | paragraphs |
 | Label | … | … | caps, folios, meta |
 
-Incluir: tracking, line-height body (≥1.75 para “airy”), max-width de copy (`~60ch`).
+Include: tracking, body line-height (≥1.75 for "airy"), copy max-width (`~60ch`).
 
-### 3. Sistema de motion
+### 3. Motion system
 
-| Interacción (del brief) | Duración | Easing | Reduced motion |
+| Interaction (from the brief) | Duration | Easing | Reduced motion |
 |-------------------------|----------|--------|------------------|
 | … | … | … | … |
 
-No solo listar — especificar **curva** (`cubic-bezier`) y si pausa off-screen.
+Don't just list — specify the **curve** (`cubic-bezier`) and whether it pauses off-screen.
 
-### 4. Copy y tono
+### 4. Copy and tone
 
-- Longitud mínima por sección (ej. practices: 2–3 oraciones + meta).
-- Tono: literario / directo / técnico — explícito.
-- Nombre ficticio + tagline + 1 línea antídoto si aplica.
-- **Prohibido:** lorem, “compelling”, “seamless”, placeholders genéricos.
+- Minimum length per section (e.g. practices: 2–3 sentences + meta).
+- Tone: literary / direct / technical — explicit.
+- Fictional name + tagline + 1-line antidote if applicable.
+- **Forbidden:** lorem, "compelling", "seamless", generic placeholders.
 
-### 5. Imágenes y assets
+### 5. Images and assets
 
-- Fuente (Unsplash con IDs verificados, no Picsum genérico para producto visual).
-- Tratamiento: filtros, overlay, aspect ratios.
-- Qué debe verse en cada imagen (luz, composición).
-- **Tabla de assets** (obligatoria si hay URLs externas):
+- Source (Unsplash with verified IDs, not generic Picsum for visual product).
+- Treatment: filters, overlay, aspect ratios.
+- What each image should show (light, composition).
+- **Asset table** (mandatory if there are external URLs):
 
 ```markdown
 ## Assets (verify before ship)
 
-| URL / ID | Uso | Verificar |
+| URL / ID | Use | Verify |
 |----------|-----|-----------|
-| https://… | hero | HEAD/GET 2xx antes de cerrar |
+| https://… | hero | HEAD/GET 2xx before closing |
 ```
 
-- **No** pegar IDs de Unsplash sin marcar `verify before ship`.
-- Executor debe correr verificación HTTP y append `### Asset verification` en `## Ejecución`.
+- **Don't** paste Unsplash IDs without marking `verify before ship`.
+- The executor must run an HTTP check and append `### Asset verification` under `## Execution`.
 
-Si el repo usa **starter Boogiepop v0.0.5+**, el executor también lee `docs/CRAFT-BAR.md` y `docs/ORIGINALITY.md`.
+If the repo uses **Boogiepop starter v0.0.5+**, the executor also reads `docs/CRAFT-BAR.md` and `docs/ORIGINALITY.md`.
 
-Si **v0.1.0+**, además: `docs/VISUAL-BAR.md`, `docs/ART-DIRECTION.md`, `docs/COPY-CRAFT.md`, `docs/PAGE-COHESION.md`.
+If **v0.1.0+**, also: `docs/VISUAL-BAR.md`, `docs/ART-DIRECTION.md`, `docs/COPY-CRAFT.md`, `docs/PAGE-COHESION.md`.
 
-### 6. Anti-patterns (mínimo 3)
+### 6. Anti-patterns (at least 3)
 
-Qué evitar para no caer en “AI slop” / template:
+What to avoid to not fall into "AI slop" / template:
 
-- Hero genérico centrado + gradiente plano sin capas
-- Secciones idénticas (mismo padding/título/copy corto repetido)
-- Nav escondido hasta scroll sin razón de diseño
-- Formulario mínimo sin contexto de confianza
-- Solo checklist técnico en done criteria sin criterio visual
+- Generic centered hero + flat gradient with no layers
+- Identical sections (same padding/title/short repeated copy)
+- Nav hidden until scroll with no design reason
+- Minimal form with no trust context
+- Only a technical checklist in done criteria with no visual criterion
 
-### 7. Done criteria — capa creativa (checklist)
+### 7. Done criteria — creative layer (checklist)
 
-Además de `npm run build` (**build ≠ completado**):
+In addition to `npm run build` (**build ≠ completed**):
 
-- [ ] Cada sección del brief tiene identidad propia (no clones)
-- [ ] Copy cumple tono y longitud del plan
-- [ ] Interacciones del brief implementadas con timing del plan
-- [ ] Jerarquía tipográfica visible sin inspeccionar código
-- [ ] Imágenes alineadas al brief (tema, no random)
-- [ ] Assets externos verificados (2xx) — ver tabla Assets
-- [ ] Craft bar revisada en UI corriendo (starter: `docs/CRAFT-BAR.md`)
-- [ ] Visual bar revisada en UI corriendo (starter v0.1.0+: `docs/VISUAL-BAR.md`)
-- [ ] Art strategy en `DECISIONS.md` + copy mínimos (`docs/COPY-CRAFT.md`)
+- [ ] Each section of the brief has its own identity (no clones)
+- [ ] Copy meets the plan's tone and length
+- [ ] Brief interactions implemented with the plan's timing
+- [ ] Typographic hierarchy visible without inspecting code
+- [ ] Images aligned to the brief (thematic, not random)
+- [ ] External assets verified (2xx) — see Assets table
+- [ ] Craft bar reviewed on the running UI (starter: `docs/CRAFT-BAR.md`)
+- [ ] Visual bar reviewed on the running UI (starter v0.1.0+: `docs/VISUAL-BAR.md`)
+- [ ] Art strategy in `DECISIONS.md` + minimum copy (`docs/COPY-CRAFT.md`)
 
-### 8. Referencia externa (opcional)
+### 8. External reference (optional)
 
 ```markdown
 ## External reference (read-only)
-- URL o demo de terceros
-- Use: comparar barra de craft — **no copiar source**
+- Third-party URL or demo
+- Use: compare craft bar ambition — **do not copy source**
 ```
 
-Planner compara ambición; executor implementa **desde cero**. No archivar comparativas de sesión en el starter.
+The planner compares ambition; the executor implements **from scratch**. Don't archive session comparisons in the starter.
 
 ---
 
-## Rol del executor
+## Executor's role
 
-1. Leer ambas capas: pasos técnicos **y** secciones creativas.
-2. Si un paso técnico contradice la barra creativa → documentar desvío; preferir barra salvo bloqueo.
-3. En `## Ejecución`, marcar checklist creativo igual que el técnico.
+1. Read both layers: technical steps **and** creative sections.
+2. If a technical step contradicts the creative bar → document the deviation; favor the bar unless it's blocking.
+3. In `## Execution`, mark the creative checklist the same way as the technical one.
 
 ---
 
-## Rol de Baking (orquestador)
+## Baking's role (orchestrator)
 
-- Detectar brief creativo → avisar al planner: “incluí creative-brief-bar” + modo **prod+spec+craft+visual**.
-- No acortar el pedido visual al delegar al planner.
-- Post-exec: evaluar scores antes de cerrar (ver `BAKING-CURSOR.md` / `claude-code/BAKING.md`):
-  - **partial** si build OK pero `craft: partial|fail` o `assets: fail`
-  - **nunca completed** con `assets: fail`
+- Detect a creative brief → tell the planner: "include creative-brief-bar" + **prod+spec+craft+visual** mode.
+- Don't shorten the visual request when delegating to the planner.
+- Post-exec: evaluate scores before closing (see `BAKING-CURSOR.md` / `claude-code/BAKING.md`):
+  - **partial** if build OK but `craft: partial|fail` or `assets: fail`
+  - **never completed** with `assets: fail`
 
-Ver `starter-base/docs/BAKING-IMPROVEMENTS.md` para gates de cierre y `docs/GENERAL-ONLY.md` para ediciones al starter.
+See `starter-base/docs/BAKING-IMPROVEMENTS.md` for closing gates and `docs/GENERAL-ONLY.md` for edits to the starter.

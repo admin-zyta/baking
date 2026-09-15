@@ -1,176 +1,176 @@
 # Use Cases — Baking-AI
 
-← [Volver al README](./README.md)
+← [Back to README](./README.md)
 
-Casos reales. Cada uno: pedido → clasificación → qué corre → qué queda en disco.
-
----
-
-## 1. Fix trivial — color / typo / rename
-
-**Pedido:** *"Cambiá el botón primary a `#c9a227` en PlanCard."*
-
-| | |
-|---|---|
-| **Clasificación** | TRIVIAL o EXECUTE directo |
-| **Subagentes** | Ninguno (orquestador resuelve) o executor si hay handoff |
-| **Light stack** | Skip Engram search · skip verify si un solo criterio obvio |
-| **Handoff** | Opcional mínimo o ninguno |
-| **Ahorro** | No pagar Opus planificando un color |
-
-**Cuándo NO usar Baking:** si ya estás en medio de un plan grande — seguí el handoff existente.
+Real cases. Each one: request → classification → what runs → what's left on disk.
 
 ---
 
-## 2. Landing Boogiepop — craft + starter
+## 1. Trivial fix — color / typo / rename
 
-**Pedido:** *"usemos baking — landing editorial para estudio de yoga, mood landing, visual editorial, VISUAL-SCORE ≥27."*
+**Request:** *"Change the primary button to `#c9a227` in PlanCard."*
 
 | | |
 |---|---|
-| **Clasificación** | PLAN (+ creative-brief-bar) |
-| **Planner** | Opus o **Hyper** si brief ambicioso / multi-sección |
+| **Classification** | TRIVIAL or direct EXECUTE |
+| **Subagents** | None (orchestrator resolves it) or executor if a handoff exists |
+| **Light stack** | Skip Engram search · skip verify if there's a single obvious criterion |
+| **Handoff** | Optional minimal or none |
+| **Savings** | Not paying Opus to plan a color |
+
+**When NOT to use Baking:** if you're already in the middle of a big plan — follow the existing handoff.
+
+---
+
+## 2. Boogiepop landing — craft + starter
+
+**Request:** *"use baking — editorial landing for a yoga studio, mood landing, editorial visual, VISUAL-SCORE ≥27."*
+
+| | |
+|---|---|
+| **Classification** | PLAN (+ creative-brief-bar) |
+| **Planner** | Opus or **Hyper** if the brief is ambitious / multi-section |
 | **Handoff** | Spec template + layout recipes + motion + copy |
 | **Executor** | Composer/Sonnet · starter-base bars · asset verify 2xx |
-| **Verify** | Criterios done vs diff + VISUAL-SCORE honesto |
-| **Witch** | `starter_witch_plan` al explorar kit/flavors |
-| **Output** | App en `starter-base/apps/` + handoff con `## Ejecución` |
+| **Verify** | Done criteria vs diff + honest VISUAL-SCORE |
+| **Witch** | `starter_witch_plan` when exploring kit/flavors |
+| **Output** | App in `starter-base/apps/` + handoff with `## Execution` |
 
-**Por qué Baking y no SDD:** el starter **ya es** spec en disco (CRAFT-BAR, VISUAL-BAR) — no 10 fases extra.
-
----
-
-## 3. Feature Zyta — badge solo en Plan Pro
-
-**Pedido:** *"Agregá badge Más popular solo en Plan Pro, no en Enterprise."*
-
-| | |
-|---|---|
-| **Clasificación** | PLAN (regla de negocio) + EXECUTE |
-| **Planner** | Handoff con **Criterios de done** explícitos |
-| **Executor** | Implementa |
-| **Verify** | Tabla: "badge solo Pro" → pass/fail vs diff |
-| **Engram** | `mem_save` si es convención producto recurrente |
-| **Métricas** | `verify: fail` si copió componente a todos los planes |
-
-**Problema que resuelve:** build OK pero regla violada — Verify atrapa interpretación.
+**Why Baking and not SDD:** the starter **already is** an on-disk spec (CRAFT-BAR, VISUAL-BAR) — not 10 extra phases.
 
 ---
 
-## 4. Solo plan — arquitectura sin codear
+## 3. Zyta feature — badge only on Plan Pro
 
-**Pedido:** *"Solo plan — compará JWT vs sessions para auth en el monorepo, no ejecutes."*
+**Request:** *"Add a Most popular badge only on Plan Pro, not on Enterprise."*
 
 | | |
 |---|---|
-| **Clasificación** | PLAN-ONLY |
-| **Planner** | Opus o Hyper (≥2 señales arquitectura) |
+| **Classification** | PLAN (business rule) + EXECUTE |
+| **Planner** | Handoff with explicit **Done criteria** |
+| **Executor** | Implements |
+| **Verify** | Table: "badge only on Pro" → pass/fail vs diff |
+| **Engram** | `mem_save` if it's a recurring product convention |
+| **Metrics** | `verify: fail` if it copied the component to all plans |
+
+**Problem it solves:** build OK but the rule was violated — Verify catches misinterpretation.
+
+---
+
+## 4. Plan only — architecture without coding
+
+**Request:** *"Plan only — compare JWT vs sessions for auth in the monorepo, don't execute."*
+
+| | |
+|---|---|
+| **Classification** | PLAN-ONLY |
+| **Planner** | Opus or Hyper (≥2 architecture signals) |
 | **Executor** | **Skipped** |
-| **Cierre** | `flow: PLAN-ONLY`, `status: plan-ready` |
-| **Siguiente turno** | *"ejecutá el handoff"* → EXECUTE |
+| **Close** | `flow: PLAN-ONLY`, `status: plan-ready` |
+| **Next turn** | *"execute the handoff"* → EXECUTE |
 
-**Regla:** Baking **no** infiere EXECUTE hasta pedido explícito.
+**Rule:** Baking does **not** infer EXECUTE until explicitly asked.
 
 ---
 
-## 5. Plan deep — migración multi-servicio
+## 5. Deep plan — multi-service migration
 
-**Pedido:** *"hyper — diseñá migración auth refresh tokens en todos los servicios Boogiepop."*
+**Request:** *"hyper — design an auth refresh-token migration across all Boogiepop services."*
 
 | | |
 |---|---|
-| **Clasificación** | PLAN-DEEP |
+| **Classification** | PLAN-DEEP |
 | **Planner** | **planner-hyper** (Fable) |
-| **Handoff** | Decisiones, trade-offs, archivos, criterios medibles |
-| **Cuándo Hyper** | Explícito "hyper" o ≥2 señales (arquitectura, >3 archivos, ambigüedad) |
-| **Execute** | Después, con executor — no Fable codeando todo |
+| **Handoff** | Decisions, trade-offs, files, measurable criteria |
+| **When Hyper** | Explicit "hyper" or ≥2 signals (architecture, >3 files, ambiguity) |
+| **Execute** | Afterward, with the executor — not Fable coding everything |
 
-**~10% de proyectos** — el resto alcanza con planner Opus normal.
+**~10% of projects** — the rest are fine with the regular Opus planner.
 
 ---
 
-## 6. Mecánico — rename campo (Claude Code)
+## 6. Mechanical — rename field (Claude Code)
 
-**Pedido:** *"Renombrá `userId` → `accountId` en el handoff de ayer."*
+**Request:** *"Rename `userId` → `accountId` in yesterday's handoff."*
 
 | | |
 |---|---|
-| **Clasificación** | EXECUTE |
+| **Classification** | EXECUTE |
 | **Agent** | **executor-mecanic** (Haiku) |
-| **Perfil** | `claude` |
-| **Prompt** | Solo ruta del handoff |
-| **Ahorro** | Haiku vs Sonnet para wiring trivial |
+| **Profile** | `claude` |
+| **Prompt** | Only the handoff path |
+| **Savings** | Haiku vs Sonnet for trivial wiring |
 
-**Cursor:** no hay mecanic — `executor-cursor` o directo.
+**Cursor:** there's no mecanic — `executor-cursor` or direct.
 
 ---
 
-## 7. Sesión larga — fork vs executor fresco (Claude Code)
+## 7. Long session — fork vs fresh executor (Claude Code)
 
-**Pedido:** *"Seguí debuggeando el encoding — ya tenemos el token del API en esta sesión."*
+**Request:** *"Keep debugging the encoding issue — we already have the API token in this session."*
 
 | | |
 |---|---|
-| **Clasificación** | EXECUTE |
-| **Modo** | **fork** (hereda contexto sesión) |
-| **Por qué** | Re-leer 38k tokens de contexto ya obtenido cuesta caro |
-| **Handoff** | Append `## Ejecución` al mismo diary |
+| **Classification** | EXECUTE |
+| **Mode** | **fork** (inherits session context) |
+| **Why** | Re-reading 38k tokens of already-obtained context is expensive |
+| **Handoff** | Append `## Execution` to the same diary |
 
-Ver [consumption.md](../../consumption.md) § fork vs fresco.
+See [consumption.md](../../consumption.md) § fork vs fresh.
 
 ---
 
-## 8. Amnesia — decisión Comms entre repos
+## 8. Amnesia — Comms decision across repos
 
-**Pedido (jueves, repo distinto):** *"Armá email transaccional para reset password."*
+**Request (Thursday, different repo):** *"Build a transactional email for password reset."*
 
 | | |
 |---|---|
-| **Light stack** | Inicio: `mem_search "comms template transaccional"` |
-| **Engram** | Recupera: "martes decidimos siempre template X, nunca HTML ad hoc" |
-| **Baking** | PLAN corto o EXECUTE con handoff mínimo |
-| **Cierre** | `mem_session_summary` 5 bullets |
+| **Light stack** | Start: `mem_search "transactional comms template"` |
+| **Engram** | Recovers: "on Tuesday we decided to always use template X, never ad hoc HTML" |
+| **Baking** | Short PLAN or EXECUTE with a minimal handoff |
+| **Close** | `mem_session_summary` 5 bullets |
 
-**Witch no alcanza:** mapa de código ≠ acta de decisiones.
+**Witch isn't enough:** a code map ≠ a decision log.
 
 ---
 
-## 9. Deploy Vercel con skill correcta
+## 9. Vercel deploy with the right skill
 
-**Pedido:** *"Deployá preview a Vercel el dashboard."*
+**Request:** *"Deploy a preview of the dashboard to Vercel."*
 
 | | |
 |---|---|
-| **Registry** | Matchea `deploy-vercel` en skill-registry |
-| **Acción** | Read `~/.cursor/skills/deploy-vercel/SKILL.md` |
-| **Baking** | EXECUTE siguiendo skill + handoff si multi-paso |
-| **Refresh** | `baking skill-registry --force` al instalar skill nueva |
+| **Registry** | Matches `deploy-vercel` in the skill-registry |
+| **Action** | Read `~/.cursor/skills/deploy-vercel/SKILL.md` |
+| **Baking** | EXECUTE following the skill + handoff if multi-step |
+| **Refresh** | `baking skill-registry --force` when installing a new skill |
 
 ---
 
-## 10. Benchmark — justificar ahorro
+## 10. Benchmark — justifying savings
 
-**Pedido:** *"Mismo badge Plan Pro — corrida baseline sin baking vs con baking."*
+**Request:** *"Same Plan Pro badge — baseline run without baking vs with baking."*
 
 | | |
 |---|---|
-| **Brazo A** | Opus/Composer todo el chat · `benchmark.arm: baseline` |
-| **Brazo B** | `/baking` · `benchmark.arm: baking` |
-| **Mismo** | `benchmark.pair_id` |
-| **Post** | `usage.total_usd` manual · `baking metrics-summary` |
+| **Arm A** | Opus/Composer the whole chat · `benchmark.arm: baseline` |
+| **Arm B** | `/baking` · `benchmark.arm: baking` |
+| **Same** | `benchmark.pair_id` |
+| **After** | manual `usage.total_usd` · `baking metrics-summary` |
 
-Ver [METRICS.md](../../METRICS.md).
+See [METRICS.md](../../METRICS.md).
 
 ---
 
-## Matriz rápida — qué activar
+## Quick matrix — what to enable
 
-| Caso | PLAN | Hyper | Verify | Engram | Witch |
+| Case | PLAN | Hyper | Verify | Engram | Witch |
 |------|------|-------|--------|--------|-------|
-| Color / typo | — | — | skip | opcional | — |
-| Landing craft | ✓ | a veces | ✓ | ✓ | ✓ |
-| Regla negocio | ✓ | — | ✓ | ✓ | — |
-| Solo plan | ✓ | a veces | skip | ✓ | — |
-| Migración grande | ✓ | ✓ | ✓ | ✓ | a veces |
-| Mecánico CC | — | — | ligero | — | — |
+| Color / typo | — | — | skip | optional | — |
+| Craft landing | ✓ | sometimes | ✓ | ✓ | ✓ |
+| Business rule | ✓ | — | ✓ | ✓ | — |
+| Plan only | ✓ | sometimes | skip | ✓ | — |
+| Large migration | ✓ | ✓ | ✓ | ✓ | sometimes |
+| CC mechanical | — | — | light | — | — |
 | Cross-repo context | — | — | — | **✓** | — |

@@ -1,17 +1,17 @@
-# Planner → Executor — Orquestador **Baking** (global)
+# Planner → Executor — **Baking** orchestrator (global)
 
-Config única: **`~/.cursor/opus-sonnet/config.json`** (`enabled`, `profile`, `handoffDir`).
+Single config: **`~/.cursor/opus-sonnet/config.json`** (`enabled`, `profile`, `handoffDir`).
 
-**No** usar `.claude/planner-executor.json` por repo.
+**Do not** use per-repo `.claude/planner-executor.json`.
 
 ## Baking
 
-- **`/baking`** o *"usemos baking para …"*
-- Agentes globales: `~/.claude/agents/` (baking, planner, executor)
-- Handoff: `.cursor/handoff/` (Baking crea la carpeta si falta)
+- **`/baking`** or *"use baking for …"*
+- Global agents: `~/.claude/agents/` (baking, planner, executor)
+- Handoff: `.cursor/handoff/` (Baking creates the folder if missing)
 
-## Perfil
+## Profile
 
-Editar `profile` en config global: `claude` | `cursor` | `hybrid`
+Edit `profile` in global config: `claude` | `cursor` | `hybrid`
 
-Referencia: `~/.cursor/opus-sonnet/claude-code/BAKING.md`
+Reference: `~/.cursor/opus-sonnet/claude-code/BAKING.md`

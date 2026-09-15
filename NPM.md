@@ -1,29 +1,29 @@
-# Publicar `@boogiepop/baking`
+# Publishing `@boogiepop/baking`
 
-Paquete npm que instala Baking global en Cursor + Claude Code (skills, agentes, rules, config).
+npm package that installs Baking globally in Cursor + Claude Code (skills, agents, rules, config).
 
-## Instalar (otra máquina)
+## Install (another machine)
 
-**Desde npm** (después de `npm publish`):
+**From npm** (after `npm publish`):
 
 ```bash
 npx @boogiepop/baking install
 ```
 
-**Desde GitHub** (sin npm):
+**From GitHub** (no npm):
 
 ```bash
 git clone https://github.com/admin-zyta/baking.git ~/.cursor/opus-sonnet
 cd ~/.cursor/opus-sonnet && node bin/baking.js install
 ```
 
-O en una línea:
+Or in one line:
 
 ```bash
 npx github:admin-zyta/baking install
 ```
 
-*(Requiere que el repo sea accesible con tu token GitHub; si es privado, configurá `GH_TOKEN`.)*
+*(Requires the repo to be accessible with your GitHub token; if it's private, configure `GH_TOKEN`.)*
 
 Global:
 
@@ -32,37 +32,37 @@ npm i -g @boogiepop/baking
 baking install
 ```
 
-Si ya tenés `config.json` custom y no querés backup automático, el install respeta el existente (copia a `config.json.bak` solo al sobrescribir docs; config se backup si existe).
+If you already have a custom `config.json` and don't want an automatic backup, install respects the existing one (it copies to `config.json.bak` only when overwriting docs; config is backed up if it exists).
 
-Forzar reemplazo de config:
+Force config replacement:
 
 ```bash
 baking install --force-config
 ```
 
-## Publicar (maintainers)
+## Publish (maintainers)
 
 1. Bump `VERSION`, `package.json` → `version`, `config.json` → `bakingVersion`, `CHANGELOG.md`
-2. Login npm con acceso al scope `@boogiepop`
-3. Desde la raíz del repo:
+2. Login to npm with access to the `@boogiepop` scope
+3. From the repo root:
 
 ```bash
 npm publish
 ```
 
-Scope **restricted** por defecto (`publishConfig.access`). Para público: `"access": "public"` en `package.json`.
+Scope is **restricted** by default (`publishConfig.access`). For public: `"access": "public"` in `package.json`.
 
-## Dry-run local
+## Local dry-run
 
 ```bash
 node bin/baking.js install
 node bin/baking.js version
 ```
 
-Equivalente a `sync-global.ps1` en Windows; el bin es cross-platform (Node 18+).
+Equivalent to `sync-global.ps1` on Windows; the bin is cross-platform (Node 18+).
 
-## Qué no incluye npm
+## What npm does not include
 
-- Métricas por workspace (`.cursor/baking/metrics/` en cada proyecto — se crea al correr)
-- Handoff diary (`.cursor/handoff/` por proyecto)
-- Accept de Fable / modelos disponibles en la cuenta Cursor
+- Per-workspace metrics (`.cursor/baking/metrics/` in each project — created on run)
+- Handoff diary (`.cursor/handoff/` per project)
+- Fable acceptance / models available on the Cursor account

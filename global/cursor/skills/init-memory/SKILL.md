@@ -1,40 +1,40 @@
 ---
 name: init-memory
-description: Bootstrap memoria de proyecto estilo Claude /init — scan + AGENTS.md + Engram. baking init-memory + PLAN-ONLY.
+description: Claude /init-style project memory bootstrap — scan + AGENTS.md + Engram. baking init-memory + PLAN-ONLY.
 disable-model-invocation: false
 user-invocable: true
 ---
 
 # Init-memory — Baking
 
-Equivalente liviano al **`/init` de Claude Code**: analizar el repo y dejar memoria persistente.
+A lightweight equivalent of Claude Code's **`/init`**: analyze the repo and leave persistent memory behind.
 
-## Paso 0 — CLI (usuario o agente)
+## Step 0 — CLI (user or agent)
 
-Desde la raíz del repo:
+From the repo root:
 
 ```bash
 baking init-memory
-# audit sin tocar AGENTS.md existente:
+# audit without touching an existing AGENTS.md:
 baking init-memory
-# regenerar regla de proyecto:
+# regenerate the project rule:
 baking init-memory --force
 ```
 
-Genera `.cursor/baking/init/` (scan, borrador, temas Engram, `NEXT.md`).
+Generates `.cursor/baking/init/` (scan, draft, Engram topics, `NEXT.md`).
 
-## Paso 1 — PLAN-ONLY (agente)
+## Step 1 — PLAN-ONLY (agent)
 
-1. Leer `.cursor/baking/init/NEXT.md` y `scan.json`.
-2. Lanzar **`planner`** (Opus/Fable según señales) — **PLAN-ONLY**, sin executor.
-3. Entregables en el handoff:
-   - **`AGENTS.md`** final (create) o **audit/merge** (si ya existía).
-   - **`.cursor/rules/baking-project.mdc`** conciso si falta contexto Cursor.
-   - **`mem_save`** por cada tema en `engram-topics.json` (estructurado, no transcript).
-4. Cierre: YAML + JSONL métricas.
+1. Read `.cursor/baking/init/NEXT.md` and `scan.json`.
+2. Launch **`planner`** (Opus/Fable depending on signals) — **PLAN-ONLY**, no executor.
+3. Deliverables in the handoff:
+   - Final **`AGENTS.md`** (create) or **audit/merge** (if it already existed).
+   - Concise **`.cursor/rules/baking-project.mdc`** if Cursor context is missing.
+   - **`mem_save`** for each topic in `engram-topics.json` (structured, not a transcript).
+4. Close: YAML + metrics JSONL.
 
-## Reglas
+## Rules
 
-- No volcar README/handoff entero a Engram.
-- Solo lo que el agente **inferiría mal** sin contexto (comandos no estándar, puertos, monorepo, gotchas).
-- Modo **audit** si ya hay `AGENTS.md` o `CLAUDE.md` — no sobrescribir sin revisión del usuario.
+- Don't dump the whole README/handoff into Engram.
+- Only what the agent **would misinfer** without context (non-standard commands, ports, monorepo, gotchas).
+- **audit** mode if `AGENTS.md` or `CLAUDE.md` already exists — don't overwrite without user review.

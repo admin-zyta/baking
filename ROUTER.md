@@ -1,39 +1,39 @@
-# Opus → Sonnet Router (modo automático)
+# Opus → Sonnet Router (automatic mode)
 
-Orquestador de costo: **Opus planifica**, **Sonnet ejecuta**. Cada corrida deja un **diary** persistente.
+Cost orchestrator: **Opus plans**, **Sonnet executes**. Every run leaves a persistent **diary**.
 
-## Configuración activa
+## Active configuration
 
-1. Leé **`~/.cursor/opus-sonnet/config.json`** (global — única fuente).
-2. **No** existe `.cursor/opus-sonnet.json` por proyecto; no mezclar overrides locales.
-3. Resolvé el **perfil** activo desde `profile` global (default `cursor`).
-4. Cargá `planner`, `plannerHyper`, `executor` y `orchestrator` desde `profiles[<profile>]`.
-5. Usá `handoffDir`, subagentes y flags de `consumption` del config global.
+1. Read **`~/.cursor/opus-sonnet/config.json`** (global — single source).
+2. There is **no** per-project `.cursor/opus-sonnet.json`; don't mix local overrides.
+3. Resolve the active **profile** from global `profile` (default `cursor`).
+4. Load `planner`, `plannerHyper`, `executor`, and `orchestrator` from `profiles[<profile>]`.
+5. Use `handoffDir`, subagents, and `consumption` flags from the global config.
 
-Si `enabled` no es `true`, **no aplicar** este router (invocar `/baking` manualmente).
+If `enabled` is not `true`, **do not apply** this router (invoke `/baking` manually).
 
-**Auto-route (opcional, v1.6+):** si `autoRoute.enabled` es `true`, aplicar este router en pedidos de implementación **sin** que el usuario diga `/baking` cada vez. Toggle: `baking auto-route on|off`. Ver **`INIT-MEMORY.md`**.
+**Auto-route (optional, v1.6+):** if `autoRoute.enabled` is `true`, apply this router on implementation requests **without** the user saying `/baking` every time. Toggle: `baking auto-route on|off`. See **`INIT-MEMORY.md`**.
 
-**Init memoria de proyecto:** `baking init-memory` + `/init-memory` (estilo Claude `/init`).
+**Project memory init:** `baking init-memory` + `/init-memory` (Claude `/init` style).
 
 ## Light stack (v1.5+)
 
-Una config (`lightStack` en `config.json`) para **Cursor y Claude Code**. Detalle: **`LIGHT-STACK.md`**.
+One config (`lightStack` in `config.json`) for **Cursor and Claude Code**. Details: **`LIGHT-STACK.md`**.
 
-- **Engram** — amnesia (MCP en Cursor o Claude)
-- **Verify** — handoff criterios vs diff al cierre EXECUTE
-- **Witch** — orientación Boogiepop (MCP starter)
-- **Skill registry** — `baking skill-registry` → índice global
+- **Engram** — amnesia (MCP in Cursor or Claude)
+- **Verify** — handoff criteria vs diff at EXECUTE close
+- **Witch** — Boogiepop orientation (starter MCP)
+- **Skill registry** — `baking skill-registry` → global index
 
-## Perfiles de modelo
+## Model profiles
 
-| Perfil | Planner normal | Planner deep (Hyper) | Executor | Pool de billing |
+| Profile | Normal planner | Deep planner (Hyper) | Executor | Billing pool |
 |--------|----------------|----------------------|----------|-----------------|
 | `claude` | Opus 5 (`planner`) | Fable (`planner-hyper`) | Sonnet (`executor`) | Other Models (Claude) |
-| `cursor` | Opus 5 (`planner`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Mixto — **default** |
-| `hybrid` | Grok 4.6 (`planner-cursor`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Cursor Models (sin Opus plan normal) |
+| `cursor` | Opus 5 (`planner`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Mixed — **default** |
+| `hybrid` | Grok 4.6 (`planner-cursor`) | Fable (`planner-hyper-cursor`) | Composer 2.5 (`executor-cursor`) | Cursor Models (no regular Opus plan) |
 
-**Perfil global** — editar en `~/.cursor/opus-sonnet/config.json`:
+**Global profile** — edit in `~/.cursor/opus-sonnet/config.json`:
 
 ```json
 {
@@ -42,89 +42,89 @@ Una config (`lightStack` en `config.json`) para **Cursor y Claude Code**. Detall
 }
 ```
 
-**Opus 5 planifica + Composer ejecuta:** `"profile": "cursor"` (default global).
+**Opus 5 plans + Composer executes:** `"profile": "cursor"` (global default).
 
-**Todo pool Cursor, sin Opus (Grok + Composer):** `"profile": "hybrid"`.
+**All Cursor pool, no Opus (Grok + Composer):** `"profile": "hybrid"`.
 
-**Todo Claude:** `"profile": "claude"`.
+**All Claude:** `"profile": "claude"`.
 
-## Modelo del chat principal (orquestador)
+## Main chat model (orchestrator)
 
-- Usá **Composer o Sonnet**, nunca Opus como padre (salvo pedido explícito del usuario).
-- Modelos sugeridos: ver `orchestrator.recommendedModels` en config.
+- Use **Composer or Sonnet**, never Opus as the parent (unless the user explicitly asks).
+- Suggested models: see `orchestrator.recommendedModels` in config.
 
-## Diary (handoff persistente)
+## Diary (persistent handoff)
 
-| Campo | Valor |
+| Field | Value |
 |-------|--------|
-| Carpeta | `handoffDir` del config (default `.cursor/handoff/`) |
-| Nombre | `YYYY-MM-DD-<slug>.md` |
-| Colisión mismo día | `-HHmm` o `-2`, `-3` |
-| Contenido | Plan (planner) + `## Ejecución` (executor) en el **mismo** archivo |
+| Folder | `handoffDir` from config (default `.cursor/handoff/`) |
+| Name | `YYYY-MM-DD-<slug>.md` |
+| Same-day collision | `-HHmm` or `-2`, `-3` |
+| Content | Plan (planner) + `## Execution` (executor) in the **same** file |
 
-Creá la carpeta si no existe. **No borrar** entradas viejas.
+Create the folder if it doesn't exist. **Do not delete** old entries.
 
-## Paso 0 — Clasificar
+## Step 0 — Classify
 
-**PLAN** → investigar, diseñar, comparar, arquitectura, tarea grande/ambigua, multi-archivo sin handoff previo.
+**PLAN** → research, design, compare, architecture, large/ambiguous task, multi-file with no prior handoff.
 
-**EXECUTE** → cambio acotado, fix puntual, plan/handoff ya existente **y el usuario pidió implementar**.
+**EXECUTE** → narrow change, specific fix, plan/handoff already exists **and the user asked to implement**.
 
-**PLAN-DEEP** → explícito (*hyper*, *plan deep*) o ≥2 señales (arquitectura, creative-brief, ambigüedad) → subagente `plannerHyper` del perfil.
+**PLAN-DEEP** → explicit (*hyper*, *plan deep*) or ≥2 signals (architecture, creative-brief, ambiguity) → the profile's `plannerHyper` subagent.
 
-**PLAN-ONLY** → "solo plan", "no ejecutes", "planear nomás", "preguntá antes" → planner o hyper, **sin executor**.
+**PLAN-ONLY** → "plan only", "don't execute", "just plan", "ask before doing anything" → planner or hyper, **without executor**.
 
-**PLAN-REVISE** → repregunta o "cambiá el plan" → planner actualiza handoff o orquestador responde desde el `.md`.
+**PLAN-REVISE** → follow-up question or "change the plan" → planner updates the handoff or the orchestrator answers from the `.md`.
 
-Reglas de config:
+Config rules:
 
-- `routing.defaultOnAmbiguity` → default si dudás (`PLAN` recomendado).
-- Si `consumption.skipPlannerForTrivialTasks` y el pedido tiene ≤ `trivialTaskMaxWords` palabras y es una sola acción obvia → **EXECUTE** directo.
-- Si `routing.forcePlanIfNoHandoffExists` y la tarea es no trivial y no hay handoff del día relacionado → **PLAN**.
+- `routing.defaultOnAmbiguity` → default when in doubt (`PLAN` recommended).
+- If `consumption.skipPlannerForTrivialTasks` and the request has ≤ `trivialTaskMaxWords` words and is a single obvious action → direct **EXECUTE**.
+- If `routing.forcePlanIfNoHandoffExists` and the task is non-trivial and there's no related handoff for the day → **PLAN**.
 
-## Paso 1 — PLAN (si aplica)
+## Step 1 — PLAN (if applicable)
 
-Delegá al subagente del perfil (`planner`, `planner-cursor` o `plannerHyper` según routing PLAN-DEEP):
+Delegate to the profile's subagent (`planner`, `planner-cursor`, or `plannerHyper` per PLAN-DEEP routing):
 
-- Pedido completo del usuario.
-- Handoff en `handoffDir` con plantilla completa (ver agente planner correspondiente).
-- Esperá la **ruta exacta** del archivo.
+- The user's full request.
+- Handoff in `handoffDir` with the full template (see the corresponding planner agent).
+- Wait for the file's **exact path**.
 
-Preguntas abiertas **bloqueantes** → consultar al usuario. Si el pedido era **PLAN-ONLY** → **detener acá**; no pasar a EXECUTE hasta pedido explícito.
+Blocking open questions → ask the user. If the request was **PLAN-ONLY** → **stop here**; don't move to EXECUTE until explicitly asked.
 
-## Paso 2 — EXECUTE (si aplica — no en PLAN-ONLY)
+## Step 2 — EXECUTE (if applicable — not in PLAN-ONLY)
 
-**Omitir** si clasificaste PLAN-ONLY o el usuario no pidió implementar.
+**Skip** if you classified PLAN-ONLY or the user didn't ask to implement.
 
-Delegá al subagente del perfil (`executor` o `executor-cursor`, según config):
+Delegate to the profile's subagent (`executor` or `executor-cursor`, per config):
 
-**Con plan:**
-
-```text
-Implementá según: <ruta exacta del handoff>
-Primer paso: leer ese archivo. Al terminar: append sección Ejecución en el mismo archivo.
-```
-
-**Ejecución directa:**
+**With a plan:**
 
 ```text
-Ejecución directa. Handoff mínimo en <handoffDir>, implementá, append Ejecución.
-Pedido: [copiar pedido]
+Implement per: <exact handoff path>
+First step: read that file. When done: append an Execution section to the same file.
 ```
 
-Respetá `consumption.maxParallelSubagents` (default 2).
+**Direct execution:**
 
-## Paso 3 — Cierre
+```text
+Direct execution. Minimal handoff in <handoffDir>, implement, append Execution.
+Request: [copy the request]
+```
 
-1. Ruta del diary
-2. PLAN + EXECUTE o solo EXECUTE
-3. **[Light]** Verify + YAML `verify:` si hubo código (ver `LIGHT-STACK.md`)
-4. Estado: completado | parcial | bloqueado
-5. Resumen breve
-6. **[Light]** Engram `mem_session_summary` si `lightStack.enabled`
+Respect `consumption.maxParallelSubagents` (default 2).
 
-## Reglas duras
+## Step 3 — Close
 
-- **Nunca** parafrasear el plan al executor: solo la **ruta del archivo**.
-- Subagentes con `force-default-model: true` en `~/.cursor/agents/`.
-- Aplicar también `~/.cursor/opus-sonnet/consumption.md`.
+1. Diary path
+2. PLAN + EXECUTE or EXECUTE only
+3. **[Light]** Verify + YAML `verify:` if there was code (see `LIGHT-STACK.md`)
+4. Status: completed | partial | blocked
+5. Brief summary
+6. **[Light]** Engram `mem_session_summary` if `lightStack.enabled`
+
+## Hard rules
+
+- **Never** paraphrase the plan to the executor: only the **file path**.
+- Subagents with `force-default-model: true` in `~/.cursor/agents/`.
+- Also apply `~/.cursor/opus-sonnet/consumption.md`.

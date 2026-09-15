@@ -1,48 +1,48 @@
-# Agentes Baking — nombres exactos para Task
+# Baking agents — exact names for Task
 
-**Importante:** los agentes viven en **`~/.cursor/agents/`** y **`~/.claude/agents/`** después de `node bin/baking.js install`. Clonar el repo **no** alcanza.
+**Important:** agents live in **`~/.cursor/agents/`** and **`~/.claude/agents/`** after `node bin/baking.js install`. Cloning the repo is **not** enough.
 
 ## Cursor (`~/.cursor/agents/`)
 
-| Task `subagent_type` | Archivo | Rol |
+| Task `subagent_type` | File | Role |
 |----------------------|---------|-----|
-| `baking` | `baking.md` | Orquestador |
-| `planner` | `planner.md` | Plan normal (Opus) |
-| `planner-hyper` | `planner-hyper.md` | Plan deep (Fable) |
-| `planner-hyper-cursor` | `planner-hyper-cursor.md` | Idem (nombre alternativo) |
-| `planner-cursor` | `planner-cursor.md` | Plan normal hybrid (Grok) |
-| `executor-cursor` | `executor-cursor.md` | Ejecutor (Composer) |
-| `executor` | `executor.md` | Referencia |
+| `baking` | `baking.md` | Orchestrator |
+| `planner` | `planner.md` | Normal plan (Opus) |
+| `planner-hyper` | `planner-hyper.md` | Deep plan (Fable) |
+| `planner-hyper-cursor` | `planner-hyper-cursor.md` | Same (alternate name) |
+| `planner-cursor` | `planner-cursor.md` | Normal hybrid plan (Grok) |
+| `executor-cursor` | `executor-cursor.md` | Executor (Composer) |
+| `executor` | `executor.md` | Reference |
 
-**No existe en Cursor:** `executor-mecanic` (solo Claude Code / Haiku). Tareas mecánicas → `executor-cursor` o resolver directo.
+**Doesn't exist in Cursor:** `executor-mecanic` (Claude Code / Haiku only). Mechanical tasks → `executor-cursor` or resolve directly.
 
 ## Claude Code (`~/.claude/agents/`)
 
-| Agent | Archivo | Rol |
+| Agent | File | Role |
 |-------|---------|-----|
-| `baking` | `baking.md` | Orquestador |
-| `planner` | `planner.md` | Plan normal (Opus) |
-| `planner-hyper` | `planner-hyper.md` | Plan deep (Fable) |
-| `executor` | `executor.md` | Ejecutor (Sonnet) |
-| `executor-mecanic` | `executor-mecanic.md` | Mecánico (Haiku) |
+| `baking` | `baking.md` | Orchestrator |
+| `planner` | `planner.md` | Normal plan (Opus) |
+| `planner-hyper` | `planner-hyper.md` | Deep plan (Fable) |
+| `executor` | `executor.md` | Executor (Sonnet) |
+| `executor-mecanic` | `executor-mecanic.md` | Mecanic (Haiku) |
 
-## Verificar instalación
+## Verify installation
 
 ```bash
 node bin/baking.js doctor
 ```
 
-Debe listar todos los archivos anteriores como **OK**.
+It should list all the files above as **OK**.
 
 ## Light stack (Cursor + Claude Code)
 
-Misma config `lightStack` en `~/.cursor/opus-sonnet/config.json`. Ver **`LIGHT-STACK.md`**.
+Same `lightStack` config in `~/.cursor/opus-sonnet/config.json`. See **`LIGHT-STACK.md`**.
 
-| Pieza | Cursor | Claude Code |
+| Piece | Cursor | Claude Code |
 |-------|--------|-------------|
-| Docs Baking | `BAKING-CURSOR.md` | `claude-code/BAKING.md` |
-| Planner plantilla | `~/.cursor/agents/planner.md` | **misma ruta** |
-| Métricas `runtime` | `cursor` | `claude-code` |
-| Engram | `engram setup cursor` | plugin / MCP Claude |
+| Baking docs | `BAKING-CURSOR.md` | `claude-code/BAKING.md` |
+| Planner template | `~/.cursor/agents/planner.md` | **same path** |
+| `runtime` metrics | `cursor` | `claude-code` |
+| Engram | `engram setup cursor` | plugin / Claude MCP |
 
-Comandos: `baking skill-registry` · `baking doctor` (reporta light stack).
+Commands: `baking skill-registry` · `baking doctor` (reports light stack).

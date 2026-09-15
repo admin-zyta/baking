@@ -5,7 +5,13 @@
   "properties": {
     "bakingVersion": {
       "type": "string",
-      "description": "Versión semver de Baking (debe coincidir con VERSION en el repo)."
+      "description": "Baking semver (must match VERSION in repo)."
+    },
+    "language": {
+      "type": "string",
+      "enum": ["en"],
+      "default": "en",
+      "description": "Documentation and orchestrator copy language (English only for now)."
     },
     "enabled": {
       "type": "boolean",

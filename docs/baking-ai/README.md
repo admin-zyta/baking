@@ -1,20 +1,22 @@
+Documentation language: English.
+
 # Baking-AI
 
-**El orquestador liviano para Cursor y Claude Code.**
+**The lightweight orchestrator for Cursor and Claude Code.**
 
-Opus (o Fable) planifica. Composer o Sonnet ejecuta. El plan queda en disco. Pagás menos tokens. Sabés qué pasó.
+Opus (or Fable) plans. Composer or Sonnet executes. The plan stays on disk. You pay fewer tokens. You know what happened.
 
 ---
 
-## Qué problema resuelve
+## What problem it solves
 
-| Problema | Sin Baking | Con Baking |
+| Problem | Without Baking | With Baking |
 |----------|------------|------------|
-| Opus codeando todo el chat | Caro, lento | Opus **solo planifica** (1 subagente) |
-| Plan en el chat, se pierde | Re-explicar cada sesión | **Handoff** persistente en `.cursor/handoff/` |
-| "Build OK" pero mal hecho | Confianza ciega | **Verify** — criterios vs diff |
-| Olvidás decisiones entre repos | Fricción manual | **Engram** (light stack, opcional) |
-| Landings genéricas | Template limpio | **creative-brief-bar** + starter Boogiepop |
+| Opus coding the whole chat | Expensive, slow | Opus **only plans** (1 subagent) |
+| Plan in the chat, gets lost | Re-explain every session | Persistent **Handoff** in `.cursor/handoff/` |
+| "Build OK" but poorly done | Blind trust | **Verify** — criteria vs diff |
+| Forgetting decisions across repos | Manual friction | **Engram** (light stack, optional) |
+| Generic landings | Clean template | **creative-brief-bar** + Boogiepop starter |
 
 Baking is a **router + diary + gates** for Cursor and Claude Code — not a full SDD pipeline, just what you need to plan cheaply, execute safely, and keep context on disk.
 
@@ -22,46 +24,46 @@ Baking is a **router + diary + gates** for Cursor and Claude Code — not a full
 
 ## Works with
 
-| Entorno | Invocación | Perfil típico |
+| Environment | Invocation | Typical profile |
 |---------|------------|---------------|
-| **Cursor** | `/baking` · *usemos baking* | `cursor` (Opus plan + Composer exec) |
-| **Claude Code** | `/baking` · *usemos baking* | `claude` (Opus plan + Sonnet exec) |
+| **Cursor** | `/baking` · *use baking* | `cursor` (Opus plan + Composer exec) |
+| **Claude Code** | `/baking` · *use baking* | `claude` (Opus plan + Sonnet exec) |
 
-Una config global: `~/.cursor/opus-sonnet/config.json`. **No** instalar por repo.
+One global config: `~/.cursor/opus-sonnet/config.json`. **Do not** install per repo.
 
 ---
 
-## Componentes
+## Components
 
-| Componente | Qué hace |
+| Component | What it does |
 |------------|----------|
-| **Orquestador** | Clasifica PLAN / EXECUTE / TRIVIAL · delega subagentes |
-| **Planner** | Investiga · escribe handoff · no toca `src/` |
-| **Planner Hyper** | Plan deep (Fable) — arquitectura, landings complejas |
-| **Executor** | Implementa según handoff · append `## Ejecución` |
-| **Handoff diary** | Plan + ejecución en un `.md` por tarea |
+| **Orchestrator** | Classifies PLAN / EXECUTE / TRIVIAL · delegates to subagents |
+| **Planner** | Researches · writes the handoff · doesn't touch `src/` |
+| **Planner Hyper** | Deep plan (Fable) — architecture, complex landings |
+| **Executor** | Implements per the handoff · appends `## Execution` |
+| **Handoff diary** | Plan + execution in one `.md` per task |
 | **Light stack** | Engram · Verify · Witch · Skill registry |
-| **Métricas** | `runs.jsonl` — routing, costo, `metrics-review` |
+| **Metrics** | `runs.jsonl` — routing, cost, `metrics-review` |
 | **Init-memory** | Bootstrap AGENTS + Engram (`baking init-memory`) |
-| **Auto-route** | Toggle: Baking por default (`baking auto-route on`) |
-| **creative-brief-bar** | Calidad perceptual en landings (craft, visual) |
+| **Auto-route** | Toggle: Baking by default (`baking auto-route on`) |
+| **creative-brief-bar** | Perceptual quality on landings (craft, visual) |
 
-Detalle: [components.md](./components.md)
+Details: [components.md](./components.md)
 
 ---
 
-## Flujo en 30 segundos
+## Flow in 30 seconds
 
 ```
-Usuario → Baking (orquestador barato)
+User → Baking (cheap orchestrator)
            ├─ PLAN → planner | planner-hyper
-           └─ EXECUTE → executor | executor-mecanic | directo
+           └─ EXECUTE → executor | executor-mecanic | direct
            → .cursor/handoff/YYYY-MM-DD-slug.md
            → verify + YAML + metrics JSONL
 ```
 
-Mental model: [intended-usage.md](./intended-usage.md)  
-Casos concretos: [use-cases.md](./use-cases.md)
+Mental model: [intended-usage.md](./intended-usage.md)
+Concrete cases: [use-cases.md](./use-cases.md)
 
 ---
 
@@ -73,30 +75,30 @@ baking doctor
 baking skill-registry
 ```
 
-Cursor o Claude Code → `/baking` + tu pedido.
+Cursor or Claude Code → `/baking` + your request.
 
-Guía completa: [quickstart.md](./quickstart.md)
+Full guide: [quickstart.md](./quickstart.md)
 
 ---
 
-## Documentación
+## Documentation
 
-| Doc | Contenido |
+| Doc | Contents |
 |-----|-----------|
-| [intended-usage.md](./intended-usage.md) | Cómo pensarlo — si leés una, que sea esta |
-| [use-cases.md](./use-cases.md) | Escenarios reales (Zyta, Boogiepop, fixes…) |
-| [components.md](./components.md) | Cada pieza, agentes, perfiles |
+| [intended-usage.md](./intended-usage.md) | How to think about it — if you read one, make it this one |
+| [use-cases.md](./use-cases.md) | Real scenarios (Zyta, Boogiepop, fixes…) |
+| [components.md](./components.md) | Each piece, agents, profiles |
 | [routing.md](./routing.md) | PLAN / EXECUTE / Hyper / mecanic / fork |
-| [quickstart.md](./quickstart.md) | Instalar, perfiles, primer corrida |
-| [../../INIT-MEMORY.md](../../INIT-MEMORY.md) | Bootstrap memoria de proyecto |
+| [quickstart.md](./quickstart.md) | Install, profiles, first run |
+| [../../INIT-MEMORY.md](../../INIT-MEMORY.md) | Project memory bootstrap |
 | [../../LIGHT-STACK.md](../../LIGHT-STACK.md) | Engram, Verify, Witch, registry |
-| [../../METRICS.md](../../METRICS.md) | JSONL, benchmark S0 vs S3, costo |
-| [../../AGENTS.md](../../AGENTS.md) | Nombres exactos Task / Agent |
+| [../../METRICS.md](../../METRICS.md) | JSONL, S0 vs S3 benchmark, cost |
+| [../../AGENTS.md](../../AGENTS.md) | Exact Task / Agent names |
 
-Referencias técnicas: `BAKING-CURSOR.md` · `claude-code/BAKING.md`
+Technical references: `BAKING-CURSOR.md` · `claude-code/BAKING.md`
 
 ---
 
-## Versión
+## Version
 
-`bakingVersion` en `config.json` · paquete `@boogiepop/baking` · repo [admin-zyta/baking](https://github.com/admin-zyta/baking)
+`bakingVersion` in `config.json` · package `@boogiepop/baking` · repo [admin-zyta/baking](https://github.com/admin-zyta/baking)

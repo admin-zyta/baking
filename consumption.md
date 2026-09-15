@@ -1,161 +1,160 @@
-# Consumo — reglas globales planner/executor
+# Consumption — global planner/executor rules
 
-Aplicar cuando el router está activo (`enabled: true` en **`~/.cursor/opus-sonnet/config.json`** — global, sin overrides por repo). Respetar `profile` del config.
+Apply when the router is active (`enabled: true` in **`~/.cursor/opus-sonnet/config.json`** — global, no per-repo overrides). Respect the config's `profile`.
 
-## Pools de Cursor
+## Cursor pools
 
-| Pool | Modelos típicos | Cuándo usar |
+| Pool | Typical models | When to use |
 |------|-----------------|-------------|
-| **Cursor Models** | Composer 2.5, Grok 4.6 | Día a día, mucho Agent; más incluido en Pro |
-| **Other Models** | Claude Opus/Sonnet, GPT, Gemini | Planes difíciles o perfil `claude` |
+| **Cursor Models** | Composer 2.5, Grok 4.6 | Day-to-day, heavy Agent use; more included in Pro |
+| **Other Models** | Claude Opus/Sonnet, GPT, Gemini | Hard plans or `claude` profile |
 
-## Por perfil
+## By profile
 
 ### `cursor` (default — Opus + Composer)
 
-- Orquestador: **Composer 2.5**
-- Planner: **Opus 5** (solo PLAN, una vez)
+- Orchestrator: **Composer 2.5**
+- Planner: **Opus 5** (PLAN only, once)
 - Executor: **Composer 2.5**
-- Mejor plan; ejecución barata en pool Cursor Models
+- Best plan; cheap execution in the Cursor Models pool
 
-### `hybrid` (100% pool Cursor)
+### `hybrid` (100% Cursor pool)
 
-- Orquestador: **Composer 2.5**
-- Planner: **Grok 4.6** (no Fast salvo urgencia)
+- Orchestrator: **Composer 2.5**
+- Planner: **Grok 4.6** (not Fast unless urgent)
 - Executor: **Composer 2.5**
-- Cero Opus; máximo ahorro Other Models
+- Zero Opus; maximum Other Models savings
 
 ### `claude`
 
-- Orquestador: **Composer 2.5** o Sonnet (no Opus)
+- Orchestrator: **Composer 2.5** or Sonnet (not Opus)
 - Planner: Opus | Executor: Sonnet
-- Mejor calidad end-to-end Claude; más caro en ejecución
+- Best end-to-end Claude quality; pricier execution
 
-## Subagentes
+## Subagents
 
-- **Planner:** solo PLAN; no editar producto salvo `handoffDir`.
-- **Executor:** toda la edición de producto.
-- Máximo `maxParallelSubagents` en paralelo (default 2).
-- En perfil `cursor`, no usar Grok Fast ni Composer Fast salvo pedido explícito.
+- **Planner:** PLAN only; don't edit product code except `handoffDir`.
+- **Executor:** all product editing.
+- Max `maxParallelSubagents` in parallel (default 2).
+- In the `cursor` profile, don't use Grok Fast or Composer Fast unless explicitly requested.
 
-## Handoff = ahorro
+## Handoff = savings
 
-- El diary evita re-explicar contexto en el chat.
-- Pasar **ruta de archivo**, no el contenido del plan, al executor.
-- Pedidos triviales (≤12 palabras, una acción): **directo** (Baking, sin subagente) — más barato que mecánico.
-- Pasos mecánicos con handoff (rename, campo suelto, doc-only, verify simple, sin craft/assets):
-  delegar **`executor-mecanic`** (Haiku fijo en frontmatter — Claude Code). No usar override
-  `model:` en Agent call; no usar mecánico si el handoff trae creative-brief-bar / asset verify.
-- Lógica, craft, landings, schema: **`executor`** (Sonnet). Composer/Grok ya son el barato en Cursor
-  (`executor-cursor`); ahí TRIVIAL directo o executor-cursor, sin mecánico Haiku.
-- Al cerrar una tarea (`status: completed`), sugerir `/compact` — el handoff en disco ya preserva
-  plan+ejecución, no se pierde nada. `/clear` si el próximo pedido es un tema no relacionado.
-  Evidencia: reporte de uso 24h — 84% subagent-heavy, 74% de uso a >150k de contexto.
+- The diary avoids re-explaining context in the chat.
+- Pass the **file path**, not the plan content, to the executor.
+- Trivial requests (≤12 words, one action): **direct** (Baking, no subagent) — cheaper than mecanic.
+- Mechanical steps with a handoff (rename, loose field, doc-only, simple verify, no craft/assets):
+  delegate to **`executor-mecanic`** (Haiku fixed in frontmatter — Claude Code). Don't use a `model:`
+  override on the Agent call; don't use mecanic if the handoff includes creative-brief-bar / asset verify.
+- Logic, craft, landings, schema: **`executor`** (Sonnet). Composer/Grok are already the cheap option in
+  Cursor (`executor-cursor`); there, direct TRIVIAL or executor-cursor, no Haiku mecanic.
+- When closing a task (`status: completed`), suggest `/compact` — the on-disk handoff already preserves
+  plan+execution, nothing is lost. `/clear` if the next request is an unrelated topic.
+  Evidence: 24h usage report — 84% subagent-heavy, 74% usage at >150k context.
 
-## Cuándo NO usar planner fuerte (Opus/Grok plan)
+## When NOT to use a strong planner (Opus/Grok plan)
 
-- Typos, renombres, cambio de color, imports, format.
-- Usuario dice “seguí el plan en `.cursor/handoff/...`”.
-- Bug con stack trace y archivo obvio.
+- Typos, renames, color changes, imports, formatting.
+- User says "follow the plan in `.cursor/handoff/...`".
+- Bug with a stack trace and an obvious file.
 
-## Cuándo SÍ usar planner fuerte
+## When to use a strong planner
 
-- Arquitectura, migraciones, “cómo conviene”, comparar enfoques.
-- >3 archivos sin plan previo.
-- En perfil `hybrid`, Grok alcanza para muchos planes; subí a `cursor` si falla calidad.
+- Architecture, migrations, "what's the best approach", comparing approaches.
+- >3 files with no prior plan.
+- In the `hybrid` profile, Grok is enough for many plans; move up to `cursor` if quality falls short.
 
-## Claude Code — `fork` vs agente fresco (`executor`/`planner`)
+## Claude Code — `fork` vs a fresh agent (`executor`/`planner`)
 
-Workflow completo Baking (Claude Code): **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**.
+Full Baking workflow (Claude Code): **`~/.cursor/opus-sonnet/claude-code/BAKING.md`**.
 
-Sólo aplica en Claude Code: `fork` (subagent_type del Agent tool) hereda el contexto completo de
-la conversación actual — comparte prompt cache, no relee nada. `executor`/`planner` frescos
-arrancan en frío: si necesitan algo que el orquestador ya estableció en esta sesión (login hecho,
-puertos/tokens ya descubiertos, archivos ya leídos), lo vuelven a pagar en tokens.
+Only applies to Claude Code: `fork` (the Agent tool's subagent_type) inherits the full context of
+the current conversation — it shares the prompt cache, rereads nothing. A fresh `executor`/`planner`
+starts cold: if it needs something the orchestrator already established in this session (login
+already done, ports/tokens already discovered, files already read), it pays for it again in tokens.
 
-**Evidencia real** (sesión lore-forge, 2026-09-11): un `executor` fresco para "diagnosticar un bug
-de encoding" gastó 38.6k tokens — gran parte relevantando un proceso y releyendo código que el
-orquestador ya tenía a mano. Con `fork` ese costo habría sido ~0 en esa parte.
+**Real evidence** (lore-forge session, 2026-09-11): a fresh `executor` for "diagnose an encoding
+bug" spent 38.6k tokens — largely re-surveying a process and re-reading code the orchestrator
+already had at hand. With `fork` that part would have cost ~0.
 
-**Regla:** en el Paso 2 (EXECUTE), antes de delegar preguntate si la tarea depende de estado que
-*esta* conversación ya tiene:
+**Rule:** in Step 2 (EXECUTE), before delegating ask yourself whether the task depends on state that
+*this* conversation already has:
 
-| Señal | Delegar a |
+| Signal | Delegate to |
 |---|---|
-| Necesita un proceso/login/puerto/token que el orquestador ya obtuvo en esta sesión | **`fork`** |
-| Necesita archivos que el orquestador ya leyó en esta sesión | **`fork`** |
-| El perfil pide un modelo distinto al del orquestador actual (ej. planner en Opus, orquestador en Sonnet) | `planner`/`executor` fresco — `fork` siempre corre en el modelo del padre, no puede subir a Opus |
-| Handoff autocontenido, no depende de nada de esta sesión (plan ya escrito con todo adentro, corrida larga/desatendida que conviene aislar del contexto propio) | `executor`/`planner` fresco — la re-derivación es baja o el aislamiento es la meta |
-| Pedido trivial (2-3 comandos, un status check) | Ninguno — resolverlo directo, sin handoff |
+| Needs a process/login/port/token the orchestrator already obtained in this session | **`fork`** |
+| Needs files the orchestrator already read in this session | **`fork`** |
+| The profile requires a different model than the current orchestrator's (e.g. planner on Opus, orchestrator on Sonnet) | fresh `planner`/`executor` — `fork` always runs on the parent's model, it can't upgrade to Opus |
+| Self-contained handoff, doesn't depend on anything from this session (plan already written with everything inside, long/unattended run worth isolating from your own context) | fresh `executor`/`planner` — re-derivation cost is low or isolation is the goal |
+| Trivial request (2-3 commands, a status check) | None — resolve it directly, no handoff |
 
-`fork` **no** sirve para el paso PLAN cuando el perfil pide Opus y el orquestador corre en otro
-modelo (`fork` siempre hereda el modelo del padre, el override se ignora) — ahí sí conviene el
-`planner` fresco pese al costo de re-lectura, porque la calidad del plan lo justifica.
+`fork` is **not** useful for the PLAN step when the profile requires Opus and the orchestrator runs
+on a different model (`fork` always inherits the parent's model, the override is ignored) — there a
+fresh `planner` is worth it despite the re-reading cost, because the plan quality justifies it.
 
-## Subagente caído por infraestructura — reintentar solo, no escalar al usuario
+## Subagent down due to infrastructure — retry alone, don't escalate to the user
 
-Un subagente puede fallar con un mensaje de infraestructura, no de contenido — ej. `"Agent stalled:
-no progress for 600s (stream watchdog did not recover)"`. Se distingue de una falla real porque el
-resultado no dice nada del handoff/tarea en sí, sólo del runtime que lo ejecutaba.
+A subagent can fail with an infrastructure message, not a content one — e.g. `"Agent stalled:
+no progress for 600s (stream watchdog did not recover)"`. It's distinguished from a real failure
+because the result says nothing about the handoff/task itself, only about the runtime that ran it.
 
-**Evidencia real** (sesión lore-forge, 2026-09-12): un `planner` se colgó así habiendo sólo leído el
-handoff (sin escribir nada todavía). Se relanzó el mismo pedido sobre el mismo handoff intacto y
-terminó bien en el segundo intento.
+**Real evidence** (lore-forge session, 2026-09-12): a `planner` stalled like this having only read
+the handoff (without writing anything yet). The same request was relaunched on the same intact
+handoff and it finished fine on the second attempt.
 
-**Regla:** ante una falla con ese perfil (mensaje de infra, cero o poco progreso, handoff sin tocar
-o intacto):
+**Rule:** faced with a failure of this profile (infra message, zero or little progress, handoff
+untouched or intact):
 
-1. Confirmar que no se perdió trabajo (leer el handoff / mirar el archivo que se supone que iba a
-   tocar).
-2. Relanzar el **mismo** pedido sobre el **mismo** handoff, sin pedirle permiso al usuario primero
-   — es un reintento mecánico, no una decisión de diseño.
-3. Avisar recién si vuelve a fallar una segunda vez, o si esta vez sí hay señal de que se perdió
-   algo.
+1. Confirm no work was lost (read the handoff / check the file it was supposed to touch).
+2. Relaunch the **same** request on the **same** handoff, without asking the user for permission
+   first — it's a mechanical retry, not a design decision.
+3. Only notify if it fails again a second time, or if this time there is a sign that something
+   was lost.
 
-No hace falta que el usuario note el stall para que se reintente — la única razón para escalarlo es
-que el reintento también falle.
+The user doesn't need to notice the stall for it to be retried — the only reason to escalate is
+if the retry also fails.
 
-## Cierre de métricas — releer la skill tras un cambio, no confiar en memoria del workflow
+## Metrics close — reread the skill after a change, don't rely on workflow memory
 
-Baking ≥1.2.0 agregó un paso obligatorio de cierre: appendear una línea a
-`.cursor/baking/metrics/runs.jsonl` (ver `METRICS.md`). El orquestador puede dejar de aplicarlo si,
-después de que la skill/config global se actualiza a mitad de sesión, sigue orquestando de memoria
-(despachando `planner`/`executor`/`fork` directo, sin pasar por `/baking`) en vez de volver a
-invocar la skill o releer `SKILL.md` — el contenido nuevo nunca vuelve a entrar en su contexto,
-aunque el archivo en disco ya lo tenga.
+Baking ≥1.2.0 added a mandatory closing step: appending a line to
+`.cursor/baking/metrics/runs.jsonl` (see `METRICS.md`). The orchestrator can stop applying it if,
+after the skill/global config is updated mid-session, it keeps orchestrating from memory
+(dispatching `planner`/`executor`/`fork` directly, without going through `/baking`) instead of
+invoking the skill again or rereading `SKILL.md` — the new content never re-enters its context,
+even though the file on disk already has it.
 
-**Evidencia real** (sesión lore-forge, 2026-09-14): baking subió de v1.1.0 a v1.4.0 a mitad de
-sesión (visible por un system-reminder de "New agent types are now available"), agregando
-`executor-mecanic` y el requisito de métricas. El orquestador siguió despachando
-`planner-hyper`/`executor`/`executor-mecanic` directo (patrón ya aprendido antes del update) sin
-volver a leer `SKILL.md` ni una sola vez en ~15 corridas siguientes — cero líneas de métricas
-escritas, hasta que el usuario preguntó directo "¿se está generando el JSON?".
+**Real evidence** (lore-forge session, 2026-09-14): baking went from v1.1.0 to v1.4.0 mid-session
+(visible from a system-reminder about "New agent types are now available"), adding
+`executor-mecanic` and the metrics requirement. The orchestrator kept dispatching
+`planner-hyper`/`executor`/`executor-mecanic` directly (a pattern already learned before the
+update) without rereading `SKILL.md` even once over the next ~15 runs — zero metrics lines
+written, until the user asked directly "is the JSON being generated?".
 
-**Regla:** cuando el harness informe agentes/skills nuevos disponibles (o cualquier señal de que la
-config global de baking cambió), releer `SKILL.md`/`BAKING.md`/`METRICS.md` antes de la próxima
-corrida — no asumir que el workflow sigue siendo el mismo que se aprendió al principio de la sesión.
-En sesiones largas (varias horas, muchas corridas), vale re-chequear esto aunque no haya
-notificación explícita — el config puede sincronizarse en caliente sin avisar en el chat.
+**Rule:** when the harness reports new agents/skills available (or any signal that the global
+baking config changed), reread `SKILL.md`/`BAKING.md`/`METRICS.md` before the next run — don't
+assume the workflow is still the one learned at the start of the session. In long sessions
+(several hours, many runs), it's worth rechecking this even without an explicit notification —
+the config can sync live without announcing it in the chat.
 
-## Revisión de gasto
+## Spend review
 
-- Cursor → Settings → Usage: filtrar por pool (Cursor Models vs Other Models).
-- Proyectos con mucho Agent: `profile: "cursor"` (Opus plan + Composer exec).
-- Sin Opus en absoluto: `profile: "hybrid"` (Grok + Composer).
-- Proyectos críticos end-to-end Claude: `profile: "claude"`.
+- Cursor → Settings → Usage: filter by pool (Cursor Models vs Other Models).
+- Projects with heavy Agent use: `profile: "cursor"` (Opus plan + Composer exec).
+- No Opus at all: `profile: "hybrid"` (Grok + Composer).
+- Critical end-to-end Claude projects: `profile: "claude"`.
 
 ## Light stack (Cursor + Claude Code)
 
-Si `lightStack.enabled` en config → **`LIGHT-STACK.md`**. Misma config global; métricas usan `runtime: cursor | claude-code`.
+If `lightStack.enabled` in config → **`LIGHT-STACK.md`**. Same global config; metrics use `runtime: cursor | claude-code`.
 
-| Hook | Orquestador | Tokens |
+| Hook | Orchestrator | Tokens |
 |------|-------------|--------|
-| Engram inicio | `mem_context` + `mem_search` si no trivial | ≤2 calls |
-| Skill registry | Read 1 SKILL.md si matchea índice | 1 read |
-| Witch | `starter_witch_plan` en Boogiepop explore (≥4 archivos) | 1 call |
-| Verify cierre | Handoff criterios vs `git diff` → `## Verify` | sin subagente SDD |
-| Engram fin | `mem_session_summary` | 1 call |
+| Engram start | `mem_context` + `mem_search` if non-trivial | ≤2 calls |
+| Skill registry | Read 1 SKILL.md if it matches the index | 1 read |
+| Witch | `starter_witch_plan` on Boogiepop explore (≥4 files) | 1 call |
+| Verify close | Handoff criteria vs `git diff` → `## Verify` | no SDD subagent |
+| Engram end | `mem_session_summary` | 1 call |
 
-Skip verify en TRIVIAL / PLAN-ONLY. Claude Code: verify al cierre del orquestador o en `## Ejecución` del executor/fork.
+Skip verify on TRIVIAL / PLAN-ONLY. Claude Code: verify at the orchestrator's close or in the executor/fork's `## Execution`.
 
 Refresh skills: `baking skill-registry` (global `~/.cursor/baking/skill-registry.md`).

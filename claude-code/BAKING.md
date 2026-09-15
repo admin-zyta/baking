@@ -1,162 +1,162 @@
-# Baking — Claude Code (referencia completa)
+# Baking — Claude Code (full reference)
 
-Orquestador: **Sonnet**. Planner: **Opus** o **Hyper (Fable)**. Executor: **Sonnet** o **Mecanic (Haiku)**. Handoff: `.cursor/handoff/`.
+Orchestrator: **Sonnet**. Planner: **Opus** or **Hyper (Fable)**. Executor: **Sonnet** or **Mecanic (Haiku)**. Handoff: `.cursor/handoff/`.
 
-Leé también: `~/.cursor/opus-sonnet/ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
+Also read: `~/.cursor/opus-sonnet/ROUTER.md`, `consumption.md`, `creative-brief-bar.md`.
 
 ---
 
 ## Bootstrap (handoff only)
 
-Baking es **100% global**. Config en `~/.cursor/opus-sonnet/config.json` (perfil `claude` para Claude Code end-to-end).
+Baking is **100% global**. Config in `~/.cursor/opus-sonnet/config.json` (`claude` profile for Claude Code end-to-end).
 
-Solo crear **`.cursor/handoff/`** en el workspace si falta. **No** `.claude/planner-executor.json`.
+Only create **`.cursor/handoff/`** in the workspace if missing. **No** `.claude/planner-executor.json`.
 
 ---
 
-## Paso 0 — Clasificar
+## Step 0 — Classify
 
-| Tipo | Señales |
+| Type | Signals |
 |------|---------|
-| **EXECUTE-MECANIC** | rename, typo, doc-only, un campo, wiring trivial, verify simple; handoff sin craft/visual/assets | → **`executor-mecanic`** (Haiku) |
-| **EXECUTE** | lógica, multi-archivo, craft, assets, landing, schema | → **`executor`** (Sonnet) o **`fork`** |
-| **PLAN** | arquitectura, multi-archivo, ambigüedad, landing/portfolio/vibe |
-| **PLAN-ONLY** | "solo plan", "no ejecutes", "planear nomás", "preguntá antes" | → planner, **sin executor** |
-| **PLAN-REVISE** | repregunta / "cambiá el plan" con handoff existente | → planner actualiza o Baking responde desde handoff |
-| **TRIVIAL** | 2–3 comandos, una acción obvia | → **directo** (sin subagente — más barato que mecánico) |
+| **EXECUTE-MECANIC** | rename, typo, doc-only, a single field, trivial wiring, simple verify; handoff with no craft/visual/assets | → **`executor-mecanic`** (Haiku) |
+| **EXECUTE** | logic, multi-file, craft, assets, landing, schema | → **`executor`** (Sonnet) or **`fork`** |
+| **PLAN** | architecture, multi-file, ambiguity, landing/portfolio/vibe |
+| **PLAN-ONLY** | "plan only", "don't execute", "just plan", "ask before doing anything" | → planner, **without executor** |
+| **PLAN-REVISE** | follow-up question / "change the plan" with an existing handoff | → planner updates it or Baking answers from the handoff |
+| **TRIVIAL** | 2–3 commands, one obvious action | → **direct** (no subagent — cheaper than mecanic) |
 
-Ante duda → **PLAN**. Si piden plan sin código → **PLAN-ONLY**.
+When in doubt → **PLAN**. If they ask for a plan with no code → **PLAN-ONLY**.
 
-### Light stack (v1.5 — Cursor y Claude Code)
+### Light stack (v1.5 — Cursor and Claude Code)
 
-Si `lightStack.enabled` → **`LIGHT-STACK.md`**. Misma config global; `runtime` en métricas distingue entorno.
+If `lightStack.enabled` → **`LIGHT-STACK.md`**. Same global config; `runtime` in metrics distinguishes the environment.
 
-| Pieza | Cuándo | Acción |
+| Piece | When | Action |
 |-------|--------|--------|
-| **Engram** | Inicio no trivial | `mem_context` + `mem_search` (máx. 2) — MCP Cursor o Claude |
-| **Engram** | Cierre | `mem_session_summary` |
-| **Skill registry** | Pedido matchea skill | Read un `SKILL.md` de `~/.cursor/baking/skill-registry.md` |
-| **Witch** | Boogiepop + ≥4 archivos | `starter_witch_plan` (MCP starter si está) |
-| **Verify** | Post-EXECUTE | Criterios del handoff vs `git diff` → `## Verify` + YAML |
+| **Engram** | Non-trivial start | `mem_context` + `mem_search` (max 2) — Cursor or Claude MCP |
+| **Engram** | Close | `mem_session_summary` |
+| **Skill registry** | Request matches a skill | Read one `SKILL.md` from `~/.cursor/baking/skill-registry.md` |
+| **Witch** | Boogiepop + ≥4 files | `starter_witch_plan` (starter MCP if present) |
+| **Verify** | Post-EXECUTE | Handoff criteria vs `git diff` → `## Verify` + YAML |
 
 Skip verify: `TRIVIAL`, `PLAN-ONLY`. `verify: fail` → `status: partial`.
 
-Claude Code: verify lo puede hacer el **orquestador** al cierre (no hace falta subagente SDD). Executor/fork append `## Verify` si implementaron.
+Claude Code: verify can be done by the **orchestrator** at close (no SDD subagent needed). Executor/fork append `## Verify` if they implemented anything.
 
 ### PLAN-DEEP → `planner-hyper` (Fable)
 
-**Explícito (siempre gana):** *"plan deep"*, *"hyper"*, *"pensá bien"*, *"plan en profundidad"* → **`planner-hyper`**, `plan_mode: explicit-deep`.
+**Explicit (always wins):** *"plan deep"*, *"hyper"*, *"think it through"*, *"deep plan"* → **`planner-hyper`**, `plan_mode: explicit-deep`.
 
-**Explícito normal:** *"plan simple"*, *"plan rápido"* → **`planner`** (Opus), `plan_mode: explicit-normal`.
+**Explicit normal:** *"simple plan"*, *"quick plan"* → **`planner`** (Opus), `plan_mode: explicit-normal`.
 
-**Automático** → **`planner-hyper`** si **≥2 señales**:
+**Automatic** → **`planner-hyper`** if **≥2 signals**:
 
-- arquitectura, migración, comparar opciones / trade-offs
+- architecture, migration, comparing options / trade-offs
 - creative-brief-bar (landing, portfolio, vibe, visual)
-- PLAN-ONLY estratégico
-- >3 archivos sin handoff previo
-- ambigüedad alta
+- strategic PLAN-ONLY
+- >3 files with no prior handoff
+- high ambiguity
 
-**Automático** → **`planner`** (Opus) si plan acotado, fix con plan, PLAN-REVISE menor.
+**Automatic** → **`planner`** (Opus) if the plan is narrow, a fix with a plan, or a minor PLAN-REVISE.
 
-**Nunca `fork`** para plan.
+**Never `fork`** for planning.
 
 ---
 
-## Paso 1 — PLAN
+## Step 1 — PLAN
 
-| Routing | Subagente | Modelo |
+| Routing | Subagent | Model |
 |---------|-----------|--------|
 | PLAN-DEEP | **`planner-hyper`** | Fable |
-| PLAN normal | **`planner`** | Opus |
+| Normal PLAN | **`planner`** | Opus |
 
-Prompt (ambos):
+Prompt (both):
 
-- Pedido **completo** del usuario (no acortar brief visual).
-- Handoff con plantilla `~/.cursor/agents/planner.md`.
-- Si brief creativo → **"incluí creative-brief-bar"** + **prod+spec+craft** (+ visual si starter v0.1.0+).
-- Tabla Assets si hay URLs externas.
+- The user's **full** request (don't shorten the visual brief).
+- Handoff using the `~/.cursor/agents/planner.md` template.
+- If it's a creative brief → **"include creative-brief-bar"** + **prod+spec+craft** (+ visual if starter v0.1.0+).
+- Assets table if there are external URLs.
 
-Esperar **ruta exacta** del `.md`. Preguntas bloqueantes → usuario antes de EXECUTE.
-
----
-
-## Modo PLAN-ONLY (sin ejecutar)
-
-**Señales:** "solo plan", "no ejecutes", "planear nomás", "preguntá y repreguntá".
-
-1. Agent → **`planner`** o **`planner-hyper`** — **nunca `fork`**.
-2. **No** llamar `executor` ni `fork` para implementar. **No** editar `src/`.
-3. Presentar handoff + **Preguntas abiertas**. Esperar repreguntas o "ejecutá".
-
-**Repreguntas:** aclaración menor → Baking responde desde handoff; cambio de plan → **`planner`** actualiza el mismo `.md`.
-
-**EXECUTE** solo si el usuario lo pide explícitamente ("ejecutá", "implementá", "dale").
-
-Cierre: `flow: PLAN-ONLY`, `exec_mode: skipped`, `status: plan-ready | blocked-on-questions`.
+Wait for the **exact path** of the `.md`. Blocking questions → ask the user before EXECUTE.
 
 ---
 
-## Paso 2 — EXECUTE (solo si aplica)
+## PLAN-ONLY mode (no execution)
 
-**Escalera de costo:** TRIVIAL directo → **mecanic** (Haiku) → **executor** (Sonnet) → **fork** (sesión).
+**Signals:** "plan only", "don't execute", "just plan", "ask and follow up".
 
-Antes de delegar, ¿la tarea depende de contexto **ya cargado en esta sesión**?
+1. Agent → **`planner`** or **`planner-hyper`** — **never `fork`**.
+2. **Do not** call `executor` or `fork` to implement. **Do not** edit `src/`.
+3. Present the handoff + **Open questions**. Wait for follow-up questions or "execute".
 
-| Señal | Modo | Cómo |
+**Follow-up questions:** minor clarification → Baking answers from the handoff; plan change → **`planner`** updates the same `.md`.
+
+**EXECUTE** only if the user explicitly asks ("execute", "implement", "go ahead").
+
+Close: `flow: PLAN-ONLY`, `exec_mode: skipped`, `status: plan-ready | blocked-on-questions`.
+
+---
+
+## Step 2 — EXECUTE (only if applicable)
+
+**Cost ladder:** direct TRIVIAL → **mecanic** (Haiku) → **executor** (Sonnet) → **fork** (session).
+
+Before delegating, does the task depend on context **already loaded in this session**?
+
+| Signal | Mode | How |
 |-------|------|------|
-| 2–3 comandos, una acción obvia | **directo** | vos, sin subagente |
-| Mecánica con handoff (sin craft/assets/visual) | **`executor-mecanic`** | Agent → **solo ruta** handoff |
-| Login/puerto/token/proceso ya obtenido acá | **`fork`** | Agent → fork |
-| Archivos ya leídos; debug iterativo | **`fork`** | idem |
-| Lógica, craft, assets, landing, schema | **`executor`** | Agent → **solo ruta** handoff |
-| Handoff autocontenido; aislar contexto | **`executor`** o **`executor-mecanic`** según tabla arriba | idem |
+| 2–3 commands, one obvious action | **direct** | you, no subagent |
+| Mechanical with a handoff (no craft/assets/visual) | **`executor-mecanic`** | Agent → **path only** for the handoff |
+| Login/port/token/process already obtained here | **`fork`** | Agent → fork |
+| Files already read; iterative debugging | **`fork`** | same |
+| Logic, craft, assets, landing, schema | **`executor`** | Agent → **path only** for the handoff |
+| Self-contained handoff; isolate context | **`executor`** or **`executor-mecanic`** per the table above | same |
 
-**Regla de oro:** handoff autocontenido → agente fresco OK. Si depende de contexto de sesión → **`fork`**. No uses **`executor-mecanic`** si el handoff pide creative-brief-bar, asset verify o VISUAL-BAR.
+**Golden rule:** self-contained handoff → a fresh agent is fine. If it depends on session context → **`fork`**. Don't use **`executor-mecanic`** if the handoff calls for creative-brief-bar, asset verify, or VISUAL-BAR.
 
-Prompt **`executor-mecanic`** (solo ruta):
+**`executor-mecanic`** prompt (path only):
 
 ```text
-Implementá pasos mecánicos según: .cursor/handoff/YYYY-MM-DD-slug.md
-Read primero. Si no es mecánico, pará y pedí executor Sonnet al padre.
-Append ## Ejecución al mismo archivo.
+Implement the mechanical steps per: .cursor/handoff/YYYY-MM-DD-slug.md
+Read it first. If it's not mechanical, stop and ask the parent for a Sonnet executor.
+Append ## Execution to the same file.
 ```
 
-Prompt **`executor`** (solo ruta):
+**`executor`** prompt (path only):
 
 ```text
-Implementá según: .cursor/handoff/YYYY-MM-DD-slug.md
-Primer paso: Read ese archivo. Append ## Ejecución al mismo archivo.
-Verificá: checklist técnico, creative-brief-bar, CRAFT-BAR si existe, asset verification (2xx).
-Anti-fork: no copiar src/ de apps previas.
+Implement per: .cursor/handoff/YYYY-MM-DD-slug.md
+First step: Read that file. Append ## Execution to the same file.
+Verify: technical checklist, creative-brief-bar, CRAFT-BAR if it exists, asset verification (2xx).
+Anti-fork: don't copy src/ from previous apps.
 ```
 
-Prompt **`fork`:**
+**`fork`** prompt:
 
 ```text
-[Contexto mínimo si hace falta: qué ya descubrimos]
-Implementá según el handoff: <ruta> (Read primero).
-O: [tarea concreta usando contexto de sesión]
-Append ## Ejecución en el handoff si aplica.
+[Minimal context if needed: what we already found out]
+Implement per the handoff: <path> (Read it first).
+Or: [concrete task using session context]
+Append ## Execution to the handoff if applicable.
 ```
 
 ---
 
-## Brief creativo (creative-brief-bar)
+## Creative brief (creative-brief-bar)
 
-Señales: landing, portfolio, vibe, paleta, tipografía, motion, "feels like", copy editorial.
+Signals: landing, portfolio, vibe, palette, typography, motion, "feels like", editorial copy.
 
-Modo default: **prod + spec + craft**.
+Default mode: **prod + spec + craft**.
 
-1. PLAN + planner con creative-brief-bar.
-2. Executor: asset verification (2xx) + craft bar + anti-fork (no copiar `src/` previo).
-3. Post-exec: build OK **≠** completado si fallan craft o assets.
+1. PLAN + planner with creative-brief-bar.
+2. Executor: asset verification (2xx) + craft bar + anti-fork (don't copy previous `src/`).
+3. Post-exec: build OK **≠** completed if craft or assets fail.
 
 ---
 
-## Paso 3 — Cierre (gates obligatorios)
+## Step 3 — Close (mandatory gates)
 
-`npm run build` **≠** completed en tareas creativas.
+`npm run build` **≠** completed on creative tasks.
 
 ```yaml
 baking:
@@ -175,31 +175,31 @@ baking:
   models: { planner: opus|fable, exec: haiku|sonnet|fork-parent }
 ```
 
-**Reglas:** partial si craft/assets/verify fallan; nunca completed con `assets: fail` o **`verify: fail`**.
+**Rules:** partial if craft/assets/verify fail; never completed with `assets: fail` or **`verify: fail`**.
 
-**Nota fork:** `fork` (Agent tool) reutiliza contexto de sesión — OK para debug. **Prohibido** usar fork/copy para pegar `src/` de otra app (bench inválido).
+**Fork note:** `fork` (Agent tool) reuses session context — fine for debugging. It is **forbidden** to use fork/copy to paste `src/` from another app (invalid bench).
 
-**Sugerir `/compact` al cerrar** (`status: completed`), sobre todo si ya es la 2da+ tarea cerrada en
-la sesión — el handoff en disco ya preserva plan + ejecución, compactar no pierde nada durable.
-Si el usuario arranca un tema no relacionado, sugerir `/clear` en vez de `/compact`. Evidencia:
-reporte de uso 24h del usuario — *"74% of your usage was at >150k context... /compact mid-task,
-/clear when switching to new tasks"*.
+**Suggest `/compact` when closing** (`status: completed`), especially if it's already the 2nd+ task
+closed in the session — the on-disk handoff already preserves plan + execution, compacting loses
+nothing durable. If the user starts an unrelated topic, suggest `/clear` instead of `/compact`.
+Evidence: the user's 24h usage report — *"74% of your usage was at >150k context... /compact
+mid-task, /clear when switching to new tasks"*.
 
-Mensaje breve al usuario + ruta handoff.
+Brief message to the user + handoff path.
 
 ---
 
-## Paso 4 — Métricas (obligatorio)
+## Step 4 — Metrics (mandatory)
 
-Leé **`~/.cursor/opus-sonnet/METRICS.md`**. Append **una línea JSON** a:
+Read **`~/.cursor/opus-sonnet/METRICS.md`**. Append **one JSON line** to:
 
 `<metrics.dir>/runs.jsonl` (default `.cursor/baking/metrics/runs.jsonl`)
 
-Creá la carpeta si falta. Respetar `metrics.enabled` en config (default true).
+Create the folder if missing. Respect `metrics.enabled` in config (default true).
 
-Completá **`review`** honesto (ver METRICS.md). Si es **bench** (S0/S3, baseline vs Baking), agregá **`benchmark`** + **`usage.total_usd`** desde Usage.
+Fill in an honest **`review`** (see METRICS.md). If it's a **bench** run (S0/S3, baseline vs Baking), add **`benchmark`** + **`usage.total_usd`** from Usage.
 
-Ejemplo (routing + costo bench):
+Example (routing + cost bench):
 
 ```json
 {"ts":"2026-09-14T16:00:00-03:00","bakingVersion":"1.4.0","runtime":"claude-code","profile":"claude","prompt":"…","handoff":".cursor/handoff/….md","classification":{"flow":"PLAN+EXECUTE","plan_agent":"planner","exec_agent":"mecanic","plan_mode":"auto","exec_mode":"auto"},"models":{"orchestrator":"sonnet","planner":"opus","executor":"haiku"},"signals":["mechanical"],"benchmark":{"scenario_id":"S3-plan-complex","arm":"baking","pair_id":"stream-plans-s3-badge"},"usage":{"total_usd":0.35,"total_tokens":95000,"source":"manual"},"outcome":{"status":"completed","scores":{"spec":"pass"}},"review":{"plan_fit":"good","exec_fit":"good","note":""}}
@@ -209,17 +209,17 @@ Ejemplo (routing + costo bench):
 
 ## Anti-patterns
 
-- Parafrasear el plan al executor (solo ruta).
-- Opus en el chat principal.
-- `fork` para PLAN (pierde Opus).
-- `executor` Sonnet para mecánica con handoff (usar **`executor-mecanic`**).
-- `executor-mecanic` en landings / craft / assets (usar **`executor`**).
-- Marcar completado solo por `build` en briefs creativos.
+- Paraphrasing the plan to the executor (path only).
+- Opus in the main chat.
+- `fork` for PLAN (loses Opus).
+- Sonnet `executor` for mechanical work with a handoff (use **`executor-mecanic`**).
+- `executor-mecanic` on landings / craft / assets (use **`executor`**).
+- Marking as completed based only on `build` for creative briefs.
 
 ---
 
-## Evidencia
+## Evidence
 
-- lore-forge 2026-09-11: executor fresco 38.6k tokens re-leyendo contexto → usar **fork** en EXECUTE iterativo.
-- S5 yoga/studio: build OK, UI pobre → **creative-brief-bar** obligatorio.
+- lore-forge 2026-09-11: a fresh executor spent 38.6k tokens re-reading context → use **fork** in iterative EXECUTE.
+- S5 yoga/studio: build OK, poor UI → **creative-brief-bar** made mandatory.
 - yoga bench v0.0.4: spec OK / craft weak / 404 URLs → scores + asset verify (`starter-base/docs/BAKING-IMPROVEMENTS.md`).

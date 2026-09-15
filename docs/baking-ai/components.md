@@ -1,43 +1,43 @@
 # Components — Baking-AI
 
-← [Volver al README](./README.md)
+← [Back to README](./README.md)
 
 ---
 
 ## Core
 
-| ID | Componente | Descripción |
+| ID | Component | Description |
 |----|------------|-------------|
-| `orchestrator` | **Baking** | Clasifica, delega, cierra YAML + métricas. No edita producto. |
-| `handoff` | **Diary** | `.cursor/handoff/*.md` — plan + ejecución + verify en un archivo. |
-| `planner` | **Planner** | Opus. Investigación + handoff. Solo escribe en handoffDir. |
-| `planner-hyper` | **Hyper** | Fable. Plan deep — arquitectura, creative-brief estratégico. |
-| `executor` | **Executor** | Implementa según handoff. Sonnet (Claude) o Composer (Cursor). |
-| `executor-mecanic` | **Mecanic** | Haiku. Pasos mecánicos con handoff. **Solo Claude Code.** |
-| `executor-cursor` | **Executor Cursor** | Composer 2.5. Perfiles `cursor` / `hybrid`. |
-| `metrics` | **runs.jsonl** | Una línea JSON por corrida — routing, costo, review. |
+| `orchestrator` | **Baking** | Classifies, delegates, closes with YAML + metrics. Doesn't edit product code. |
+| `handoff` | **Diary** | `.cursor/handoff/*.md` — plan + execution + verify in one file. |
+| `planner` | **Planner** | Opus. Research + handoff. Only writes in handoffDir. |
+| `planner-hyper` | **Hyper** | Fable. Deep plan — architecture, strategic creative-brief. |
+| `executor` | **Executor** | Implements per the handoff. Sonnet (Claude) or Composer (Cursor). |
+| `executor-mecanic` | **Mecanic** | Haiku. Mechanical steps with a handoff. **Claude Code only.** |
+| `executor-cursor` | **Executor Cursor** | Composer 2.5. `cursor` / `hybrid` profiles. |
+| `metrics` | **runs.jsonl** | One JSON line per run — routing, cost, review. |
 | `creative-brief-bar` | **Craft gates** | Landings: prod + spec + craft + visual. |
 
 ---
 
 ## Light stack (v1.5+)
 
-| ID | Componente | Problema que ataca |
+| ID | Component | Problem it addresses |
 |----|------------|-------------------|
-| `engram` | **Engram MCP** | Amnesia — decisiones entre repos/sesiones |
-| `verify` | **Handoff vs diff** | Build OK pero no cumple criterios |
-| `witch` | **Witch MCP** | Grep masivo en starter/apps Boogiepop |
-| `skill-registry` | **Índice skills** | No usar la skill que ya tenés instalada |
+| `engram` | **Engram MCP** | Amnesia — decisions across repos/sessions |
+| `verify` | **Handoff vs diff** | Build OK but criteria not met |
+| `witch` | **Witch MCP** | Massive Grep across starter/Boogiepop apps |
+| `skill-registry` | **Skill index** | Not using a skill you already have installed |
 
-Config: `lightStack` en `config.json`. Doc: [LIGHT-STACK.md](../../LIGHT-STACK.md).
+Config: `lightStack` in `config.json`. Doc: [LIGHT-STACK.md](../../LIGHT-STACK.md).
 
 ---
 
-## Agentes por entorno
+## Agents by environment
 
 ### Cursor (`~/.cursor/agents/`)
 
-| Task name | Archivo |
+| Task name | File |
 |-----------|---------|
 | `baking` | `baking.md` |
 | `planner` | `planner.md` |
@@ -47,7 +47,7 @@ Config: `lightStack` en `config.json`. Doc: [LIGHT-STACK.md](../../LIGHT-STACK.m
 
 ### Claude Code (`~/.claude/agents/`)
 
-| Agent | Archivo |
+| Agent | File |
 |-------|---------|
 | `baking` | `baking.md` |
 | `planner` | `planner.md` |
@@ -55,31 +55,31 @@ Config: `lightStack` en `config.json`. Doc: [LIGHT-STACK.md](../../LIGHT-STACK.m
 | `executor` | `executor.md` |
 | `executor-mecanic` | `executor-mecanic.md` |
 
-Plantilla handoff compartida: **`~/.cursor/agents/planner.md`**.
+Shared handoff template: **`~/.cursor/agents/planner.md`**.
 
-Ver [AGENTS.md](../../AGENTS.md).
+See [AGENTS.md](../../AGENTS.md).
 
 ---
 
 ## CLI (`@boogiepop/baking`)
 
-| Comando | Acción |
+| Command | Action |
 |---------|--------|
-| `baking install` | Deploy global Cursor + Claude |
-| `baking doctor` | Agentes + light stack + Engram |
-| `baking skill-registry` | Regenera índice de skills |
-| `baking metrics-summary` | Ahorro S0 vs S3, promedios |
-| `baking metrics-review` | Conclusión routing/ahorro (7 días o 50 runs) |
-| `baking version` | Semver instalado |
+| `baking install` | Global deploy to Cursor + Claude |
+| `baking doctor` | Agents + light stack + Engram |
+| `baking skill-registry` | Regenerates the skill index |
+| `baking metrics-summary` | S0 vs S3 savings, averages |
+| `baking metrics-review` | Routing/savings conclusion (7 days or 50 runs) |
+| `baking version` | Installed semver |
 
 ---
 
-## Perfiles de billing
+## Billing profiles
 
-| Perfil | Planner | Executor | Pool |
+| Profile | Planner | Executor | Pool |
 |--------|---------|----------|------|
-| `cursor` | Opus | Composer | Mixto |
+| `cursor` | Opus | Composer | Mixed |
 | `hybrid` | Grok | Composer | Cursor Models |
 | `claude` | Opus | Sonnet / Haiku | Other Models |
 
-Ver [routing.md](./routing.md) y [consumption.md](../../consumption.md).
+See [routing.md](./routing.md) and [consumption.md](../../consumption.md).

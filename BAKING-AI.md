@@ -1,32 +1,32 @@
-# Baking-AI — índice de documentación
+# Baking-AI — documentation index
 
-Documentación estilo producto para el orquestador **Baking** (`@boogiepop/baking`).
+Product-style documentation for the **Baking** orchestrator (`@boogiepop/baking`).
 
-**Empezá acá:** [docs/baking-ai/README.md](./docs/baking-ai/README.md)
+**Start here:** [docs/baking-ai/README.md](./docs/baking-ai/README.md)
 
 ---
 
-## Mapa
+## Map
 
-| Doc | Para qué |
+| Doc | What it's for |
 |-----|----------|
-| [docs/baking-ai/README.md](./docs/baking-ai/README.md) | Landing — qué es, componentes, links |
-| [docs/baking-ai/intended-usage.md](./docs/baking-ai/intended-usage.md) | Modelo mental (leer primero) |
-| [docs/baking-ai/use-cases.md](./docs/baking-ai/use-cases.md) | 10 casos de uso concretos |
-| [docs/baking-ai/components.md](./docs/baking-ai/components.md) | Agentes, light stack, CLI |
+| [docs/baking-ai/README.md](./docs/baking-ai/README.md) | Landing — what it is, components, links |
+| [docs/baking-ai/intended-usage.md](./docs/baking-ai/intended-usage.md) | Mental model (read first) |
+| [docs/baking-ai/use-cases.md](./docs/baking-ai/use-cases.md) | 10 concrete use cases |
+| [docs/baking-ai/components.md](./docs/baking-ai/components.md) | Agents, light stack, CLI |
 | [docs/baking-ai/routing.md](./docs/baking-ai/routing.md) | PLAN / EXECUTE / Hyper / fork |
-| [docs/baking-ai/quickstart.md](./docs/baking-ai/quickstart.md) | Instalar en 5 minutos |
+| [docs/baking-ai/quickstart.md](./docs/baking-ai/quickstart.md) | Install in 5 minutes |
 
-## Referencia técnica (orquestador)
+## Technical reference (orchestrator)
 
-| Doc | Entorno |
+| Doc | Environment |
 |-----|---------|
-| [BAKING-CURSOR.md](./BAKING-CURSOR.md) | Cursor — spec completa |
-| [claude-code/BAKING.md](./claude-code/BAKING.md) | Claude Code — spec completa |
+| [BAKING-CURSOR.md](./BAKING-CURSOR.md) | Cursor — full spec |
+| [claude-code/BAKING.md](./claude-code/BAKING.md) | Claude Code — full spec |
 | [LIGHT-STACK.md](./LIGHT-STACK.md) | Engram · Verify · Witch · registry |
-| [INIT-MEMORY.md](./INIT-MEMORY.md) | Bootstrap memoria de proyecto |
-| [METRICS.md](./METRICS.md) | JSONL · benchmark · costo |
-| [ROUTER.md](./ROUTER.md) | Router automático |
-| [AGENTS.md](./AGENTS.md) | Nombres Task / Agent |
+| [INIT-MEMORY.md](./INIT-MEMORY.md) | Project memory bootstrap |
+| [METRICS.md](./METRICS.md) | JSONL · benchmark · cost |
+| [ROUTER.md](./ROUTER.md) | Automatic router |
+| [AGENTS.md](./AGENTS.md) | Task / Agent names |
 
-Copia en Desktop: **`baking-ai-docs.html`** — ver [BAKING-AI.md](./BAKING-AI.md).
+Desktop copy: **`baking-ai-docs.html`** — see [BAKING-AI.md](./BAKING-AI.md).

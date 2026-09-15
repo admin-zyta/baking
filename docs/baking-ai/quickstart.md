@@ -1,29 +1,29 @@
 # Quickstart — Baking-AI
 
-← [Volver al README](./README.md)
+← [Back to README](./README.md)
 
 ---
 
-## Requisitos
+## Requirements
 
-- **Cursor** y/o **Claude Code**
-- **Node 18+** (para CLI install)
-- Opcional: **Engram** (light stack memoria)
+- **Cursor** and/or **Claude Code**
+- **Node 18+** (for CLI install)
+- Optional: **Engram** (light stack memory)
 
 ---
 
-## 1. Instalar (una vez por máquina)
+## 1. Install (once per machine)
 
 ```bash
-# Desde npm (cuando esté publicado)
+# From npm (once published)
 npx @boogiepop/baking install
 
-# O desde clone
+# Or from a clone
 git clone https://github.com/admin-zyta/baking ~/.cursor/opus-sonnet
 node ~/.cursor/opus-sonnet/bin/baking.js install
 ```
 
-Windows alternativo:
+Windows alternative:
 
 ```powershell
 & "$env:USERPROFILE\.cursor\opus-sonnet\sync-global.ps1"
@@ -31,24 +31,24 @@ Windows alternativo:
 
 ---
 
-## 2. Verificar
+## 2. Verify
 
 ```bash
 baking doctor
 baking skill-registry
 ```
 
-Esperado:
+Expected:
 
-- Agentes Cursor 7/7 · Claude 5/5  
-- Light stack: enabled  
-- skill-registry: OK  
+- Cursor agents 7/7 · Claude 5/5
+- Light stack: enabled
+- skill-registry: OK
 
 ---
 
-## 3. Elegir perfil
+## 3. Choose a profile
 
-Editar `~/.cursor/opus-sonnet/config.json`:
+Edit `~/.cursor/opus-sonnet/config.json`:
 
 ```json
 {
@@ -58,108 +58,108 @@ Editar `~/.cursor/opus-sonnet/config.json`:
 }
 ```
 
-| Perfil | Uso |
+| Profile | Use |
 |--------|-----|
 | `cursor` | Cursor — Opus plan + Composer exec |
-| `hybrid` | Cursor — Grok + Composer (sin Opus) |
+| `hybrid` | Cursor — Grok + Composer (no Opus) |
 | `claude` | Claude Code — Opus + Sonnet + Haiku mecanic |
 
 ---
 
-## 4. Bootstrap proyecto
+## 4. Bootstrap the project
 
-En la raíz del repo (una vez):
+At the repo root (once):
 
 ```bash
 mkdir -p .cursor/handoff
 mkdir -p .cursor/baking/metrics
 ```
 
-O pedí cualquier corrida Baking — crea carpetas si faltan.
+Or just ask for any Baking run — it creates the folders if they're missing.
 
 ---
 
-## 5. Primera corrida
+## 5. First run
 
 **Cursor:**
 
 ```
 /baking
 
-usemos baking para agregar tooltip al botón Guardar en Settings.tsx
+use baking to add a tooltip to the Save button in Settings.tsx
 ```
 
-**Claude Code:** igual con `/baking` o lenguaje natural.
+**Claude Code:** same, with `/baking` or natural language.
 
-Recibirás:
+You'll get:
 
-1. Clasificación (PLAN o EXECUTE)  
-2. Handoff path (si hubo plan)  
-3. YAML de cierre  
-4. Línea en `runs.jsonl`  
+1. Classification (PLAN or EXECUTE)
+2. Handoff path (if there was a plan)
+3. Closing YAML
+4. A line in `runs.jsonl`
 
 ---
 
-## 6. Light stack — Engram (opcional)
+## 6. Light stack — Engram (optional)
 
 ```bash
-# Instalar Engram desde releases GitHub
+# Install Engram from GitHub releases
 engram setup cursor      # Cursor
-# Claude: ver docs Engram
-# Reiniciar IDE
+# Claude: see Engram docs
+# Restart the IDE
 baking doctor              # Engram MCP: OK
 ```
 
 ---
 
-## 7. Comandos útiles
+## 7. Useful commands
 
 ```bash
 baking version
 baking doctor
 baking skill-registry [--force]
-baking init-memory [--force]       # bootstrap AGENTS + Engram (ver INIT-MEMORY.md)
-baking auto-route on|off|status    # Baking por default sin /baking cada vez
+baking init-memory [--force]       # bootstrap AGENTS + Engram (see INIT-MEMORY.md)
+baking auto-route on|off|status    # Baking by default without /baking every time
 baking metrics-summary
 baking metrics-review --status
 ```
 
 ---
 
-## 8. Init memoria de proyecto (legacy / nuevo repo)
+## 8. Init project memory (legacy / new repo)
 
 ```bash
 baking init-memory
-# luego en chat: /init-memory  (PLAN-ONLY + mem_save)
+# then in chat: /init-memory  (PLAN-ONLY + mem_save)
 ```
 
-Ver [../../INIT-MEMORY.md](../../INIT-MEMORY.md).
+See [../../INIT-MEMORY.md](../../INIT-MEMORY.md).
 
 ---
 
-## 9. Auto-route (opcional)
+## 9. Auto-route (optional)
 
 ```bash
-baking auto-route on     # implementación → Baking automático
+baking auto-route on     # implementation → automatic Baking
 baking auto-route status
 ```
 
 ---
 
-## 10. Documentación siguiente
+## 10. Next docs
 
-- [intended-usage.md](./intended-usage.md) — modelo mental  
-- [use-cases.md](./use-cases.md) — escenarios  
-- [components.md](./components.md) — piezas  
-- [routing.md](./routing.md) — PLAN / EXECUTE  
+- [intended-usage.md](./intended-usage.md) — mental model
+- [use-cases.md](./use-cases.md) — scenarios
+- [components.md](./components.md) — pieces
+- [routing.md](./routing.md) — PLAN / EXECUTE
 
 ---
 
 ## Troubleshooting
 
-| Problema | Solución |
+| Problem | Fix |
 |----------|----------|
-| "Agente planner-hyper no existe" | `baking install` + reiniciar Cursor |
-| No se crea runs.jsonl | Releer skill baking · ver METRICS.md |
-| Fable bloqueado | Aceptar data retention en Cursor Dashboard |
-| Engram MISSING | `engram setup cursor` · reiniciar |
+| "planner-hyper agent doesn't exist" | `baking install` + restart Cursor |
+| runs.jsonl isn't created | Reread the baking skill · see METRICS.md |
+| Fable blocked | Accept data retention in the Cursor Dashboard |
+| Engram MISSING | `engram setup cursor` · restart |

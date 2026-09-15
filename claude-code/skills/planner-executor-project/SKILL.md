@@ -1,12 +1,12 @@
 ---
 name: planner-executor-project
-description: DEPRECATED — Baking es global. Usar /baking. No instalar por repo.
+description: DEPRECATED — Baking is global. Use /baking. Don't install per repo.
 disable-model-invocation: true
 user-invocable: true
 ---
 
 # DEPRECATED
 
-Baking es **global**. Usá **`/baking`** o *"usemos baking para …"*.
+Baking is **global**. Use **`/baking`** or *"use baking for …"*.
 
-Config: `~/.cursor/opus-sonnet/config.json` — no crear archivos en el repo.
+Config: `~/.cursor/opus-sonnet/config.json` — don't create files in the repo.

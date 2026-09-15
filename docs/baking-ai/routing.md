@@ -1,26 +1,26 @@
 # Routing — Baking-AI
 
-← [Volver al README](./README.md)
+← [Back to README](./README.md)
 
-Referencia completa: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](../../BAKING-CURSOR.md) · Claude: [claude-code/BAKING.md](../../claude-code/BAKING.md)
+Full reference: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](../../BAKING-CURSOR.md) · Claude: [claude-code/BAKING.md](../../claude-code/BAKING.md)
 
 ---
 
-## Paso 0 — Clasificar
+## Step 0 — Classify
 
 ```
                     ┌─────────────┐
-                    │   Usuario   │
+                    │    User     │
                     └──────┬──────┘
                            ▼
               ┌────────────────────────┐
-              │   Baking orquestador   │
+              │  Baking orchestrator   │
               └────────────┬───────────┘
                            │
      ┌─────────────────────┼─────────────────────┐
      ▼                     ▼                     ▼
  TRIVIAL              PLAN / PLAN-ONLY        EXECUTE
- (directo)            / PLAN-REVISE          (handoff ok)
+ (direct)             / PLAN-REVISE          (handoff ok)
      │                     │                     │
      │              ┌──────┴──────┐              │
      │              ▼             ▼              │
@@ -29,77 +29,77 @@ Referencia completa: [ROUTER.md](../../ROUTER.md) · Cursor: [BAKING-CURSOR.md](
      │              │             │              │
      └──────────────┴─────────────┴──────────────┘
                            │
-                           ▼ (si pidió ejecutar)
+                           ▼ (if asked to execute)
               ┌────────────────────────┐
               │ executor / mecanic /   │
-              │ fork / directo         │
+              │ fork / direct          │
               └────────────────────────┘
 ```
 
 ---
 
-## Tabla de decisión
+## Decision table
 
-| Flow | Señales | Subagente | Modelo |
+| Flow | Signals | Subagent | Model |
 |------|---------|-----------|--------|
-| **TRIVIAL** | 2–3 comandos, status | Orquestador | Composer/Sonnet |
-| **PLAN** | multi-file, ambigüedad, landing | `planner` | Opus / Grok |
-| **PLAN-DEEP** | "hyper", arquitectura, ≥2 señales | `planner-hyper` | Fable |
-| **PLAN-ONLY** | "solo plan", "no ejecutes" | planner / hyper | — sin exec |
-| **PLAN-REVISE** | "cambiá el plan" | planner actualiza `.md` | — |
-| **EXECUTE** | handoff + "implementá" | `executor-cursor` / `executor` | Composer / Sonnet |
-| **EXECUTE-MECANIC** | mecánico, handoff simple | `executor-mecanic` | Haiku (CC only) |
-| **EXECUTE-FORK** | debug sesión, contexto ya cargado | `fork` | hereda padre (CC) |
+| **TRIVIAL** | 2–3 commands, status | Orchestrator | Composer/Sonnet |
+| **PLAN** | multi-file, ambiguity, landing | `planner` | Opus / Grok |
+| **PLAN-DEEP** | "hyper", architecture, ≥2 signals | `planner-hyper` | Fable |
+| **PLAN-ONLY** | "plan only", "don't execute" | planner / hyper | — no exec |
+| **PLAN-REVISE** | "change the plan" | planner updates the `.md` | — |
+| **EXECUTE** | handoff + "implement" | `executor-cursor` / `executor` | Composer / Sonnet |
+| **EXECUTE-MECANIC** | mechanical, simple handoff | `executor-mecanic` | Haiku (CC only) |
+| **EXECUTE-FORK** | session debugging, context already loaded | `fork` | inherits parent (CC) |
 
 ---
 
-## PLAN-DEEP — cuándo Hyper (Fable)
+## PLAN-DEEP — when to go Hyper (Fable)
 
-**Explícito:** *plan deep*, *hyper*, *pensá bien*.
+**Explicit:** *plan deep*, *hyper*, *think it through*.
 
-**Automático (≥2 señales):**
+**Automatic (≥2 signals):**
 
-- arquitectura / migración / trade-offs
+- architecture / migration / trade-offs
 - creative-brief-bar (landing, vibe, portfolio)
-- PLAN-ONLY estratégico
-- >3 archivos sin handoff
-- ambigüedad alta
+- strategic PLAN-ONLY
+- >3 files with no handoff
+- high ambiguity
 
 ---
 
-## Escalera EXECUTE (Claude Code)
+## EXECUTE ladder (Claude Code)
 
 ```
-TRIVIAL (directo)
-    ↓ si mecánico con handoff
+TRIVIAL (direct)
+    ↓ if mechanical with a handoff
 executor-mecanic (Haiku)
-    ↓ si lógica / craft / assets
+    ↓ if logic / craft / assets
 executor (Sonnet)
-    ↓ si depende contexto de sesión
+    ↓ if it depends on session context
 fork
 ```
 
-Cursor: TRIVIAL → `executor-cursor` → (no fork nativo igual).
+Cursor: TRIVIAL → `executor-cursor` → (no native fork equivalent).
 
 ---
 
 ## Anti-patterns
 
-- Opus como chat principal
-- Parafrasear plan al executor (solo **ruta**)
-- `fork` para PLAN (pierde Opus/Fable)
-- `completed` solo por build en landings
-- SDD Gentle-AI encima del starter (duplicación)
+- Opus as the main chat
+- Paraphrasing the plan to the executor (**path** only)
+- `fork` for PLAN (loses Opus/Fable)
+- `completed` based only on build for landings
+- SDD Gentle-AI on top of the starter (duplication)
 
 ---
 
-## Cierre — gates
+## Close — gates
 
-| Gate | Cuándo |
-|------|--------|
-| `spec` | Criterios técnicos del handoff |
+| Gate | When |
+|------|------|
+| `spec` | Technical criteria from the handoff |
 | `craft` | creative-brief-bar / CRAFT-BAR |
-| `assets` | URLs externas 2xx |
-| `verify` | Light stack — criterios vs diff |
+| `assets` | External URLs 2xx |
+| `verify` | Light stack — criteria vs diff |
 
-`verify: fail` o `craft: fail` → **`status: partial`**
+`verify: fail` or `craft: fail` → **`status: partial`**

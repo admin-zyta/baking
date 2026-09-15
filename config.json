@@ -1,6 +1,7 @@
 {
   "$schema": "./config.schema.json",
   "bakingVersion": "1.6.0",
+  "language": "en",
   "enabled": true,
   "autoRoute": {
     "enabled": false
@@ -10,7 +11,7 @@
   "filenamePattern": "YYYY-MM-DD-<slug>.md",
   "profiles": {
     "claude": {
-      "label": "Opus 5 planifica, Sonnet ejecuta (pool Other Models)",
+      "label": "Opus 5 plans, Sonnet executes (Other Models pool)",
       "planner": {
         "subagent": "planner",
         "model": "claude-opus-5[effort=high]"
@@ -33,7 +34,7 @@
       "billingPool": "other"
     },
     "cursor": {
-      "label": "Opus 5 planifica, Composer ejecuta (default)",
+      "label": "Opus 5 plans, Composer executes (default)",
       "planner": {
         "subagent": "planner",
         "model": "claude-opus-5[effort=high]"
@@ -55,7 +56,7 @@
       "billingPool": "mixed"
     },
     "hybrid": {
-      "label": "Grok 4.6 planifica, Composer ejecuta (100% pool Cursor Models)",
+      "label": "Grok 4.6 plans, Composer executes (100% Cursor Models pool)",
       "planner": {
         "subagent": "planner-cursor",
         "model": "grok-4.6[]"
