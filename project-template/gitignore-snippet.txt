@@ -1,2 +1,2 @@
-# Opcional: diary solo local (descomentar en .gitignore del proyecto)
+# Optional: diary local only (uncomment in project .gitignore)
 # .cursor/handoff/

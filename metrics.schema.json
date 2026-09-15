@@ -40,19 +40,19 @@
     },
     "benchmark": {
       "type": "object",
-      "description": "Opcional — correlacionar corridas bench (S0 vs S3, baseline vs Baking)",
+      "description": "Optional — correlate bench runs (S0 vs S3, baseline vs Baking)",
       "properties": {
         "scenario_id": { "type": "string", "examples": ["S0-baseline", "S3-plan-complex"] },
         "arm": { "enum": ["baseline", "baking", "opus-parent", "other"] },
         "pair_id": {
           "type": "string",
-          "description": "Mismo valor en ambos brazos del mismo prompt para comparar costo"
+          "description": "Same value on both arms of the same prompt to compare cost"
         }
       }
     },
     "usage": {
       "type": "object",
-      "description": "Opcional — costo/tokens para justificar ahorro (desde Usage manual o export)",
+      "description": "Optional — cost/tokens to justify savings (from manual Usage or export)",
       "properties": {
         "orchestrator_tokens_in": { "type": ["integer", "null"], "minimum": 0 },
         "orchestrator_tokens_out": { "type": ["integer", "null"], "minimum": 0 },

@@ -15,11 +15,11 @@
     },
     "enabled": {
       "type": "boolean",
-      "description": "Activa el gate automático (config global única)."
+      "description": "Enables the automatic gate (single global config)."
     },
     "autoRoute": {
       "type": "object",
-      "description": "Si enabled: Baking en pedidos de código sin /baking explícito (toggle: baking auto-route on|off)",
+      "description": "When enabled: Baking on code requests without explicit /baking (toggle: baking auto-route on|off)",
       "properties": {
         "enabled": { "type": "boolean" }
       }
@@ -27,19 +27,19 @@
     "profile": {
       "type": "string",
       "enum": ["claude", "cursor", "hybrid"],
-      "description": "Perfil de modelos: claude | cursor | hybrid"
+      "description": "Model profile: claude | cursor | hybrid"
     },
     "profiles": {
       "type": "object",
-      "description": "Mapa de perfiles (solo en config global)"
+      "description": "Profile map (global config only)"
     },
     "handoffDir": {
       "type": "string",
-      "description": "Carpeta del diary relativa a la raíz del proyecto."
+      "description": "Diary folder relative to project root."
     },
     "filenamePattern": {
       "type": "string",
-      "description": "Patrón de nombre: YYYY-MM-DD-<slug>.md"
+      "description": "Filename pattern: YYYY-MM-DD-<slug>.md"
     },
     "planner": {
       "type": "object",
@@ -93,7 +93,7 @@
         "file": { "type": "string" },
         "review": {
           "type": "object",
-          "description": "Ciclo de conclusión: intervalDays OR minRuns (ver METRICS.md)",
+          "description": "Review cycle: intervalDays OR minRuns (see METRICS.md)",
           "properties": {
             "intervalDays": { "type": "integer", "minimum": 1 },
             "minRuns": { "type": "integer", "minimum": 1 },
@@ -107,7 +107,7 @@
     },
     "lightStack": {
       "type": "object",
-      "description": "Light stack: Engram + verify + Witch + skill registry (ver LIGHT-STACK.md)",
+      "description": "Light stack: Engram + verify + Witch + skill registry (see LIGHT-STACK.md)",
       "properties": {
         "enabled": { "type": "boolean" },
         "memory": { "type": "object" },

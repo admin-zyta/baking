@@ -1,5 +1,5 @@
-# Deploy Baking global desde el repo versionado (~/.cursor/opus-sonnet)
-# Fuente: global/cursor → ~/.cursor  |  global/claude → ~/.claude
+# Deploy Baking globally from versioned repo (~/.cursor/opus-sonnet)
+# Source: global/cursor → ~/.cursor  |  global/claude → ~/.claude
 
 $ErrorActionPreference = "Stop"
 $repo = Join-Path $env:USERPROFILE ".cursor\opus-sonnet"

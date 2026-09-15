@@ -1,7 +1,7 @@
 Baking — global (Cursor + Claude Code)
 ========================================
 
-**No hay instalación por proyecto.** Todo es global.
+**No per-project install.** Everything is global.
 
 CONFIG
 ------
@@ -14,26 +14,26 @@ CURSOR
 ------
   ~/.cursor/skills/baking/SKILL.md
   ~/.cursor/agents/baking.md, planner.md, executor-cursor.md
-  /baking  o  "usemos baking para ..."
+  /baking  or  "use baking for ..."
 
 CLAUDE CODE
 -----------
   ~/.claude/skills/baking/SKILL.md
   ~/.claude/agents/baking.md, planner.md, executor.md, executor-mecanic.md
 
-  Actualizar globals:
+  Update globals:
     & "$env:USERPROFILE\.cursor\opus-sonnet\claude-code\install-claude-skills.ps1"
 
-  Perfil claude en config global si querés Opus+Sonnet.
+  Set profile claude in global config for Opus+Sonnet.
 
-HANDOFF (único artefacto por repo)
-----------------------------------
+HANDOFF (only per-repo artifact)
+--------------------------------
   .cursor/handoff/YYYY-MM-DD-slug.md
-  Baking crea la carpeta si falta — no commitear config de baking al repo.
+  Baking creates the folder if missing — do not commit baking config to the repo.
 
-DEPRECADO
----------
+DEPRECATED
+----------
   /init-baking, enable-project.ps1, .cursor/opus-sonnet.json, .claude/planner-executor.json
 
-Referencia: ~/.cursor/opus-sonnet/BAKING-CURSOR.md (Cursor)
+Reference: ~/.cursor/opus-sonnet/BAKING-CURSOR.md (Cursor)
             ~/.cursor/opus-sonnet/claude-code/BAKING.md (Claude Code)

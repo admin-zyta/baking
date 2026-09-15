@@ -1,14 +1,14 @@
-# DEPRECATED — Baking es global. No instalar por proyecto.
-# Solo crea handoff/ si lo necesitás. Config: ~/.cursor/opus-sonnet/config.json
+# DEPRECATED — Baking is global. Do not install per project.
+# Only creates handoff/ if you need it. Config: ~/.cursor/opus-sonnet/config.json
 
 param(
     [Parameter(Mandatory = $true)]
     [string]$ProjectPath
 )
 
-Write-Warning "enable-project.ps1 esta DEPRECADO. Baking es global (~/.cursor/opus-sonnet/config.json)."
-Write-Warning "Usa /baking o 'usemos baking'. No se crea .cursor/opus-sonnet.json."
+Write-Warning "enable-project.ps1 is DEPRECATED. Baking is global (~/.cursor/opus-sonnet/config.json)."
+Write-Warning "Use /baking or 'use baking'. Does not create .cursor/opus-sonnet.json."
 
 $handoffDir = Join-Path $ProjectPath ".cursor\handoff"
 New-Item -ItemType Directory -Force -Path $handoffDir | Out-Null
-Write-Host "OK: $handoffDir (solo diary — config global)"
+Write-Host "OK: $handoffDir (diary only — global config)"

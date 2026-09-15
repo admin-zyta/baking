@@ -12,28 +12,28 @@ const { lightStackReport } = require('../lib/light-stack');
 const path = require('path');
 
 const HELP = `
-@boogiepop/baking — orquestador planner → executor (Cursor + Claude Code)
+@boogiepop/baking — planner → executor orchestrator (Cursor + Claude Code)
 
 Usage:
-  baking install [--force-config]   Deploy skills, agents, rules, config global
-  baking sync                       Alias de install
-  baking doctor                     Verificar agentes + light stack
-  baking skill-registry [--force]   Índice liviano de skills (~/.cursor/baking/)
+  baking install [--force-config]   Deploy skills, agents, rules, global config
+  baking sync                       Alias for install
+  baking doctor                     Verify agents + light stack
+  baking skill-registry [--force]   Lightweight skills index (~/.cursor/baking/)
   baking init-memory [--force] [--dry-run]
-                                    Scan repo → AGENTS + init/ (luego /init-memory)
-  baking auto-route on|off|status   Toggle Baking por default (sin "/baking" cada prompt)
+                                    Scan repo → AGENTS + init/ (then /init-memory)
+  baking auto-route on|off|status   Toggle Baking as default (without "/baking" every prompt)
   baking metrics-review [--status] [--force] [--close-cycle]
-                                    Conclusión routing/ahorro (7 días o 50 runs)
+                                    Routing/savings conclusion (7 days or 50 runs)
   baking version                    Show installed package version
 
 Examples:
   npx @boogiepop/baking install
   npm i -g @boogiepop/baking && baking install
 
-Destinos:
-  ~/.cursor/skills/baking/          Skill Cursor
-  ~/.cursor/agents/                 Subagentes Cursor
-  ~/.cursor/rules/                  Gate router
+Targets:
+  ~/.cursor/skills/baking/          Cursor skill
+  ~/.cursor/agents/                 Cursor subagents
+  ~/.cursor/rules/                  Router gate
   ~/.cursor/opus-sonnet/            Config + docs
   ~/.claude/skills/ + agents/       Claude Code
 `;
@@ -67,7 +67,7 @@ function main() {
       console.log('');
       console.log('Light stack:');
       console.log(`  enabled: ${report.lightStack.enabled ? 'yes' : 'no'}`);
-      console.log(`  Engram MCP: ${report.lightStack.engram.ok ? 'OK' : 'MISSING (opcional)'}`);
+      console.log(`  Engram MCP: ${report.lightStack.engram.ok ? 'OK' : 'MISSING (optional)'}`);
       if (!report.lightStack.engram.ok) {
         console.log(`    → ${report.lightStack.engram.hint}`);
       }
@@ -76,19 +76,19 @@ function main() {
         const stale = reg.stale ? ' (stale — baking skill-registry)' : '';
         console.log(`  skill-registry: OK — ${reg.count} skills, ${reg.ageHours}h${stale}`);
       } else {
-        console.log('  skill-registry: MISSING — correr: baking skill-registry');
+        console.log('  skill-registry: MISSING — run: baking skill-registry');
       }
     }
     const ar = autoRouteStatus();
     console.log('');
     console.log(`Auto-route: ${ar.autoRouteEnabled ? 'ON' : 'OFF'} (baking enabled: ${ar.bakingEnabled ? 'yes' : 'no'})`);
     if (ar.bakingEnabled && !ar.autoRouteEnabled) {
-      console.log('  → baking auto-route on   # Baking default sin repetir /baking');
+      console.log('  → baking auto-route on   # Baking default without repeating /baking');
     }
     if (!report.ok) {
       console.log('');
       console.log(report.hint);
-      console.log('Ver AGENTS.md — executor-mecanic NO existe en Cursor (solo Claude Code).');
+      console.log('See AGENTS.md — executor-mecanic does not exist in Cursor (Claude Code only).');
     }
     process.exit(report.ok ? 0 : 1);
   }
@@ -147,7 +147,7 @@ function main() {
         console.log(`  ${k}: ${p}`);
       }
       console.log('');
-      console.log('Siguiente: /init-memory o "usemos baking PLAN-ONLY para completar init-memory"');
+      console.log('Next: /init-memory or "use baking PLAN-ONLY to complete init-memory"');
       process.exit(0);
     } catch (err) {
       console.error(`init-memory failed: ${err.message}`);
@@ -162,18 +162,18 @@ function main() {
       console.log(`Baking enabled: ${s.bakingEnabled ? 'yes' : 'no'}`);
       console.log(`Auto-route: ${s.autoRouteEnabled ? 'ON' : 'OFF'}`);
       console.log(`Effective (auto Baking on code tasks): ${s.effective ? 'yes' : 'no'}`);
-      if (!s.bakingEnabled) console.log('→ Activa baking en config: enabled: true');
+      if (!s.bakingEnabled) console.log('→ Enable baking in config: enabled: true');
       process.exit(0);
     }
     if (sub === 'on') {
       const r = setAutoRoute(true);
-      console.log('Auto-route ON — pedidos de implementación usan Baking sin "/baking" en cada prompt.');
-      console.log('Rule gate: ~/.cursor/rules/opus-sonnet-router.mdc (correr baking install si no actualizó).');
+      console.log('Auto-route ON — implementation requests use Baking without "/baking" on every prompt.');
+      console.log('Rule gate: ~/.cursor/rules/opus-sonnet-router.mdc (run baking install if not updated).');
       process.exit(r.bakingEnabled ? 0 : 0);
     }
     if (sub === 'off') {
       setAutoRoute(false);
-      console.log('Auto-route OFF — volvé a invocar /baking o "usemos baking" explícitamente.');
+      console.log('Auto-route OFF — invoke /baking or "use baking" explicitly again.');
       process.exit(0);
     }
     console.error('Usage: baking auto-route on|off|status');
@@ -201,7 +201,7 @@ function main() {
       if (result.conclusionPath) {
         console.log(result.summary);
         console.log('');
-        console.log(`Conclusión escrita: ${result.conclusionPath}`);
+        console.log(`Conclusion written: ${result.conclusionPath}`);
         process.exit(0);
       }
       console.log(result.status || 'OK');
@@ -225,16 +225,16 @@ function main() {
       console.log(`  Claude:  ${result.claudeRoot}`);
       console.log(`  Config:  ${result.configRoot}`);
       if (result.configSkipped) {
-        console.log('  Note: config.json existente — no reemplazado (usa --force-config)');
+        console.log('  Note: existing config.json — not replaced (use --force-config)');
       }
       console.log('');
       const installed = listInstalledAgents();
-      console.log('  Agentes Cursor:', installed.cursor.filter((a) => a.ok).length + '/' + installed.cursor.length);
-      console.log('  Agentes Claude:', installed.claude.filter((a) => a.ok).length + '/' + installed.claude.length);
+      console.log('  Cursor agents:', installed.cursor.filter((a) => a.ok).length + '/' + installed.cursor.length);
+      console.log('  Claude agents:', installed.claude.filter((a) => a.ok).length + '/' + installed.claude.length);
       console.log('');
-      console.log('Verificar: baking doctor');
-      console.log('Uso: /baking o "usemos baking para …"');
-      console.log('Perfil: editar ~/.cursor/opus-sonnet/config.json');
+      console.log('Verify: baking doctor');
+      console.log('Usage: /baking or "use baking for …"');
+      console.log('Profile: edit ~/.cursor/opus-sonnet/config.json');
       process.exit(0);
     } catch (err) {
       console.error(`baking install failed: ${err.message}`);

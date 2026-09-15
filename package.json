@@ -1,7 +1,7 @@
 {
   "name": "@boogiepop/baking",
   "version": "1.6.0",
-  "description": "Baking — orquestador planner → executor global para Cursor y Claude Code",
+  "description": "Baking — global planner → executor orchestrator for Cursor and Claude Code",
   "license": "UNLICENSED",
   "bin": {
     "baking": "bin/baking.js"
