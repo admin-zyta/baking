@@ -12,7 +12,27 @@ Cost orchestrator: **Opus plans**, **Sonnet executes**. Every run leaves a persi
 
 If `enabled` is not `true`, **do not apply** this router (invoke `/baking` manually).
 
-**Auto-route (optional, v1.6+):** if `autoRoute.enabled` is `true`, apply this router on implementation requests **without** the user saying `/baking` every time. Toggle: `baking auto-route on|off`. See **`INIT-MEMORY.md`**.
+## Per-project required (preferred)
+
+Marker: **`.cursor/baking/required.json`** with `"bakingRequired": true`.
+
+```bash
+cd your-repo
+baking require on      # implementation must use Baking-AI in this repo
+baking require off
+baking require status
+```
+
+| Marker | Implementation | Q&A |
+|--------|----------------|-----|
+| **yes** | **BAKING mandatory** | GATE-OUT OK |
+| **no** | Baking only if `/baking`, *use baking*, or global `autoRoute` | GATE-OUT unless explicit |
+
+`baking init-memory --require` creates the marker while bootstrapping the repo.
+
+Global **`autoRoute`** is a fallback for **all** repos without a marker — prefer **`require on`** per project instead.
+
+**Auto-route (optional, global fallback):** if `autoRoute.enabled` is `true`, apply this router on implementation when the repo has **no** require marker.
 
 ## Gate-out (before Baking)
 

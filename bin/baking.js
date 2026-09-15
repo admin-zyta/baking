@@ -7,6 +7,7 @@ const { summarize, formatReport } = require('../lib/metrics-summary');
 const { runReview } = require('../lib/metrics-review');
 const { runInitMemory } = require('../lib/init-memory');
 const { autoRouteStatus, setAutoRoute } = require('../lib/auto-route');
+const { projectRequiredStatus, setProjectRequired } = require('../lib/project-required');
 const { buildRegistry } = require('../lib/skill-registry');
 const { lightStackReport } = require('../lib/light-stack');
 const path = require('path');
@@ -20,9 +21,10 @@ Usage:
   baking sync                       Alias for install
   baking doctor                     Verify agents + light stack
   baking skill-registry [--force]   Lightweight skills index (~/.cursor/baking/)
-  baking init-memory [--force] [--dry-run]
+  baking init-memory [--force] [--dry-run] [--require]
                                     Scan repo → AGENTS + init/ (then /init-memory)
-  baking auto-route on|off|status   Toggle Baking as default (without "/baking" every prompt)
+  baking require on|off|status      Mark this repo: implementation must use Baking-AI
+  baking auto-route on|off|status   Global fallback (all repos); prefer baking require on
   baking metrics-review [--status] [--force] [--close-cycle]
                                     Routing/savings conclusion (7 days or 50 runs)
   baking version                    Show installed package version
@@ -131,8 +133,9 @@ function main() {
   if (cmd === 'init-memory') {
     const force = rest.includes('--force');
     const dryRun = rest.includes('--dry-run');
+    const requireProject = rest.includes('--require');
     try {
-      const result = runInitMemory({ force, dryRun });
+      const result = runInitMemory({ force, dryRun, requireProject });
       if (!result.ok) {
         console.error(result.error);
         process.exit(1);
@@ -143,6 +146,9 @@ function main() {
         process.exit(0);
       }
       console.log(result.message);
+      if (result.bakingRequired && result.requiredMarker) {
+        console.log(`  baking required: ${result.requiredMarker}`);
+      }
       console.log('');
       for (const [k, p] of Object.entries(result.artifacts)) {
         console.log(`  ${k}: ${p}`);
@@ -154,6 +160,31 @@ function main() {
       console.error(`init-memory failed: ${err.message}`);
       process.exit(1);
     }
+  }
+
+  if (cmd === 'require') {
+    const sub = rest.find((a) => !a.startsWith('-'));
+    if (!sub || sub === 'status') {
+      const s = projectRequiredStatus();
+      console.log(`Project: ${process.cwd()}`);
+      console.log(`Baking required: ${s.bakingRequired ? 'yes' : 'no'}`);
+      console.log(`Marker: ${s.markerFile}`);
+      if (s.error) console.log(`Error reading marker: ${s.error}`);
+      process.exit(0);
+    }
+    if (sub === 'on') {
+      const r = setProjectRequired(true);
+      console.log(`Baking required ON → ${r.markerFile}`);
+      console.log('Implementation in this repo must use Baking-AI (Q&A may still gate-out).');
+      process.exit(0);
+    }
+    if (sub === 'off') {
+      setProjectRequired(false);
+      console.log('Baking required OFF — marker removed.');
+      process.exit(0);
+    }
+    console.error('Usage: baking require on|off|status');
+    process.exit(1);
   }
 
   if (cmd === 'auto-route') {
@@ -168,7 +199,7 @@ function main() {
     }
     if (sub === 'on') {
       const r = setAutoRoute(true);
-      console.log('Auto-route ON — implementation requests use Baking without "/baking" on every prompt.');
+      console.log('Auto-route ON — global fallback for implementation (prefer `baking require on` per repo).');
       console.log('Rule gate: ~/.cursor/rules/opus-sonnet-router.mdc (run baking install if not updated).');
       process.exit(r.bakingEnabled ? 0 : 0);
     }

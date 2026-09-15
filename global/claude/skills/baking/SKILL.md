@@ -17,9 +17,9 @@ Classify **before** subagents, handoff, or metrics.
 
 **GATE-OUT** for pure Q&A, explanation, review-only, or status — no code change requested. Reply directly; optional *"Baking not needed here — …"*. No YAML, JSONL, or handoff.
 
-**Always Baking** for implement/fix/refactor/deploy or explicit **`/baking`** / *use baking*.
+**Always Baking** for implement/fix/refactor/deploy or explicit **`/baking`** / *use baking*, or when **`.cursor/baking/required.json`** exists in the repo (implementation mandatory).
 
-## Light stack (lightweight — if `lightStack.enabled`)
+Per-project: `baking require on` · Global fallback: `baking auto-route on`.
 
 1. **Start** (non-trivial): Engram `mem_context` + `mem_search` if applicable.
 2. **Skill:** match the request against `~/.cursor/baking/skill-registry.md` → Read one SKILL.md.

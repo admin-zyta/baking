@@ -14,20 +14,33 @@ Read **`~/.cursor/opus-sonnet/config.json`**. Then decide:
 | **GATE-OUT** | Pure Q&A, explanation, review-only, opinion, status/meta, no code change requested | **Do not** use Baking. Reply directly. Optional one line: *"Baking not needed here — …"* No handoff, subagents, YAML close, or metrics. |
 | **BAKING** | Implementation / code (feature, fix, refactor, wiring, deploy, create/edit files) | Follow **`ROUTER.md`** + baking skill + **`consumption.md`**. |
 
-**GATE-OUT signals (any of):** *how does*, *what is*, *explain*, *why*, *what do you think*, *review this* (no fix requested), *does it make sense*, *status of*, *hay forma de* (when asking conceptually, not *implement*), compare options without *build/implement*.
+**GATE-OUT signals (any of):** *how does*, *what is*, *explain*, *why*, *what do you think*, *review this* (no fix requested), *does it make sense*, *status of*, compare options without *build/implement*.
 
 **BAKING signals (any of):** *implement*, *fix*, *add*, *refactor*, *deploy*, *wire*, *create*, *update the code*, *make it so*, handoff execute, explicit **`/baking`** or *use baking*.
 
 **Explicit override:** if the user says **`/baking`** or *use baking* → **always BAKING**, even for PLAN-ONLY or small tasks.
 
-## Auto-route
+## Per-project required (preferred)
+
+Check **`.cursor/baking/required.json`** in the workspace (`bakingRequired: true`).
+
+| Marker | Implementation request | Q&A / review-only |
+|--------|------------------------|-------------------|
+| **Present** | **BAKING mandatory** — do not implement inline; use ROUTER + handoff + metrics. If you skipped Baking, say so and restart with Baking. | **GATE-OUT** (direct answer OK) |
+| **Absent** | Baking only if global `autoRoute` is on, or user said `/baking` / *use baking* | **GATE-OUT** unless explicit `/baking` |
+
+Enable per repo: `baking require on` (from project root). Disable: `baking require off`.
+
+**Do not** rely on global auto-route for every repo — use **`baking require on`** in projects where implementation must go through Baking-AI.
+
+## Global gate
 
 If `enabled` is **not** `true` → **GATE-OUT** unless `/baking` or *use baking*.
 
-If `enabled` is `true` and **`autoRoute.enabled` is `true`** → apply **BAKING** on implementation requests without repeating `/baking`.
+If `enabled` is `true` and **no** project marker and **`autoRoute.enabled` is `true`** → **BAKING** on implementation (legacy global mode).
 
-If `autoRoute.enabled` is `false` → **GATE-OUT** unless `/baking`, baking skill, or *use baking*.
+If `enabled` is `true` and **no** project marker and **`autoRoute.enabled` is `false`** → **GATE-OUT** on implementation unless `/baking` or *use baking*.
 
-Toggle: `baking auto-route on|off|status` · Project init: `baking init-memory` + `/init-memory`.
+Toggle global fallback: `baking auto-route on|off|status` · Per-project: `baking require on|off|status` · Init: `baking init-memory` + `/init-memory`.
 
-Orchestrator: **Baking-AI**. Global config — don't install per repo.
+Orchestrator: **Baking-AI**. Global **install** once; **require** per repo.

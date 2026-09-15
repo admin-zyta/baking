@@ -122,6 +122,16 @@
         "projectRuleFile": { "type": "string" },
         "scanDir": { "type": "string" }
       }
+    },
+    "projectRequired": {
+      "type": "object",
+      "description": "Per-repo mandatory Baking marker (see baking require on|off)",
+      "properties": {
+        "markerFile": {
+          "type": "string",
+          "default": ".cursor/baking/required.json"
+        }
+      }
     }
   }
 }

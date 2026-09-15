@@ -26,7 +26,9 @@ On GATE-OUT:
 2. Answer normally.
 3. Optional short line (once): *"Baking not needed here — …"* so the user knows why you're not routing.
 
-**Always use Baking** when the user says **`/baking`**, *use baking*, or the message clearly asks to **implement, fix, refactor, deploy, or edit code** — including large complete features.
+**Always use Baking** when the user says **`/baking`**, *use baking*, the message clearly asks to **implement, fix, refactor, deploy, or edit code**, or **this repo has** `.cursor/baking/required.json` (`bakingRequired: true`) — then implementation is **mandatory**; say *"This repo requires Baking-AI"* if you almost gate-out on code work.
+
+Per-project: `baking require on` · Global fallback only: `baking auto-route on`.
 
 ## Light stack (lightweight — if `lightStack.enabled`)
 

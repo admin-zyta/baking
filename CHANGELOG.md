@@ -2,6 +2,19 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/). Versioned in `VERSION` and `config.json` → `bakingVersion`.
 
+## [1.8.0] — 2026-09-15
+
+### Added
+
+- **`baking require on|off|status`** — per-repo marker `.cursor/baking/required.json`; implementation must use Baking-AI in that repo (Q&A may gate-out).
+- **`baking init-memory --require`** — bootstrap + require marker in one step.
+- **`projectRequired`** in config schema · router rule and docs updated.
+
+### Changed
+
+- **Per-project required preferred** over global auto-route; template `autoRoute.enabled: false`.
+- Global auto-route documented as fallback only when the repo has no require marker.
+
 ## [1.7.2] — 2026-09-15
 
 ### Added

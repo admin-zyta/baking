@@ -1,10 +1,10 @@
 {
   "$schema": "./config.schema.json",
-  "bakingVersion": "1.7.2",
+  "bakingVersion": "1.8.0",
   "language": "en",
   "enabled": true,
   "autoRoute": {
-    "enabled": true
+    "enabled": false
   },
   "profile": "claude",
   "handoffDir": ".cursor/handoff",
@@ -152,5 +152,8 @@
     "agentsFile": "AGENTS.md",
     "projectRuleFile": ".cursor/rules/baking-project.mdc",
     "scanDir": ".cursor/baking/init"
+  },
+  "projectRequired": {
+    "markerFile": ".cursor/baking/required.json"
   }
 }
